@@ -12,6 +12,7 @@
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
             --border: #2d2d2d;
+            --success: #2ecc71;
         }
 
         * {
@@ -25,7 +26,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding-bottom: 80px;
+            padding-bottom: 85px;
         }
 
         header {
@@ -100,6 +101,7 @@
         }
         button:active { opacity: 0.9; }
 
+        /* Log Output Styling */
         .log-item {
             border-bottom: 1px solid var(--border);
             padding: 10px 0;
@@ -107,18 +109,43 @@
         .log-item:last-child { border: none; }
         .log-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;}
 
-        .todo-item {
+        /* Dropdown Accordion Architecture */
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            background-color: var(--bg-color);
+        }
+        .accordion-header {
+            padding: 14px;
+            background-color: #252525;
+            cursor: pointer;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
         }
-        .todo-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent);
+        .accordion-header span.meal-tag {
+            color: var(--accent);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        .accordion-content {
+            display: none;
+            padding: 14px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: #e0e0e0;
+            background-color: #1a1a1a;
+        }
+        .accordion-content strong { color: var(--accent); }
+        .accordion-content ul { padding-left: 18px; margin: 8px 0; }
 
+        /* Bottom Menu Systems */
         nav {
             position: fixed;
             bottom: 0;
@@ -144,9 +171,7 @@
             margin: 0;
             padding: 0;
         }
-        .nav-btn.active {
-            color: var(--accent);
-        }
+        .nav-btn.active { color: var(--accent); }
         .nav-btn svg { width: 22px; height: 22px; fill: currentColor; }
     </style>
 </head>
@@ -156,7 +181,7 @@
         <h1>MASS DYNAMIC</h1>
     </header>
 
-    <!-- TRACKING PAGE -->
+    <!-- GYM TRACKING PAGE -->
     <div id="tracker" class="page active">
         <div class="card">
             <h2>Log Workout Set</h2>
@@ -164,13 +189,14 @@
                 <label>Exercise</label>
                 <select id="exercise">
                     <option>Flat Bench Press</option>
+                    <option>Incline Dumbbell Press</option>
                     <option>Barbell Back Squat</option>
                     <option>Deadlift</option>
-                    <option>Barbell Row</option>
-                    <option>Overhead Dumbbell Press</option>
-                    <option>Lat Pulldown</option>
                     <option>Romanian Deadlift (RDL)</option>
-                    <option>Lateral Raises</option>
+                    <option>Barbell Row</option>
+                    <option>Lat Pulldown</option>
+                    <option>Overhead Dumbbell Press</option>
+                    <option>Dumbbell Lateral Raises</option>
                 </select>
             </div>
             <div class="row">
@@ -193,29 +219,31 @@
         </div>
     </div>
 
-    <!-- MEAL PREP PAGE -->
+    <!-- MEAL PREP & DIET PAGE -->
     <div id="meals" class="page">
-        <div class="card" style="border-left: 4px solid var(--accent);">
-            <h2>Daily Target: Lean Bulk</h2>
-            <p style="font-size: 1.3rem; font-weight: bold; margin-bottom: 4px;">3,100 kcal</p>
-            <p style="font-size: 0.9rem; color: var(--text-muted);">Protein: 175g | Carbs: 420g | Fats: 80g</p>
+        <div class="card" style="border-left: 4px solid var(--accent); margin-bottom: 12px;">
+            <h2>Daily Surplus Target</h2>
+            <p style="font-size: 1.4rem; font-weight: bold; margin-bottom: 2px;">3,100 kcal</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Protein: 175g | Carbs: 420g | Fats: 80g</p>
         </div>
 
-        <div class="card">
-            <h2>Bulk Grocery Checklist</h2>
-            <div class="todo-item"><input type="checkbox"> <label style="color:var(--text-main); font-size:1rem;">Chicken Breast (1.2kg prep)</label></div>
-            <div class="todo-item"><input type="checkbox"> <label style="color:var(--text-main); font-size:1rem;">Eggs (2-3 dozen)</label></div>
-            <div class="todo-item"><input type="checkbox"> <label style="color:var(--text-main); font-size:1rem;">Potatoes & Rice</label></div>
-            <div class="todo-item"><input type="checkbox"> <label style="color:var(--text-main); font-size:1rem;">Tortilla Wraps</label></div>
-            <div class="todo-item"><input type="checkbox"> <label style="color:var(--text-main); font-size:1rem;">Broccoli, Peppers & Onions</label></div>
+        <!-- Day Selector Dropdown Menu Wrapper -->
+        <div class="card" style="padding: 12px; margin-bottom: 16px;">
+            <label style="font-weight: bold; margin-bottom: 6px;">Select Plan Day:</label>
+            <select id="daySelect" onchange="renderDayMenu()">
+                <option value="1">Day 1 (Setup A)</option>
+                <option value="2">Day 2 (Setup B)</option>
+                <option value="3">Day 3 (Setup A)</option>
+                <option value="4">Day 4 (Setup C)</option>
+                <option value="5">Day 5 (Setup D)</option>
+                <option value="6">Day 6 (Setup E)</option>
+                <option value="7">Day 7 (Setup F)</option>
+            </select>
         </div>
 
-        <div class="card">
-            <h2>Today's Menu Layout</h2>
-            <div style="margin-bottom: 12px;"><strong style="color: var(--accent);">Meal 1:</strong> Savory Potato & Egg Hash</div>
-            <div style="margin-bottom: 12px;"><strong style="color: var(--accent);">Meal 2:</strong> Cajun Chicken Wrap</div>
-            <div style="margin-bottom: 12px;"><strong style="color: var(--accent);">Meal 3:</strong> Protein Refuel Snack</div>
-            <div><strong style="color: var(--accent);">Meal 4:</strong> Soy-Garlic Chicken Bowl</div>
+        <h2 id="menuDayTitle" style="margin-left: 4px; margin-bottom: 10px;">Day 1 Menu</h2>
+        <div id="dynamicMenuContainer">
+            <!-- Dropdown Accordion Modules Injected via JS Engine -->
         </div>
     </div>
 
@@ -231,6 +259,57 @@
     </nav>
 
     <script>
+        // Master Database Core Recipes Data Dictionary
+        const recipes = {
+            hash: {
+                title: "Savory Potato & Egg Hash",
+                macros: "730 kcal | 28g P | 70g C | 36g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>3 Large Eggs</li><li>300g Potatoes (diced small)</li><li>½ Onion & ½ Bell Pepper</li><li>1.5 tbsp Butter/Cooking Oil</li><li>Salt, pepper, and paprika</li></ul><strong>Instructions:</strong><br>1. Microwave the diced potatoes for 3 minutes to pre-soften.<br>2. Heat 1 tbsp oil in a pan over medium heat. Sauté the onions, peppers, and potatoes until crispy golden (8–10 mins).<br>3. Push vegetables to the side of the pan. Melt the remaining ½ tbsp butter in the open space and crack in your 3 eggs.<br>4. Scramble the eggs fully, mix everything together, and season to taste.`
+            },
+            breakfastWrap: {
+                title: "Ultimate Breakfast Wrap Duo",
+                macros: "780 kcal | 30g P | 85g C | 32g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>3 Large Eggs</li><li>2 Large Tortilla Wraps</li><li>½ Onion (sliced)</li><li>1 tbsp Cooking Oil</li><li>Ketchup, mayo, or hot sauce</li></ul><strong>Instructions:</strong><br>1. Sauté onions in a hot pan with your oil until clear.<br>2. Whisk eggs in a bowl with salt/pepper, add to the pan, and scramble with the onions.<br>3. Warm both tortilla wraps for 15 seconds.<br>4. Pack the egg mixture evenly across both wraps, splash your preferred sauce, roll tight, and toast the outside line if desired.`
+            },
+            cajunWrap: {
+                title: "Spicy Cajun Chicken Wrap Duo",
+                macros: "820 kcal | 52g P | 90g C | 24g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>150g Pre-cooked Cajun Chicken Breast</li><li>2 Large Tortilla Wraps</li><li>Sliced onions/peppers or shredded greens</li><li>1 tbsp Mayonnaise or house sauce</li></ul><strong>Instructions:</strong><br>1. Reheat your batch-prepped Cajun chicken in a skillet or microwave.<br>2. Toss your sliced peppers/onions directly into the hot pan with the chicken for 2 minutes to soften.<br>3. Lay out your wraps, apply a layer of mayonnaise, load the chicken/vegetable mix, and roll securely.`
+            },
+            soyGarlicBowl: {
+                title: "Soy-Garlic Chicken Rice Bowl",
+                macros: "790 kcal | 54g P | 110g C | 15g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>150g Pre-cooked Soy-Garlic Chicken</li><li>1.5 Cups Cooked Rice (~250g weight)</li><li>1 Cup Broccoli florets & onions</li><li>1 tbsp Cooking Oil</li><li>Extra splash of soy sauce</li></ul><strong>Instructions:</strong><br>1. Sauté broccoli and onions in a skillet with oil over high heat for 3 minutes.<br>2. Drop heat down to medium, throw your pre-cooked chicken and the rice straight into the pan.<br>3. Drizzle with an extra dash of soy sauce, tossing for 2-3 minutes until completely steaming throughout.`
+            },
+            bbqPotato: {
+                title: "BBQ Chicken & Roasted Potatoes",
+                macros: "810 kcal | 50g P | 115g C | 16g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>150g Pre-cooked Chicken Breast</li><li>350g Potatoes (cut into wedges)</li><li>1.5 tbsp Olive Oil/Melted Butter</li><li>2 tbsp BBQ Sauce</li></ul><strong>Instructions:</strong><br>1. Toss raw potato wedges in 1.5 tbsp oil, salt, pepper, and garlic powder.<br>2. Roast wedges at 200°C (400°F) for 25–30 minutes or air fry until crisp.<br>3. Heat chicken in a separate pan, stir in the BBQ sauce until thoroughly coated, and plate next to your hot potatoes.`
+            },
+            snackA: {
+                title: "Protein Refuel Wrap",
+                macros: "560 kcal | 26g P | 50g C | 26g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>3 Eggs</li><li>1 Large Tortilla Wrap</li><li>1 tbsp Cooking Butter</li></ul><strong>Instructions:</strong><br>1. Soft scramble 3 eggs in a hot pan with 1 tbsp butter.<br>2. Load into a large tortilla wrap and fold up instantly for a quick protein boost.`
+            },
+            snackB: {
+                title: "Quick Savory Egg & Rice Mash",
+                macros: "540 kcal | 24g P | 65g C | 18g F",
+                html: `<strong>Ingredients:</strong><br><ul><li>3 Hard-Boiled Eggs (Prepped ahead)</li><li>1.5 Cups Cooked Rice</li><li>1 tbsp Soy sauce or hot sauce</li></ul><strong>Instructions:</strong><br>1. Reheat your pre-cooked rice until steaming hot.<br>2. Peel and dice your cold hard-boiled eggs directly into the rice bowl.<br>3. Mix vigorously with a fork, splashing soy sauce or hot sauce to make a savory mash.`
+            }
+        };
+
+        // Day Matrix Schedule Setup
+        const daySchedules = {
+            "1": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
+            "2": [ {tag: "Meal 1", ref: "breakfastWrap"}, {tag: "Meal 2", ref: "soyGarlicBowl"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "cajunWrap"} ],
+            "3": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
+            "4": [ {tag: "Meal 1", ref: "breakfastWrap"}, {tag: "Meal 2", ref: "soyGarlicBowl"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "bbqPotato"} ],
+            "5": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "bbqPotato"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "cajunWrap"} ],
+            "6": [ {tag: "Meal 1", ref: "breakfastWrap"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
+            "7": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "soyGarlicBowl"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "bbqPotato"} ]
+        };
+
+        // Navigation Switching Engine
         function switchPage(pageId, btnElement) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -239,8 +318,54 @@
             window.scrollTo(0,0);
         }
 
-        window.onload = function() { displayLogs(); };
+        // Dropdown Toggle Logic
+        function toggleAccordion(headerElement) {
+            const content = headerElement.nextElementSibling;
+            const icon = headerElement.querySelector('.arrow-icon');
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                icon.textContent = "▼";
+            } else {
+                content.style.display = "block";
+                icon.textContent = "▲";
+            }
+        }
 
+        // Dynamic Menu Construction Function
+        function renderDayMenu() {
+            const currentDay = document.getElementById('daySelect').value;
+            document.getElementById('menuDayTitle').textContent = `Day ${currentDay} Diet Plan`;
+            
+            const container = document.getElementById('dynamicMenuContainer');
+            const targetSchedule = daySchedules[currentDay];
+
+            container.innerHTML = targetSchedule.map(item => {
+                const data = recipes[item.ref];
+                return `
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div>
+                                <span class="meal-tag">${item.tag}</span><br>
+                                <span>${data.title}</span>
+                            </div>
+                            <span class="arrow-icon" style="color: var(--accent); font-size: 0.8rem;">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">Est. Macros: ${data.macros}</p>
+                            ${data.html}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Onload Initialization Hook
+        window.onload = function() {
+            displayLogs();
+            renderDayMenu();
+        };
+
+        // Workout Log Persistence Engine
         function saveSet() {
             const exercise = document.getElementById('exercise').value;
             const weight = document.getElementById('weight').value;
@@ -275,7 +400,7 @@
         }
 
         function clearHistory() {
-            if(confirm("Delete all sets?")) {
+            if(confirm("Are you sure you want to delete all logged sets?")) {
                 localStorage.removeItem('workoutLogs');
                 displayLogs();
             }
