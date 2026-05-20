@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mass Dynamic Tracker</title>
+    <title>Mass Dynamic Pro</title>
+    <!-- Premium Charting Engine Link -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --accent: #4dadf7;
+            --bg-main: #0a0a0c;
+            --bg-surface: #13131a;
+            --bg-card: #1c1c24;
+            --accent: #00e5ff;
+            --accent-glow: rgba(0, 229, 255, 0.15);
             --text-main: #ffffff;
-            --text-muted: #a0a0a0;
-            --border: #2d2d2d;
+            --text-muted: #8e8e9f;
+            --border: #262636;
+            --success: #39d353;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 85px;
+            padding-bottom: 90px;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: var(--card-bg);
+            background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(19,19,26,0.8) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid var(--border);
@@ -38,122 +46,216 @@
             z-index: 100;
         }
 
-        h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; }
-        h2 { font-size: 1.1rem; margin-bottom: 15px; color: var(--accent); }
+        header h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 { 
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+            margin-bottom: 18px; 
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 14px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
 
         .page {
             display: none;
-            padding: 20px;
-            max-width: 500px;
+            padding: 20px 16px;
+            max-width: 480px;
             margin: 0 auto;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .page.active { display: block; }
 
         .card {
-            background-color: var(--card-bg);
+            background-color: var(--bg-surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
         }
 
         .input-group {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
+        
         label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            font-weight: 600;
             color: var(--text-muted);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        
         input, select {
             width: 100%;
-            background-color: var(--bg-color);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
+        
         input:focus, select:focus {
             border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
             outline: none;
         }
 
         .row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
-        button {
+        button.primary-btn {
             width: 100%;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent) 0%, #00b0ff 100%);
             color: #000;
             border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 6px;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.25);
+            transition: transform 0.1s ease, opacity 0.2s ease;
         }
-        button:active { opacity: 0.9; }
+        button.primary-btn:active { transform: scale(0.98); opacity: 0.9; }
 
+        /* Metrics Display Panel */
+        .metrics-banner {
+            background: linear-gradient(135deg, #13131a 0%, #1a1a26 100%);
+            border-left: 4px solid var(--accent);
+        }
+        
+        /* Interactive Log Queue Design */
         .log-item {
             border-bottom: 1px solid var(--border);
-            padding: 10px 0;
+            padding: 12px 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .log-item:last-child { border: none; }
-        .log-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;}
+        .log-info-block h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+        .log-info-block p { font-size: 0.75rem; color: var(--text-muted); }
+        .log-value-badge {
+            background-color: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
 
-        /* Dropdown Architecture */
+        /* Chart Custom Elements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Enhanced Custom Dropdown Architecture */
         .accordion-item {
             border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 12px;
+            margin-bottom: 12px;
             overflow: hidden;
-            background-color: var(--bg-color);
+            background-color: var(--bg-surface);
+            transition: border-color 0.2s ease;
         }
+        
         .accordion-header {
-            padding: 14px;
-            background-color: #252525;
+            padding: 16px;
+            background-color: var(--bg-surface);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 600;
-            font-size: 0.95rem;
         }
+        
         .accordion-header span.meal-tag {
             color: var(--accent);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            background-color: var(--accent-glow);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 4px;
         }
+        
+        .accordion-header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        
         .accordion-content {
             display: none;
-            padding: 14px;
+            padding: 16px;
             border-top: 1px solid var(--border);
             font-size: 0.9rem;
-            line-height: 1.45;
-            color: #e0e0e0;
-            background-color: #1a1a1a;
+            line-height: 1.5;
+            color: #d1d1e0;
+            background-color: rgba(255,255,255,0.01);
         }
+        
         .accordion-content strong { color: var(--accent); }
-        .accordion-content ul { padding-left: 18px; margin: 8px 0; }
+        .accordion-content ul { padding-left: 20px; margin: 10px 0; }
+        .accordion-content li { margin-bottom: 4px; }
 
+        /* Navigation Architecture UI */
         nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--card-bg);
+            background-color: rgba(19, 19, 26, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid var(--border);
             display: flex;
-            height: 65px;
+            height: 70px;
             z-index: 100;
+            padding-bottom: env(safe-area-inset-bottom);
         }
+        
         .nav-btn {
             flex: 1;
             background: none;
@@ -163,22 +265,25 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-            gap: 4px;
-            margin: 0;
-            padding: 0;
+            font-size: 0.75rem;
+            font-weight: 600;
+            gap: 5px;
+            cursor: pointer;
+            transition: color 0.2s ease;
         }
+        
         .nav-btn.active { color: var(--accent); }
-        .nav-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .nav-btn svg { width: 20px; height: 20px; fill: currentColor; transition: transform 0.2s ease; }
+        .nav-btn.active svg { transform: translateY(-1px); }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>MASS DYNAMIC</h1>
+        <h1>Mass Dynamic Pro</h1>
     </header>
 
-    <!-- GYM TRACKING PAGE -->
+    <!-- WORKOUT ANALYTICS PAGE -->
     <div id="tracker" class="page active">
         <div class="card">
             <h2>Log Workout Set</h2>
@@ -222,27 +327,41 @@
                     <input type="number" id="reps" placeholder="8">
                 </div>
             </div>
-            <button onclick="saveSet()">Log Set</button>
+            <button class="primary-btn" onclick="saveSet()">Log Dataset</button>
+        </div>
+
+        <!-- Performance Analytics Engine Visuals -->
+        <div class="card">
+            <h2>Performance Analytics</h2>
+            <div class="input-group" style="margin-bottom: 12px;">
+                <label>Select Chart Target Focus</label>
+                <select id="chartFilter" onchange="updateChartMetrics()">
+                    <!-- Populated dynamically via Script Engine -->
+                </select>
+            </div>
+            <div class="chart-container">
+                <canvas id="analyticsChart"></canvas>
+            </div>
         </div>
 
         <div class="card">
-            <h2>Workout History</h2>
+            <h2>Workout History Log</h2>
             <div id="logHistory"></div>
-            <button onclick="clearHistory()" style="background: none; color: red; border: 1px solid red; margin-top: 15px; padding: 8px; font-size: 0.85rem;">Clear All History</button>
+            <button onclick="clearHistory()" style="background: none; color: #ff5252; border: 1px solid rgba(255,82,82,0.2); margin-top: 18px; padding: 10px; font-size: 0.8rem; border-radius: 8px; font-weight:600; width:100%; cursor:pointer;">Format Application Memory Storage</button>
         </div>
     </div>
 
-    <!-- MEAL PREP PAGE -->
+    <!-- MEAL NUTRITION ENGINE PAGE -->
     <div id="meals" class="page">
-        <div class="card" style="border-left: 4px solid var(--accent); margin-bottom: 12px;">
-            <h2>Daily Surplus Target</h2>
-            <p style="font-size: 1.4rem; font-weight: bold; margin-bottom: 2px;">3,100 kcal</p>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Protein: 175g | Carbs: 420g | Fats: 80g</p>
+        <div class="card metrics-banner">
+            <h2>Daily Surplus Targets</h2>
+            <p style="font-size: 1.6rem; font-weight: 800; margin-bottom: 2px; color: var(--text-main);">3,100 kcal</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:500; letter-spacing:0.3px;">Protein: 175g &bull; Carbs: 420g &bull; Fats: 80g</p>
         </div>
 
-        <!-- Day Selector Selection -->
-        <div class="card" style="padding: 12px; margin-bottom: 16px;">
-            <label style="font-weight: bold; margin-bottom: 6px;">Select Plan Day:</label>
+        <!-- Calendar Dropdown Logic Panel -->
+        <div class="card" style="padding: 16px;">
+            <label style="margin-bottom: 8px;">Selected Pipeline Target</label>
             <select id="daySelect" onchange="renderDayMenu()">
                 <option value="1">Day 1 (Monday)</option>
                 <option value="2">Day 2 (Tuesday)</option>
@@ -254,14 +373,15 @@
             </select>
         </div>
 
-        <h2 id="menuDayTitle" style="margin-left: 4px; margin-bottom: 10px;">Day 1 Menu</h2>
+        <h2 id="menuDayTitle" style="margin-left: 4px; margin-bottom: 14px;">Day 1 Menu</h2>
         <div id="dynamicMenuContainer"></div>
     </div>
 
+    <!-- Footer System UI Panels -->
     <nav>
         <button class="nav-btn active" onclick="switchPage('tracker', this)">
             <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43l-2.86-2.86L17.71 12l2.86 2.86M4.29 12l1.43-1.43L2.86 7.71 1.43 9.14 4.29 12m11.14-5.14L14 8.29l2.86 2.86 1.43-1.43-2.86-2.86M8.29 14l1.43 1.43 2.86-2.86-1.43-1.43L8.29 14M9.71 5.43L11.14 4 8.29 1.14 6.86 2.57l2.85 2.86M14.29 20l-1.43-1.43-2.86 2.86 1.43 1.43 2.86-2.86M22 2v4h-4V2h4zM6 18v4H2v-4h4z"/></svg>
-            <span>Workout</span>
+            <span>Performance</span>
         </button>
         <button class="nav-btn" onclick="switchPage('meals', this)">
             <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7m8-3h-3v14h-2.5V6h-3V2h8.5v4z"/></svg>
@@ -270,81 +390,28 @@
     </nav>
 
     <script>
-        // Recipe Database Object
+        // Global Application State Matrix Variables
+        let performanceChart = null;
+
+        // Recipe Data Structure Systems
         const recipes = {
-            hash: {
-                title: "Savory Potato & Egg Hash",
-                macros: "730 kcal | 28g P | 70g C | 36g F",
-                html: `<strong>Ingredients:</strong><ul><li>3 Large Eggs</li><li>300g Potatoes (diced small)</li><li>½ Onion & ½ Bell Pepper</li><li>1.5 tbsp Butter/Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Microwave diced potatoes for 3 minutes to soften.<br>2. Sauté onions, peppers, and potatoes in 1 tbsp oil until golden crisp (10 mins).<br>3. Push veggies aside, melt ½ tbsp butter, crack eggs, and scramble them into the mix.`
-            },
-            oats: {
-                title: "Mass Power Overnight Berry Oats",
-                macros: "760 kcal | 35g P | 105g C | 22g F",
-                html: `<strong>Ingredients:</strong><ul><li>1.5 cups Rolled Oats (~120g)</li><li>1 cup Milk of choice</li><li>1 scoop Protein Powder</li><li>2 tbsp Peanut Butter</li><li>Handful of mixed berries</li></ul><strong>Instructions:</strong><br>1. Mix oats, milk, and protein powder thoroughly in a container.<br>2. Swirl in the peanut butter and top with berries.<br>3. Seal and refrigerate overnight. Eat cold or warm up in the morning.`
-            },
-            breakfastWrap: {
-                title: "Ultimate Breakfast Wrap Duo",
-                macros: "780 kcal | 30g P | 85g C | 32g F",
-                html: `<strong>Ingredients:</strong><ul><li>3 Large Eggs</li><li>2 Large Tortilla Wraps</li><li>½ Onion (sliced)</li><li>1 tbsp Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Sauté onions in a hot pan with oil.<br>2. Pour in whisked eggs and soft scramble with onions.<br>3. Distribute egg mixture across both warm tortillas, roll tight, and toast the seams.`
-            },
-            steakPasta: {
-                title: "Creamy Garlic Steak Pasta",
-                macros: "860 kcal | 58g P | 95g C | 28g F",
-                html: `<strong>Ingredients:</strong><ul><li>150g Beef Steak Strips</li><li>120g Penne Pasta (dry weight)</li><li>¼ cup Light Cream or Half-and-Half</li><li>2 cloves Garlic (minced)</li><li>1 tsp Olive Oil</li></ul><strong>Instructions:</strong><br>1. Boil pasta according to instructions.<br>2. Pan-sear steak strips in oil with garlic over high heat for 3–4 mins, then remove steak.<br>3. Lower heat, pour cream and 2 tbsp pasta water into the pan, simmer, mix in pasta and steak.`
-            },
-            cajunWrap: {
-                title: "Spicy Cajun Chicken Wrap Duo",
-                macros: "820 kcal | 52g P | 90g C | 24g F",
-                html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Cajun Chicken Breast</li><li>2 Large Tortilla Wraps</li><li>Sliced onions and peppers</li><li>1 tbsp Mayonnaise</li></ul><strong>Instructions:</strong><br>1. Sauté peppers and onions in a pan until soft.<br>2. Toss in shredded pre-cooked cajun chicken to heat through.<br>3. Spread mayo on tortillas, load the chicken filling, and roll tight.`
-            },
-            beefSweetPotato: {
-                title: "Sweet Potato & Beef Taco Skillet",
-                macros: "840 kcal | 48g P | 98g C | 26g F",
-                html: `<strong>Ingredients:</strong><ul><li>150g Lean Ground Beef</li><li>350g Sweet Potatoes (cubed)</li><li>Taco seasoning packet</li><li>1 tbsp Olive oil</li></ul><strong>Instructions:</strong><br>1. Toss cubed sweet potatoes in oil and air-fry or pan-roast for 20 mins until soft.<br>2. Brown ground beef in a skillet with taco seasoning.<br>3. Combine beef and sweet potatoes together in the skillet for a nutrient-dense mash.`
-            },
-            soyGarlicBowl: {
-                title: "Soy-Garlic Chicken Rice Bowl",
-                macros: "790 kcal | 54g P | 110g C | 15g F",
-                html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Chicken Breast</li><li>1.5 cups Cooked Rice</li><li>1 cup Broccoli florets</li><li>1 tbsp Soy Sauce & 1 tsp Honey</li><li>1 tbsp Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Stir-fry broccoli in oil for 3 minutes.<br>2. Toss in the rice, chicken, soy sauce, and honey.<br>3. Stir together on medium-high heat until hot.`
-            },
-            honeySalmon: {
-                title: "Honey-Soy Salmon & Sesame Rice",
-                macros: "830 kcal | 46g P | 100g C | 25g F",
-                html: `<strong>Ingredients:</strong><ul><li>150g Salmon Fillet</li><li>1.5 cups Cooked Jasmine Rice</li><li>1 tbsp Soy sauce & 1 tbsp Honey</li><li>1 tsp Sesame oil</li></ul><strong>Instructions:</strong><br>1. Mix soy sauce, honey, and sesame oil together.<br>2. Pan-sear or bake salmon fillet for 4-5 mins per side, brushing with the glaze.<br>3. Serve over hot jasmine rice.`
-            },
-            bbqPotato: {
-                title: "BBQ Chicken & Roasted Potatoes",
-                macros: "810 kcal | 50g P | 115g C | 16g F",
-                html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Chicken Breast</li><li>350g Potatoes (wedges)</li><li>1.5 tbsp Olive Oil</li><li>2 tbsp BBQ Sauce</li></ul><strong>Instructions:</strong><br>1. Toss potato wedges in oil and roast at 200°C for 25 mins.<br>2. Toss chicken in BBQ sauce and heat through.<br>3. Serve side by side.`
-            },
-            turkeyChili: {
-                title: "Hearty Turkey & Bean Chili",
-                macros: "790 kcal | 52g P | 105g C | 18g F",
-                html: `<strong>Ingredients:</strong><ul><li>160g Ground Turkey</li><li>1 cup Canned Kidney Beans (rinsed)</li><li>1 cup Tomato passata/sauce</li><li>1.5 cups Cooked Rice or Cornbread</li><li>Chili powder & cumin</li></ul><strong>Instructions:</strong><br>1. Brown ground turkey in a deep pan with chili powder and cumin.<br>2. Pour in passata and kidney beans. Simmer for 10 minutes.<br>3. Serve piping hot over a heavy bed of rice.`
-            },
-            beefRiceWrap: {
-                title: "Loaded Beef & Rice Monster Burrito",
-                macros: "850 kcal | 46g P | 102g C | 28g F",
-                html: `<strong>Ingredients:</strong><ul><li>130g Lean Ground Beef</li><li>1 cup Cooked Rice</li><li>2 Large Tortilla Wraps</li><li>2 tbsp Salsa & Shredded cheese</li></ul><strong>Instructions:</strong><br>1. Cook ground beef with salt, pepper, and garlic.<br>2. Combine hot rice, beef, salsa, and cheese in a bowl.<br>3. Split the filling evenly across two large tortillas, roll tightly, and crisp up on a pan.`
-            },
-            snackA: {
-                title: "Protein Refuel Wrap",
-                macros: "560 kcal | 26g P | 50g C | 26g F",
-                html: `<strong>Ingredients:</strong><ul><li>3 Eggs</li><li>1 Large Tortilla Wrap</li><li>1 tbsp Butter</li></ul><strong>Instructions:</strong><br>1. Soft scramble 3 eggs in butter.<br>2. Roll into a single large tortilla wrap for an easy meal.`
-            },
-            snackB: {
-                title: "Quick Savory Egg & Rice Mash",
-                macros: "540 kcal | 24g P | 65g C | 18g F",
-                html: `<strong>Ingredients:</strong><ul><li>3 Hard-Boiled Eggs</li><li>1.5 cups Cooked Rice</li><li>1 tbsp Soy Sauce</li></ul><strong>Instructions:</strong><br>1. Reheat your batch-cooked rice until hot.<br>2. Mash eggs into the rice using a fork, season with soy sauce.`
-            },
-            snackC: {
-                title: "Honey Peanut Butter Rice Cakes",
-                macros: "510 kcal | 20g P | 72g C | 16g F",
-                html: `<strong>Ingredients:</strong><ul><li>4 Plain Rice Cakes</li><li>3 tbsp Peanut Butter</li><li>1 tbsp Honey</li><li>1 glass of Milk</li></ul><strong>Instructions:</strong><br>1. Spread peanut butter evenly across all four rice cakes.<br>2. Drizzle with honey and wash down with a cold glass of milk.`
-            }
+            hash: { title: "Savory Potato & Egg Hash", macros: "730 kcal | 28g P | 70g C | 36g F", html: `<strong>Ingredients:</strong><ul><li>3 Large Eggs</li><li>300g Potatoes (diced small)</li><li>½ Onion & ½ Bell Pepper</li><li>1.5 tbsp Butter/Oil</li></ul><strong>Instructions:</strong><br>1. Microwave potatoes for 3 minutes to soften.<br>2. Sauté aromatics & potatoes in 1 tbsp oil until golden crisp.<br>3. Melt remaining butter, crack eggs, scramble into matrix.` },
+            oats: { title: "Mass Power Overnight Berry Oats", macros: "760 kcal | 35g P | 105g C | 22g F", html: `<strong>Ingredients:</strong><ul><li>1.5 cups Rolled Oats (~120g)</li><li>1 cup Milk of choice</li><li>1 scoop Protein Powder</li><li>2 tbsp Peanut Butter</li><li>Handful of mixed berries</li></ul><strong>Instructions:</strong><br>1. Combine components in an airtight container.<br>2. Swirl in raw peanut butter; lay down berry garnish.<br>3. Chill overnight. Consume chilled or heated.` },
+            breakfastWrap: { title: "Ultimate Breakfast Wrap Duo", macros: "780 kcal | 30g P | 85g C | 32g F", html: `<strong>Ingredients:</strong><ul><li>3 Large Eggs</li><li>2 Large Tortilla Wraps</li><li>½ Onion (sliced)</li><li>1 tbsp Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Sauté onions in a hot pan with oil.<br>2. Pour in whisked eggs and soft scramble with onions.<br>3. Distribute egg mixture across both warm tortillas, roll tight, and toast the seams.` },
+            steakPasta: { title: "Creamy Garlic Steak Pasta", macros: "860 kcal | 58g P | 95g C | 28g F", html: `<strong>Ingredients:</strong><ul><li>150g Beef Steak Strips</li><li>120g Penne Pasta (dry weight)</li><li>¼ cup Light Cream or Half-and-Half</li><li>2 cloves Garlic (minced)</li><li>1 tsp Olive Oil</li></ul><strong>Instructions:</strong><br>1. Boil pasta according to instructions.<br>2. Pan-sear steak strips in oil with garlic over high heat for 3–4 mins, then remove steak.<br>3. Lower heat, pour cream and 2 tbsp pasta water into the pan, simmer, mix in pasta and steak.` },
+            cajunWrap: { title: "Spicy Cajun Chicken Wrap Duo", macros: "820 kcal | 52g P | 90g C | 24g F", html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Cajun Chicken Breast</li><li>2 Large Tortilla Wraps</li><li>Sliced onions and peppers</li><li>1 tbsp Mayonnaise</li></ul><strong>Instructions:</strong><br>1. Sauté peppers and onions in a pan until soft.<br>2. Toss in shredded pre-cooked cajun chicken to heat through.<br>3. Spread mayo on tortillas, load the chicken filling, and roll tight.` },
+            beefSweetPotato: { title: "Sweet Potato & Beef Taco Skillet", macros: "840 kcal | 48g P | 98g C | 26g F", html: `<strong>Ingredients:</strong><ul><li>150g Lean Ground Beef</li><li>350g Sweet Potatoes (cubed)</li><li>Taco seasoning packet</li><li>1 tbsp Olive oil</li></ul><strong>Instructions:</strong><br>1. Toss cubed sweet potatoes in oil and air-fry or pan-roast for 20 mins until soft.<br>2. Brown ground beef in a skillet with taco seasoning.<br>3. Combine beef and sweet potatoes together in the skillet for a nutrient-dense mash.` },
+            soyGarlicBowl: { title: "Soy-Garlic Chicken Rice Bowl", macros: "790 kcal | 54g P | 110g C | 15g F", html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Chicken Breast</li><li>1.5 cups Cooked Rice</li><li>1 cup Broccoli florets</li><li>1 tbsp Soy Sauce & 1 tsp Honey</li><li>1 tbsp Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Stir-fry broccoli in oil for 3 minutes.<br>2. Toss in the rice, chicken, soy sauce, and honey.<br>3. Stir together on medium-high heat until hot.` },
+            honeySalmon: { title: "Honey-Soy Salmon & Sesame Rice", macros: "830 kcal | 46g P | 100g C | 25g F", html: `<strong>Ingredients:</strong><ul><li>150g Salmon Fillet</li><li>1.5 cups Cooked Jasmine Rice</li><li>1 tbsp Soy sauce & 1 tbsp Honey</li><li>1 tsp Sesame oil</li></ul><strong>Instructions:</strong><br>1. Mix soy sauce, honey, and sesame oil together.<br>2. Pan-sear or bake salmon fillet for 4-5 mins per side, brushing with the glaze.<br>3. Serve over hot jasmine rice.` },
+            bbqPotato: { title: "BBQ Chicken & Roasted Potatoes", macros: "810 kcal | 50g P | 115g C | 16g F", html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Chicken Breast</li><li>350g Potatoes (wedges)</li><li>1.5 tbsp Olive Oil</li><li>2 tbsp BBQ Sauce</li></ul><strong>Instructions:</strong><br>1. Toss potato wedges in oil and roast at 200°C for 25 mins.<br>2. Toss chicken in BBQ sauce and heat through.<br>3. Serve side by side.` },
+            turkeyChili: { title: "Hearty Turkey & Bean Chili", macros: "790 kcal | 52g P | 105g C | 18g F", html: `<strong>Ingredients:</strong><ul><li>160g Ground Turkey</li><li>1 cup Canned Kidney Beans (rinsed)</li><li>1 cup Tomato passata/sauce</li><li>1.5 cups Cooked Rice or Cornbread</li><li>Chili powder & cumin</li></ul><strong>Instructions:</strong><br>1. Brown ground turkey in a deep pan with chili powder and cumin.<br>2. Pour in passata and kidney beans. Simmer for 10 minutes.<br>3. Serve piping hot over a heavy bed of rice.` },
+            beefRiceWrap: { title: "Loaded Beef & Rice Monster Burrito", macros: "850 kcal | 46g P | 102g C | 28g F", html: `<strong>Ingredients:</strong><ul><li>130g Lean Ground Beef</li><li>1 cup Cooked Rice</li><li>2 Large Tortilla Wraps</li><li>2 tbsp Salsa & Shredded cheese</li></ul><strong>Instructions:</strong><br>1. Cook ground beef with salt, pepper, and garlic.<br>2. Combine hot rice, beef, salsa, and cheese in a bowl.<br>3. Split the filling evenly across two large tortillas, roll tightly, and crisp up on a pan.` },
+            snackA: { title: "Protein Refuel Wrap", macros: "560 kcal | 26g P | 50g C | 26g F", html: `<strong>Ingredients:</strong><ul><li>3 Eggs</li><li>1 Large Tortilla Wrap</li><li>1 tbsp Butter</li></ul><strong>Instructions:</strong><br>1. Soft scramble 3 eggs in butter.<br>2. Roll into a single large tortilla wrap for an easy meal.` },
+            snackB: { title: "Quick Savory Egg & Rice Mash", macros: "540 kcal | 24g P | 65g C | 18g F", html: `<strong>Ingredients:</strong><ul><li>3 Hard-Boiled Eggs</li><li>1.5 cups Cooked Rice</li><li>1 tbsp Soy Sauce</li></ul><strong>Instructions:</strong><br>1. Reheat your batch-cooked rice until hot.<br>2. Mash eggs into the rice using a fork, season with soy sauce.` },
+            snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P | 72g C | 16g F", html: `<strong>Ingredients:</strong><ul><li>4 Plain Rice Cakes</li><li>3 tbsp Peanut Butter</li><li>1 tbsp Honey</li><li>1 glass of Milk</li></ul><strong>Instructions:</strong><br>1. Spread peanut butter evenly across all four rice cakes.<br>2. Drizzle with honey and wash down with a cold glass of milk.` }
         };
 
-        // 7-Day Matrix Schedule
+        // Complete 7-Day Rotational Strategy Matrix
         const daySchedules = {
             "1": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "2": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "steakPasta"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "bbqPotato"} ],
@@ -361,24 +428,25 @@
             document.getElementById(pageId).classList.add('active');
             btnElement.classList.add('active');
             window.scrollTo(0,0);
+            if (pageId === 'tracker') { updateChartMetrics(); }
         }
 
         function toggleAccordion(headerElement) {
             const content = headerElement.nextElementSibling;
-            const icon = headerElement.querySelector('.arrow-icon');
+            const arrow = headerElement.querySelector('.arrow-icon');
             if (content.style.display === "block") {
                 content.style.display = "none";
-                icon.textContent = "▼";
+                arrow.style.transform = "rotate(0deg)";
             } else {
                 content.style.display = "block";
-                icon.textContent = "▲";
+                arrow.style.transform = "rotate(180deg)";
             }
         }
 
         function renderDayMenu() {
             const currentDay = document.getElementById('daySelect').value;
             const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            document.getElementById('menuDayTitle').textContent = `${dayNames[currentDay]} Diet Plan`;
+            document.getElementById('menuDayTitle').textContent = `${dayNames[currentDay]} Fleet Pipeline`;
             
             const container = document.getElementById('dynamicMenuContainer');
             const targetSchedule = daySchedules[currentDay];
@@ -389,13 +457,13 @@
                     <div class="accordion-item">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div>
-                                <span class="meal-tag">${item.tag}</span><br>
-                                <span>${data.title}</span>
+                                <span class="meal-tag">${item.tag}</span>
+                                <h3>${data.title}</h3>
                             </div>
-                            <span class="arrow-icon" style="color: var(--accent); font-size: 0.8rem;">▼</span>
+                            <span class="arrow-icon" style="color: var(--accent); font-size: 0.75rem; transition: transform 0.2s; display:inline-block;">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">Est. Macros: ${data.macros}</p>
+                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Macros: ${data.macros}</p>
                             ${data.html}
                         </div>
                     </div>
@@ -403,18 +471,13 @@
             }).join('');
         }
 
-        window.onload = function() {
-            displayLogs();
-            renderDayMenu();
-        };
-
         function saveSet() {
             const exercise = document.getElementById('exercise').value;
-            const weight = document.getElementById('weight').value;
-            const reps = document.getElementById('reps').value;
-            if(!weight || !reps) return alert("Please fill out both weight and reps!");
+            const weight = parseFloat(document.getElementById('weight').value);
+            const reps = parseInt(document.getElementById('reps').value);
+            if(!weight || !reps) return alert("All performance dataset parameters must be specified!");
 
-            const timestamp = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit'});
+            const timestamp = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
             const newSet = { exercise, weight, reps, timestamp };
 
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
@@ -423,30 +486,99 @@
 
             document.getElementById('weight').value = '';
             document.getElementById('reps').value = '';
+            
             displayLogs();
+            populateChartFilter();
+            updateChartMetrics();
         }
 
         function displayLogs() {
             const historyContainer = document.getElementById('logHistory');
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
             if(currentLogs.length === 0) {
-                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem; text-align:center; padding: 20px 0;">No sets logged yet.</p>`;
+                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding: 24px 0;">Dataset empty. Enter metrics above.</p>`;
                 return;
             }
             historyContainer.innerHTML = currentLogs.map(item => `
                 <div class="log-item">
-                    <div class="log-meta"><span>${item.timestamp}</span></div>
-                    <div><strong>${item.exercise}</strong>: ${item.weight} kg × ${item.reps} reps</div>
+                    <div class="log-info-block">
+                        <h4>${item.exercise}</h4>
+                        <p>${item.timestamp}</p>
+                    </div>
+                    <div class="log-value-badge">${item.weight} kg × ${item.reps}</div>
                 </div>
             `).join('');
         }
 
-        function clearHistory() {
-            if(confirm("Are you sure you want to delete all logged sets?")) {
-                localStorage.removeItem('workoutLogs');
-                displayLogs();
+        function populateChartFilter() {
+            const filterSelect = document.getElementById('chartFilter');
+            const currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
+            const activeSelection = filterSelect.value;
+            
+            // Extract distinct exercises
+            const exercisesInLog = [...new Set(currentLogs.map(item => item.exercise))];
+            
+            if(exercisesInLog.length === 0) {
+                filterSelect.innerHTML = `<option value="">No Active Matrix Found</option>`;
+                return;
+            }
+
+            filterSelect.innerHTML = exercisesInLog.map(ex => `<option value="${ex}">${ex}</option>`).join('');
+            if (exercisesInLog.includes(activeSelection)) {
+                filterSelect.value = activeSelection;
             }
         }
+
+        function buildPerformanceChart() {
+            const ctx = document.getElementById('analyticsChart').getContext('2-2d');
+            performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: 'Estimated 1RM (kg)', data: [], borderColor: '#00e5ff', backgroundColor: 'rgba(0, 229, 255, 0.05)', borderWidth: 2, tension: 0.3, fill: true, pointBackgroundColor: '#00e5ff' }] },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { grid: { color: '#1f1f2e' }, ticks: { color: '#8e8e9f', font: { size: 10 } } },
+                        y: { grid: { color: '#1f1f2e' }, ticks: { color: '#8e8e9f', font: { size: 10 } } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function updateChartMetrics() {
+            if(!performanceChart) return;
+            const targetExercise = document.getElementById('chartFilter').value;
+            let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
+            
+            // Filter entries matched chronologically
+            let matches = currentLogs.filter(item => item.exercise === targetExercise).reverse();
+            
+            // Compute Estimated One Rep Max trends: Weight * (1 + Reps/30)
+            const datasetValues = matches.map(item => Math.round(item.weight * (1 + item.reps / 30)));
+            const labels = matches.map(item => item.timestamp);
+
+            performanceChart.data.labels = labels;
+            performanceChart.data.datasets[0].data = datasetValues;
+            performanceChart.data.datasets[0].label = `${targetExercise} (Est. 1RM kg)`;
+            performanceChart.update()
+        }
+
+        function clearHistory() {
+            if(confirm("Confirm destructive wipe of all saved history data segments?")) {
+                localStorage.removeItem('workoutLogs');
+                displayLogs();
+                populateChartFilter();
+                updateChartMetrics();
+            }
+        }
+
+        window.onload = function() {
+            displayLogs();
+            buildPerformanceChart();
+            populateChartFilter();
+            updateChartMetrics();
+            renderDayMenu();
+        };
     </script>
 </body>
 </html>
