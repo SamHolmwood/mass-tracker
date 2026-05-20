@@ -4,28 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mass Dynamic Pro // Terminal</title>
-    <!-- Premium Charting Engine Link -->
+    <!-- Sharp UI Font & Premium Charting Engine -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-main: #060608;
             --bg-surface: #0e0e12;
-            --bg-card: #14141c;
+            --bg-card: #15151f;
             --accent: #00e5ff;
             --accent-dim: #008ba3;
             --accent-glow: rgba(0, 229, 255, 0.08);
             --text-main: #ffffff;
-            --text-muted: #6c6c82;
-            --border: #1f1f2e;
+            --text-muted: #94a3b8;
+            --border: #222235;
             --border-laser: #ff0055;
-            --grid-color: rgba(0, 229, 255, 0.02);
+            --grid-color: rgba(0, 229, 255, 0.025);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "Courier New", Courier, monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -40,6 +41,7 @@
             color: var(--text-main);
             padding-bottom: 95px;
             overflow-x: hidden;
+            letter-spacing: -0.2px;
         }
 
         header {
@@ -56,9 +58,9 @@
         }
 
         header h1 {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 900;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--text-main);
             text-shadow: 0 0 10px var(--accent);
@@ -68,8 +70,8 @@
 
         h2 { 
             font-size: 0.95rem; 
-            font-weight: 800; 
-            letter-spacing: 1.5px;
+            font-weight: 900; 
+            letter-spacing: 1px;
             margin-bottom: 16px; 
             color: var(--text-main);
             text-transform: uppercase;
@@ -89,12 +91,12 @@
             padding: 20px 16px;
             max-width: 480px;
             margin: 0 auto;
-            animation: terminalBoot 0.25s steps(4, end);
+            animation: terminalBoot 0.15s ease-out;
         }
 
         @keyframes terminalBoot {
-            from { opacity: 0; transform: scale(0.99); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .page.active { display: block; }
@@ -126,12 +128,12 @@
         
         label {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--accent);
             margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         
         input, select {
@@ -140,8 +142,8 @@
             border: 1px solid var(--border);
             color: var(--text-main);
             padding: 12px;
-            border-radius: 2px;
-            font-size: 0.9rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
             font-weight: 600;
             transition: all 0.2s ease;
         }
@@ -163,14 +165,13 @@
             color: var(--accent);
             border: 1px solid var(--accent);
             padding: 14px;
-            border-radius: 2px;
+            border-radius: 4px;
             font-size: 0.85rem;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             cursor: pointer;
             margin-top: 6px;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.05);
             transition: all 0.15s ease;
         }
         button.primary-btn:active { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
@@ -178,26 +179,27 @@
         /* Metrics Interface Banner Configuration */
         .metrics-banner {
             border-left: 3px solid var(--border-laser) !important;
-            background: linear-gradient(135deg, var(--bg-surface) 0%, #170d14 100%);
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #1c0f18 100%);
         }
         
         /* Interactive Tech Log Output Format */
         .log-item {
             border-bottom: 1px solid var(--border);
-            padding: 12px 2px;
+            padding: 14px 2px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .log-item:last-child { border: none; }
-        .log-info-block h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; letter-spacing: 0.3px; }
-        .log-info-block p { font-size: 0.7rem; color: var(--text-muted); }
+        .log-info-block h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
+        .log-info-block p { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
         .log-value-badge {
             background-color: var(--bg-card);
-            padding: 6px 10px;
+            padding: 6px 12px;
             border: 1px solid var(--border);
-            font-size: 0.8rem;
-            font-weight: 900;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
             color: var(--accent);
         }
 
@@ -209,25 +211,27 @@
             background-color: rgba(6,6,8,0.5);
             padding: 10px;
             border: 1px dashed var(--border);
+            border-radius: 4px;
         }
 
         /* Enhanced Custom Dropdown Tactical Blueprint Layouts */
         .accordion-item {
             border: 1px solid var(--border);
-            border-radius: 2px;
+            border-radius: 4px;
             margin-bottom: 12px;
             overflow: hidden;
             background-color: var(--bg-surface);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
         .accordion-header {
-            padding: 14px;
+            padding: 14px 16px;
             background-color: var(--bg-surface);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 2px solid transparent;
+            border-left: 3px solid transparent;
         }
         
         .accordion-item:nth-child(even) .accordion-header {
@@ -242,34 +246,33 @@
             font-size: 0.65rem;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             background-color: var(--accent);
-            padding: 1px 5px;
-            border-radius: 1px;
+            padding: 2px 6px;
+            border-radius: 2px;
             display: inline-block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
         
         .accordion-header h3 {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: 0.3px;
         }
         
         .accordion-content {
             display: none;
-            padding: 14px;
-            border-top: 1px dashed var(--border);
-            font-size: 0.8rem;
-            line-height: 1.5;
-            color: #b5b5c8;
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #d1d5db;
             background-color: var(--bg-card);
         }
         
-        .accordion-content strong { color: var(--accent); }
-        .accordion-content ul { padding-left: 18px; margin: 10px 0; list-style-type: square; }
-        .accordion-content li { margin-bottom: 5px; }
+        .accordion-content strong { color: #ffffff; font-weight: 700; }
+        .accordion-content ul { padding-left: 20px; margin: 12px 0; }
+        .accordion-content li { margin-bottom: 6px; color: #e5e7eb; }
 
         /* Tactical Core Bottom Navigation Dock */
         nav {
@@ -277,7 +280,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: rgba(14, 14, 18, 0.9);
+            background-color: rgba(14, 14, 18, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 2px solid var(--border);
@@ -296,10 +299,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             gap: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -379,7 +382,7 @@
         <div class="card">
             <h2>Historical Manifest Logs</h2>
             <div id="logHistory"></div>
-            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.3); margin-top: 18px; padding: 10px; font-size: 0.75rem; border-radius: 2px; font-weight:700; width:100%; cursor:pointer; letter-spacing: 1px;">CLEAR LOCAL APPLICATION CORE FLASH MEMORY</button>
+            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.4); margin-top: 18px; padding: 12px; font-size: 0.75rem; border-radius: 4px; font-weight:700; width:100%; cursor:pointer; letter-spacing: 0.5px;">CLEAR LOCAL APPLICATION CORE FLASH MEMORY</button>
         </div>
     </div>
 
@@ -387,8 +390,8 @@
     <div id="meals" class="page">
         <div class="card metrics-banner">
             <h2>Pipeline Surplus Configuration</h2>
-            <p style="font-size: 1.5rem; font-weight: 900; margin-bottom: 2px; color: var(--text-main); font-family: monospace;">3,100 KCAL</p>
-            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight:700; letter-spacing:0.5px;">P: 175G // C: 420G // F: 80G</p>
+            <p style="font-size: 1.6rem; font-weight: 900; margin-bottom: 3px; color: var(--text-main);">3,100 KCAL</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:700; letter-spacing:0.5px;">P: 175G // C: 420G // F: 80G</p>
         </div>
 
         <!-- Tactical Dropdown Timeframe Target Selector -->
@@ -443,7 +446,7 @@
             snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P | 72g C | 16g F", html: `<strong>Ingredients:</strong><ul><li>4 Plain Rice Cakes</li><li>3 tbsp Peanut Butter</li><li>1 tbsp Honey</li><li>1 glass of Milk</li></ul><strong>Instructions:</strong><br>1. Spread peanut butter evenly across all four rice cakes.<br>2. Drizzle with honey and wash down with a cold glass of milk.` }
         };
 
-        // Complete Chrono 7-Day Rotational Strategy Configuration Matrix
+        // Complete 7-Day Rotational Strategy Configuration Matrix
         const daySchedules = {
             "1": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "2": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "steakPasta"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "bbqPotato"} ],
@@ -492,12 +495,12 @@
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div>
                                 <span class="meal-tag">${item.tag}</span>
-                                <h3>${data.title.toUpperCase()}</h3>
+                                <h3>${data.title}</h3>
                             </div>
-                            <span class="arrow-icon" style="color: var(--accent); font-size: 0.65rem; transition: transform 0.2s; display:inline-block;">▼</span>
+                            <span class="arrow-icon" style="color: var(--accent); font-size: 0.7rem; transition: transform 0.2s; display:inline-block;">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p style="font-size:0.7rem; color:var(--border-laser); margin-bottom:10px; font-weight:900; text-transform:uppercase; letter-spacing:0.5px;">TARGET MACROS // ${data.macros}</p>
+                            <p style="font-size:0.75rem; color:var(--border-laser); margin-bottom:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">TARGET MACROS // ${data.macros}</p>
                             ${data.html}
                         </div>
                     </div>
@@ -530,16 +533,16 @@
             const historyContainer = document.getElementById('logHistory');
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
             if(currentLogs.length === 0) {
-                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.75rem; text-align:center; padding: 24px 0; font-family:monospace;">[ METRIC LOG VOID // ENTER REPS REGISTRATION ABOVE ]</p>`;
+                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 24px 0;">[ METRIC LOG VOID // ENTER REPS REGISTRATION ABOVE ]</p>`;
                 return;
             }
             historyContainer.innerHTML = currentLogs.map(item => `
                 <div class="log-item">
                     <div class="log-info-block">
-                        <h4>${item.exercise.toUpperCase()}</h4>
+                        <h4>${item.exercise}</h4>
                         <p>${item.timestamp}</p>
                     </div>
-                    <div class="log-value-badge">${item.weight}KG × ${item.reps}</div>
+                    <div class="log-value-badge">${item.weight}kg × ${item.reps}</div>
                 </div>
             `).join('');
         }
@@ -556,7 +559,7 @@
                 return;
             }
 
-            filterSelect.innerHTML = exercisesInLog.map(ex => `<option value="${ex}">${ex.toUpperCase()}</option>`).join('');
+            filterSelect.innerHTML = exercisesInLog.map(ex => `<option value="${ex}">${ex}</option>`).join('');
             if (exercisesInLog.includes(activeSelection)) {
                 filterSelect.value = activeSelection;
             }
@@ -568,12 +571,12 @@
             const ctx = canvasElement.getContext('2d');
             performanceChart = new Chart(ctx, {
                 type: 'line',
-                data: { labels: [], datasets: [{ label: 'Est. 1RM (kg)', data: [], borderColor: '#00e5ff', backgroundColor: 'rgba(0, 229, 255, 0.03)', borderWidth: 2, tension: 0.2, fill: true, pointBackgroundColor: '#ff0055', pointBorderColor: '#ff0055' }] },
+                data: { labels: [], datasets: [{ label: 'Est. 1RM (kg)', data: [], borderColor: '#00e5ff', backgroundColor: 'rgba(0, 229, 255, 0.03)', borderWidth: 2, tension: 0.1, fill: true, pointBackgroundColor: '#ff0055', pointBorderColor: '#ff0055' }] },
                 options: {
                     responsive: true,
                     scales: {
-                        x: { grid: { color: '#14141c' }, ticks: { color: '#6c6c82', font: { family: 'monospace', size: 9 } } },
-                        y: { grid: { color: '#14141c' }, ticks: { color: '#6c6c82', font: { family: 'monospace', size: 9 } } }
+                        x: { grid: { color: '#1a1a26' }, ticks: { color: '#94a3b8', font: { family: 'sans-serif', size: 10, weight: '600' } } },
+                        y: { grid: { color: '#1a1a26' }, ticks: { color: '#94a3b8', font: { family: 'sans-serif', size: 10, weight: '600' } } },
                     },
                     plugins: { legend: { display: false } }
                 }
@@ -596,7 +599,7 @@
         }
 
         function clearHistory() {
-            if(confirm("Confirm destructive swipe of all saved history data segments?")) {
+            if(confirm("Confirm destructive wipe of all saved history data segments?")) {
                 localStorage.removeItem('workoutLogs');
                 displayLogs();
                 populateChartFilter();
