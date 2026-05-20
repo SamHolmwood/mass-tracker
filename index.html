@@ -185,15 +185,31 @@
             <div class="input-group">
                 <label>Exercise</label>
                 <select id="exercise">
-                    <option>Flat Bench Press</option>
-                    <option>Incline Dumbbell Press</option>
-                    <option>Barbell Back Squat</option>
-                    <option>Deadlift</option>
-                    <option>Romanian Deadlift (RDL)</option>
-                    <option>Barbell Row</option>
-                    <option>Lat Pulldown</option>
-                    <option>Overhead Dumbbell Press</option>
-                    <option>Dumbbell Lateral Raises</option>
+                    <optgroup label="Compounds">
+                        <option>Flat Bench Press</option>
+                        <option>Incline Dumbbell Press</option>
+                        <option>Barbell Back Squat</option>
+                        <option>Deadlift</option>
+                        <option>Romanian Deadlift (RDL)</option>
+                        <option>Barbell Row</option>
+                        <option>Lat Pulldown</option>
+                        <option>Overhead Dumbbell Press</option>
+                    </optgroup>
+                    <optgroup label="Isolated Machines & Cables">
+                        <option>Leg Extension Machine</option>
+                        <option>Seated Hamstring Curl</option>
+                        <option>Lying Leg Curl Machine</option>
+                        <option>Cable Chest Fly</option>
+                        <option>Pec Deck Machine</option>
+                        <option>Cable Lateral Raise</option>
+                        <option>Dumbbell Lateral Raise</option>
+                        <option>Machine Shoulder Press</option>
+                        <option>Seated Cable Row (V-Bar)</option>
+                        <option>Tricep Rope Pushdown</option>
+                        <option>Cable Bicep Curl</option>
+                        <option>Preacher Curl Machine</option>
+                        <option>Calf Raise Machine</option>
+                    </optgroup>
                 </select>
             </div>
             <div class="row">
@@ -254,7 +270,7 @@
     </nav>
 
     <script>
-        // Expanded Recipe Database Object
+        // Recipe Database Object
         const recipes = {
             hash: {
                 title: "Savory Potato & Egg Hash",
@@ -328,7 +344,7 @@
             }
         };
 
-        // Fully Randomized 7-Day Matrix Schedule
+        // 7-Day Matrix Schedule
         const daySchedules = {
             "1": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "2": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "steakPasta"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "bbqPotato"} ],
