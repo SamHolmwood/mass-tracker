@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mass Dynamic Pro // Terminal</title>
+    <title>Mass Dynamic Pro</title>
     <!-- Sharp UI Font & Premium Charting Engine -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -48,7 +48,7 @@
             background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(14,14,18,0.9) 100%);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 18px;
+            padding: 20px;
             text-align: center;
             border-bottom: 2px solid var(--accent-dim);
             position: sticky;
@@ -58,32 +58,34 @@
         }
 
         header h1 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--text-main);
-            text-shadow: 0 0 10px var(--accent);
+            text-shadow: 0 0 12px var(--accent);
         }
 
-        header h1::before { content: "SYS_LOG // "; color: var(--border-laser); }
-
         h2 { 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             font-weight: 900; 
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin-bottom: 16px; 
             color: var(--text-main);
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         h2::before {
-            content: '>';
-            color: var(--border-laser);
-            font-weight: 900;
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: var(--border-laser);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--border-laser);
         }
 
         .page {
@@ -315,13 +317,13 @@
 <body>
 
     <header>
-        <h1>MASS_DYNAMIC // PRO</h1>
+        <h1>MASS DYNAMIC PRO</h1>
     </header>
 
     <!-- CORE WORKOUT TRACKING COMPONENT -->
     <div id="tracker" class="page active">
         <div class="card">
-            <h2>Log Tactical Dataset</h2>
+            <h2>Log Workout Dataset</h2>
             <div class="input-group">
                 <label>Exercise Identity</label>
                 <select id="exercise">
@@ -380,9 +382,9 @@
         </div>
 
         <div class="card">
-            <h2>Historical Manifest Logs</h2>
+            <h2>Historical Performance Logs</h2>
             <div id="logHistory"></div>
-            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.4); margin-top: 18px; padding: 12px; font-size: 0.75rem; border-radius: 4px; font-weight:700; width:100%; cursor:pointer; letter-spacing: 0.5px;">CLEAR LOCAL APPLICATION CORE FLASH MEMORY</button>
+            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.4); margin-top: 18px; padding: 12px; font-size: 0.75rem; border-radius: 4px; font-weight:700; width:100%; cursor:pointer; letter-spacing: 0.5px;">CLEAR SYSTEM STORAGE FLASH MEMORY</button>
         </div>
     </div>
 
@@ -408,7 +410,7 @@
             </select>
         </div>
 
-        <h2 id="menuDayTitle" style="margin-left: 4px; margin-bottom: 14px;">Day 1 Menu Manifest</h2>
+        <h2 id="menuDayTitle" style="margin-left: 4px; margin-bottom: 14px;">Monday Menu Manifest</h2>
         <div id="dynamicMenuContainer"></div>
     </div>
 
@@ -481,7 +483,7 @@
         function renderDayMenu() {
             const currentDay = document.getElementById('daySelect').value;
             const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            document.getElementById('menuDayTitle').textContent = `[ ${dayNames[currentDay].toUpperCase()} // PREP_LOG ]`;
+            document.getElementById('menuDayTitle').textContent = `${dayNames[currentDay]} Menu`;
             
             const container = document.getElementById('dynamicMenuContainer');
             const targetSchedule = daySchedules[currentDay];
@@ -500,7 +502,7 @@
                             <span class="arrow-icon" style="color: var(--accent); font-size: 0.7rem; transition: transform 0.2s; display:inline-block;">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p style="font-size:0.75rem; color:var(--border-laser); margin-bottom:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">TARGET MACROS // ${data.macros}</p>
+                            <p style="font-size:0.75rem; color:var(--border-laser); margin-bottom:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Target Macros // ${data.macros}</p>
                             ${data.html}
                         </div>
                     </div>
@@ -533,7 +535,7 @@
             const historyContainer = document.getElementById('logHistory');
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
             if(currentLogs.length === 0) {
-                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 24px 0;">[ METRIC LOG VOID // ENTER REPS REGISTRATION ABOVE ]</p>`;
+                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 24px 0;">No history logged. Enter sets above.</p>`;
                 return;
             }
             historyContainer.innerHTML = currentLogs.map(item => `
@@ -555,7 +557,7 @@
             const exercisesInLog = [...new Set(currentLogs.map(item => item.exercise))];
             
             if(exercisesInLog.length === 0) {
-                filterSelect.innerHTML = `<option value="">NO METRIC REGISTRY FOUND</option>`;
+                filterSelect.innerHTML = `<option value="">No metrics found</option>`;
                 return;
             }
 
