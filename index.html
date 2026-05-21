@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mass Dynamic Pro</title>
     <link rel="manifest" href="./manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -20,7 +20,6 @@
             --border: #222235;
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
-            /* Interaction colors set to transparent to keep graphic clean */
             --muscle-base: transparent;
             --muscle-stroke: transparent;
         }
@@ -126,11 +125,12 @@
             z-index: 10;
         }
 
+        /* HARDCODED EMBEDDED GRAPHIC PATH */
         .anatomy-viewport {
             width: 100%;
             height: 380px;
             position: relative;
-            background-image: url('Gemini_Generated_Image_dtklxndtklxndtkl.png');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none" stroke="%2300e5ff" stroke-width="1.2" stroke-opacity="0.65"><g id="anterior-panel"><path d="M50,22 c-3,-6 -5,-7 -8,-7 c-6,0 -9,4 -10,11 c0,4 2,7 3,9 l-3,4 l-14,1 c-7,2 -10,9 -12,21 l-1,24 c0,6 4,8 7,6 l3,-14 l-1,29 l1,30l-8,39 l19,0 l9,-39 l2,-24 l2,24 l9,39 l19,0 l-8,-39 l1,-30 l-1,-29 l3,14 c3,2 7,0 7,-6 l-1,-24 c-2,-12 -5,-19 -12,-21 l-14,-1 l-3,-4 c1,-2 3,-5 3,-9 c-1,-7 -4,-11 -10,-11 c-3,0 -5,1 -8,7 Z" stroke-dasharray="1,1"/><path d="M32,45 c-4,1 -8,6 -9,12 c-1,6 -1,12 0,16 l7,-5 c-1,-8 0,-17 2,-23 Z"/><path d="M68,45 c4,1 8,6 9,12 c1,6 1,12 0,16 l-7,-5 c1,-8 0,-17 -2,-23 Z"/><path d="M34,48 c6,-2 13,0 15,5 c-2,10 -10,12 -17,9 c-2,-5 -1,-10 2,-4 Z"/><path d="M66,48 c-6,-2 -13,0 -15,5 c2,10 10,12 17,9 c2,-5 1,-10 -2,-4 Z"/><path d="M42,68 l16,0 l0,32 l-16,0 z" stroke-dasharray="2,2"/><path d="M28,95 c6,0 18,2 17,31 l-14,0 c-8,-14 -7,-23 -3,-31 z"/><path d="M72,95 c-6,0 -18,2 -17,31 l14,0 c8,-14 7,-23 3,-31 z"/></g><g id="posterior-panel" transform="translate(100,0)"><path d="M50,22 c-3,-6 -5,-7 -8,-7 c-6,0 -9,4 -10,11 c0,4 2,7 3,9 l-3,4 l-14,1 c-7,2 -10,9 -12,21 l-1,24 c0,6 4,8 7,6 l3,-14 l-1,29 l1,30l-8,39 l19,0 l9,-39 l2,-24 l2,24 l9,39 l19,0 l-8,-39 l1,-30 l-1,-29 l3,14 c3,2 7,0 7,-6 l-1,-24 c-2,-12 -5,-19 -12,-21 l-14,-1 l-3,-4 c1,-2 3,-5 3,-9 c-1,-7 -4,-11 -10,-11 c-3,0 -5,1 -8,7 Z" stroke-dasharray="1,1"/><line x1="50" y1="38" x2="50" y2="105" stroke-dasharray="2,3"/><path d="M44,35 l12,0 l4,10 c-6,2 -14,2 -20,0 z"/><path d="M28,45 c10,2 20,6 21,28 c-9,-2 -22,-11 -21,-28 z"/><path d="M72,45 c-10,2 -20,6 -21,28 c9,-2 22,-11 21,-28 z"/><path d="M40,72 l20,0 l-5,18 l-10,0 z"/><path d="M29,94 c10,-4 20,-1 21,12 c-10,2 -21,-3 -21,-12 z"/><path d="M71,94 c-10,-4 -20,-1 -21,12 c10,2 21,-3 21,-12 z"/><path d="M30,108 l19,0 l-2,31 l-17,0 z"/><path d="M70,108 l-19,0 l2,31 l17,0 z"/></g></svg>');
             background-size: 200% 100%;
             background-repeat: no-repeat;
         }
@@ -158,9 +158,7 @@
         }
         
         .skeletal-spine { 
-            stroke: rgba(0, 229, 255, 0.15); 
-            stroke-dasharray: 2,3; 
-            stroke-width: 1.2; 
+            stroke: none; 
         }
         
         .muscle-node {
@@ -250,34 +248,15 @@
                     <span>Anterior Matrix</span>
                     <div class="anatomy-viewport anterior">
                         <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
-                            <path class="body-silhouette" d="M50,8 C44,8 41,12 41,20 C41,25 43,28 45,31 L41,36 L21,37 C9,40 4,52 1,70 L0,105 C-1,114 6,117 11,114 L16,93 L15,135 L17,178 L4,236 L32,236 L47,180 L50,146 L53,180 L68,236 L96,236 L83,178 L85,135 L84,93 L89,114 C94,117 101,114 100,105 L99,70 C96,52 91,40 79,37 L59,36 L55,31 C57,28 59,25 59,20 C59,12 56,8 50,8 Z" />
-                            
-                            <path class="muscle-node" data-muscle="shoulders" d="M21,38 C14,40 6,48 4,58 C2,68 1,78 3,84 L14,76 C13,64 15,50 21,38 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M79,38 C86,40 94,48 96,58 C98,68 99,78 97,84 L86,76 C87,64 85,50 79,38 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M22,38 C25,43 26,49 24,55 L15,53 C17,47 19,42 22,38 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M78,38 C75,43 74,49 76,55 L85,53 C83,47 81,42 78,38 Z" />
-
-                            <path class="muscle-node" data-muscle="chest" d="M24,43 C34,40 45,44 49,52 C46,68 34,71 23,66 C20,58 21,50 24,43 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M76,43 C66,40 55,44 51,52 C54,68 66,71 77,66 C80,58 79,50 76,43 Z" />
-
-                            <path class="muscle-node" data-muscle="abs" d="M36,70 L49,70 L49,81 L36,81 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M51,70 L64,70 L64,81 L51,81 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M37,83 L49,83 L49,94 L37,94 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M51,83 L63,83 L63,94 L51,94 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M38,96 L49,96 L49,107 L38,107 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M51,96 L62,96 L62,107 L51,107 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M39,109 L49,109 L49,122 L39,122 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M51,109 L61,109 L61,122 L51,122 Z" />
-
-                            <path class="muscle-node" data-muscle="arms" d="M12,74 C7,80 5,90 8,100 L14,94 L15,76 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M88,74 C93,80 95,90 92,100 L86,94 L85,76 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M8,101 L2,113 C4,119 9,120 12,115 L14,101 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M92,101 L98,113 C96,119 91,120 88,115 L86,101 Z" />
-
-                            <path class="muscle-node" data-muscle="legs" d="M18,126 C28,126 47,129 46,174 L24,174 C11,152 13,138 18,126 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M82,126 C72,126 53,129 54,174 L76,174 C89,152 87,138 82,126 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M34,158 C38,158 44,165 45,174 L30,174 C30,167 31,161 34,158 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M66,158 C62,158 56,165 55,174 L70,174 C70,167 69,161 66,158 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M12,28 C8,33 4,40 4,48 C4,52 6,56 8,60 L14,52 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M88,28 C92,33 96,40 96,48 C96,52 94,56 92,60 L86,52 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M22,32 C32,29 45,32 49,40 C46,54 34,56 23,52 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M78,32 C68,29 55,32 51,40 C54,54 66,56 77,52 Z" />
+                            <path class="muscle-node" data-muscle="abs" d="M38,58 L62,58 L62,95 L38,95 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M8,62 L3,90 L13,90 L14,64 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M92,62 L97,90 L87,90 L86,64 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M20,98 C35,98 48,102 46,155 L24,155 C12,130 14,110 20,98 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M80,98 C65,98 52,102 54,155 L76,155 C88,130 86,110 80,98 Z" />
                         </svg>
                     </div>
                 </div>
@@ -286,23 +265,13 @@
                     <span>Posterior Matrix</span>
                     <div class="anatomy-viewport posterior">
                         <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
-                            <path class="body-silhouette" d="M50,8 C44,8 41,12 41,20 C41,25 43,28 45,31 L41,36 L21,37 C9,40 4,52 1,70 L0,105 C-1,114 6,117 11,114 L16,93 L15,135 L17,178 L4,236 L32,236 L47,180 L50,146 L53,180 L68,236 L96,236 L83,178 L85,135 L84,93 L89,114 C94,117 101,114 100,105 L99,70 C96,52 91,40 79,37 L59,36 L55,31 C57,28 59,25 59,20 C59,12 56,8 50,8 Z" />
-                            <line class="skeletal-spine" x1="50" y1="34" x2="50" y2="124" />
-                       
-                            <path class="muscle-node" data-muscle="back" d="M41,32 L59,32 L66,48 C56,51 44,51 34,48 Z" />
-                            <path class="muscle-node" data-muscle="back" d="M14,48 C30,51 46,58 47,94 C32,90 11,76 14,48 Z" />
-                            <path class="muscle-node" data-muscle="back" d="M86,48 C70,51 54,58 53,94 C68,90 89,76 86,48 Z" />
-                            <path class="muscle-node" data-muscle="back" d="M34,96 L66,96 L58,124 L42,124 Z" />
-
-                            <path class="muscle-node" data-muscle="arms" d="M16,54 L9,92 L14,92 L19,64 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M84,54 L91,92 L86,92 L81,64 Z" />
-
-                            <path class="muscle-node" data-muscle="legs" d="M17,124 C32,118 48,122 49,142 C34,145 16,138 17,124 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M83,124 C68,118 52,122 51,142 C66,145 84,138 83,124 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M18,145 L47,145 L44,192 L16,192 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M53,145 L82,145 L80,192 L56,192 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M16,196 C27,196 33,204 32,224 L14,224 C12,212 13,202 16,196 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M84,196 C73,196 67,204 68,224 L86,224 C88,212 87,202 84,196 Z" />
+                            <path class="muscle-node" data-muscle="back" d="M24,35 L76,35 L70,80 L30,80 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M14,42 L8,80 L16,80 L18,48 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M86,42 L92,80 L84,80 L82,48 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M18,94 C34,90 48,94 49,112 L16,112 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M82,94 C66,90 52,94 51,112 L84,112 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M18,115 L46,115 L44,160 L16,160 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M54,115 L82,115 L80,160 L56,160 Z" />
                         </svg>
                     </div>
                 </div>
