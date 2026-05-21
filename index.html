@@ -20,7 +20,7 @@
             --border: #222235;
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
-            --muscle-base: transparent; /* Made transparent to show your new physique image */
+            --muscle-base: transparent;
             --muscle-stroke: transparent;
         }
 
@@ -125,7 +125,7 @@
             z-index: 10;
         }
 
-        /* Set up the viewports to display the front/back halves of your generated image */
+        /* Fixed Image Viewports to accurately align split layout backgrounds */
         .anatomy-viewport {
             width: 100%;
             height: 380px;
@@ -133,14 +133,15 @@
             background-image: url('Gemini_Generated_Image_dtklxndtklxndtkl.png');
             background-size: 200% 100%;
             background-repeat: no-repeat;
+            background-position: center;
         }
 
         .anatomy-viewport.anterior {
-            background-position: left center;
+            background-position: 0% center;
         }
 
         .anatomy-viewport.posterior {
-            background-position: right center;
+            background-position: 100% center;
         }
 
         .anatomy-svg-overlay {
@@ -152,7 +153,6 @@
             z-index: 5;
         }
 
-        /* Made old lines invisible so only the premium graphic is seen */
         .body-silhouette { 
             fill: none; 
             stroke: none; 
