@@ -20,8 +20,9 @@
             --border: #222235;
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
-            --muscle-base: rgba(0, 229, 255, 0.04);
-            --muscle-stroke: rgba(0, 229, 255, 0.2);
+            /* Interaction colors set to transparent to keep graphic clean */
+            --muscle-base: transparent;
+            --muscle-stroke: transparent;
         }
 
         * {
@@ -108,12 +109,11 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            background-image: linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
-            background-size: 10px 10px;
-            border: 1px solid rgba(255,255,255,0.03);
+            background-image: linear-gradient(rgba(0, 229, 255, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.01) 1px, transparent 1px);
+            background-size: 14px 14px;
+            border: 1px solid rgba(255,255,255,0.02);
             border-radius: 4px;
             padding: 8px 4px;
-            background-color: rgba(6, 6, 8, 0.6);
         }
 
         .muscle-map-pane span {
@@ -152,37 +152,35 @@
             z-index: 5;
         }
 
-        /* Gives the body silhouette a clear cyberpunk frame outline */
         .body-silhouette { 
-            fill: rgba(21, 21, 31, 0.5); 
-            stroke: rgba(0, 229, 255, 0.2); 
-            stroke-width: 1.5px;
+            fill: none; 
+            stroke: none; 
         }
         
         .skeletal-spine { 
-            stroke: rgba(0, 229, 255, 0.3); 
-            stroke-dasharray: 2,4; 
-            stroke-width: 1.5; 
+            stroke: rgba(0, 229, 255, 0.15); 
+            stroke-dasharray: 2,3; 
+            stroke-width: 1.2; 
         }
         
         .muscle-node {
             fill: var(--muscle-base);
             stroke: var(--muscle-stroke);
-            stroke-width: 1px;
+            stroke-width: 0.9;
             cursor: pointer;
             transition: all 0.15s ease-in-out;
         }
 
         .muscle-node:hover { 
-            fill: rgba(0, 229, 255, 0.3);
+            fill: rgba(0, 229, 255, 0.25);
             stroke: var(--accent);
-            stroke-width: 1.5px;
+            stroke-width: 1px;
         }
 
         .muscle-node.selected {
-            fill: rgba(255, 0, 85, 0.5);
+            fill: rgba(255, 0, 85, 0.45);
             stroke: #ffffff;
-            stroke-width: 1.5px;
+            stroke-width: 1.2;
             filter: drop-shadow(0 0 8px var(--border-laser));
         }
 
@@ -404,7 +402,7 @@
                 ingredients: ["300g White Potatoes (Diced)", "2 Large Whole Eggs", "100g Egg Whites", "5g Olive Oil", "Onion & Bell Pepper Blend"],
                 steps: ["Toss diced potatoes in olive oil and seasonings of choice.", "Air fry at 200°C for 18-20 minutes until crisp.", "Pan-fry the onion and peppers, then scramble in the eggs and egg whites.", "Mix the crisp potatoes into the egg scramble and serve hot."]
             },
-            oats: {
+            oats: { 
                 title: "Mass Power Overnight Berry Oats", 
                 macros: "760 kcal | 35g P | 110g C | 16g F",
                 ingredients: ["100g Rolled Oats", "30g Whey Protein Isolate", "150ml Almond Milk", "80g Mixed Berries", "15g Chia Seeds"],
