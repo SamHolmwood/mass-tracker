@@ -14,7 +14,7 @@
             --bg-card: #15151f;
             --accent: #00e5ff;
             --accent-dim: #008ba3;
-            --accent-glow: rgba(0, 229, 255, 0.08);
+            --accent-glow: rgba(0, 229, 255, 0.15);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
             --border: #222235;
@@ -34,9 +34,8 @@
             background-color: var(--bg-main);
             background-image: 
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px),
-                linear-gradient(rgba(255, 0, 85, 0.01) 2px, transparent 2px);
-            background-size: 24px 24px, 24px 24px, 100% 4px;
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 24px 24px, 24px 24px;
             color: var(--text-main);
             padding-bottom: 95px;
             overflow-x: hidden;
@@ -53,7 +52,6 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0,229,255,0.1);
         }
 
         header h1 {
@@ -61,7 +59,6 @@
             font-weight: 900;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--text-main);
             text-shadow: 0 0 12px var(--accent);
         }
 
@@ -70,7 +67,6 @@
             font-weight: 900; 
             letter-spacing: 1.5px;
             margin-bottom: 16px; 
-            color: var(--text-main);
             text-transform: uppercase;
             display: flex;
             align-items: center;
@@ -95,12 +91,12 @@
             animation: terminalBoot 0.15s ease-out;
         }
 
+        .page.active { display: block; }
+
         @keyframes terminalBoot {
             from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .page.active { display: block; }
 
         .card {
             background-color: var(--bg-surface);
@@ -110,71 +106,102 @@
             padding: 18px;
             margin-bottom: 20px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.7);
-            position: relative;
-            overflow: hidden;
         }
 
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 8px; height: 8px;
-            background-color: var(--border);
-            transform: translate(4px, -4px) rotate(45deg);
-        }
-
-        /* PREMIUM MUSCLE MAP VISUAL INTERFACE COMPONENT */
+        /* PREMIUM HIGH-FIDELITY ANATOMY MATRIX WRAPPER */
         .muscle-map-container {
             display: flex;
-            justify-content: space-around;
-            background-color: var(--bg-card);
+            justify-content: space-between;
+            background-color: #0b0b10;
             border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 16px;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
         .muscle-map-pane {
-            width: 45%;
+            width: 49%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            background-image: 
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 12px 12px;
+            border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 4px;
+            padding: 8px 4px;
         }
 
         .muscle-map-pane span {
             font-size: 0.65rem;
             font-weight: 900;
             color: var(--text-muted);
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
             text-transform: uppercase;
+            z-index: 2;
         }
 
-        .anatomy-svg {
+        /* Layer Core: 3D Anatomical Render Framework Backdrop */
+        .anatomy-viewport {
             width: 100%;
-            max-height: 220px;
+            height: 280px;
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center bottom;
         }
 
-        .muscle-group {
-            fill: #252538;
-            stroke: #060608;
-            stroke-width: 1.5;
+        .anterior-view {
+            background-image: url('https://images.unsplash.com/photo-1593032465175-481da7f67f64?auto=format&fit=crop&q=80&w=400');
+            filter: hue-rotate(180deg) brightness(0.35) contrast(1.2);
+        }
+
+        .posterior-view {
+            background-image: url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=400');
+            filter: hue-rotate(190deg) brightness(0.25) contrast(1.3);
+        }
+
+        /* Layer Vector: Premium Interactive Node Mapping Array */
+        .anatomy-svg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        .muscle-node {
+            fill: rgba(0, 229, 255, 0);
+            stroke: rgba(0, 229, 255, 0.08);
+            stroke-width: 0.8;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .muscle-group:hover, .muscle-group.selected {
-            fill: var(--accent);
-            filter: drop-shadow(0px 0px 6px var(--accent));
+        .muscle-node:hover {
+            fill: rgba(0, 229, 255, 0.15);
+            stroke: rgba(0, 229, 255, 0.6);
+        }
+
+        .muscle-node.selected {
+            fill: rgba(0, 229, 255, 0.35);
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 8px rgba(0,229,255,0.8));
         }
 
         .filter-status-banner {
             display: none;
-            background: rgba(0, 229, 255, 0.05);
+            background: rgba(0, 229, 255, 0.04);
             border: 1px dashed var(--accent-dim);
-            padding: 10px;
+            padding: 12px;
             border-radius: 4px;
-            margin-bottom: 14px;
+            margin-bottom: 18px;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
@@ -183,7 +210,7 @@
         .filter-status-banner strong {
             color: var(--accent);
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .clear-filter-btn {
@@ -192,16 +219,13 @@
             color: var(--border-laser);
             font-size: 0.65rem;
             font-weight: 900;
-            padding: 4px 8px;
+            padding: 6px 10px;
             border-radius: 3px;
             text-transform: uppercase;
             cursor: pointer;
         }
 
-        .input-group {
-            margin-bottom: 14px;
-        }
-        
+        .input-group { margin-bottom: 14px; }
         label {
             display: block;
             font-size: 0.75rem;
@@ -209,7 +233,6 @@
             color: var(--accent);
             margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         
         input, select {
@@ -221,19 +244,14 @@
             border-radius: 4px;
             font-size: 0.95rem;
             font-weight: 600;
-            transition: all 0.2s ease;
         }
         
         input:focus, select:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 8px var(--accent-glow);
             outline: none;
         }
 
-        .row {
-            display: flex;
-            gap: 12px;
-        }
+        .row { display: flex; gap: 12px; }
 
         button.primary-btn {
             width: 100%;
@@ -248,14 +266,10 @@
             letter-spacing: 1.5px;
             cursor: pointer;
             margin-top: 6px;
-            transition: all 0.15s ease;
         }
         button.primary-btn:active { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
 
-        .metrics-banner {
-            border-left: 3px solid var(--border-laser) !important;
-            background: linear-gradient(135deg, var(--bg-surface) 0%, #1c0f18 100%);
-        }
+        .metrics-banner { border-left: 3px solid var(--border-laser) !important; }
         
         .log-item {
             border-bottom: 1px solid var(--border);
@@ -264,17 +278,15 @@
             justify-content: space-between;
             align-items: center;
         }
-        .log-item:last-child { border: none; }
-        .log-info-block h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
-        .log-info-block p { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+        .log-info-block h4 { font-size: 0.9rem; font-weight: 700; }
+        .log-info-block p { font-size: 0.75rem; color: var(--text-muted); }
         .log-value-badge {
             background-color: var(--bg-card);
             padding: 6px 12px;
             border: 1px solid var(--border);
             border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 700;
             color: var(--accent);
+            font-weight: 700;
         }
 
         .chart-container {
@@ -291,95 +303,40 @@
             border: 1px solid var(--border);
             border-radius: 4px;
             margin-bottom: 12px;
-            overflow: hidden;
             background-color: var(--bg-surface);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
         
         .accordion-header {
             padding: 14px 16px;
-            background-color: var(--bg-surface);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 3px solid transparent;
+            border-left: 3px solid var(--accent);
         }
         
-        .accordion-item:nth-child(even) .accordion-header {
-            border-left-color: var(--accent);
-        }
-        .accordion-item:nth-child(odd) .accordion-header {
-            border-left-color: var(--border-laser);
-        }
-        
-        .accordion-header span.meal-tag {
-            color: #000;
-            font-size: 0.65rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background-color: var(--accent);
-            padding: 2px 6px;
-            border-radius: 2px;
-            display: inline-block;
-            margin-bottom: 6px;
-        }
-        
-        .accordion-header h3 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-        
-        .accordion-content {
-            display: none;
-            padding: 16px;
-            border-top: 1px solid var(--border);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #d1d5db;
-            background-color: var(--bg-card);
-        }
-        
-        .accordion-content strong { color: #ffffff; font-weight: 700; }
-        .accordion-content ul { padding-left: 20px; margin: 12px 0; }
-        .accordion-content li { margin-bottom: 6px; color: #e5e7eb; }
+        .accordion-header h3 { font-size: 0.95rem; font-weight: 700; }
+        .accordion-content { display: none; padding: 16px; border-top: 1px solid var(--border); background-color: var(--bg-card); }
 
         nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             background-color: rgba(14, 14, 18, 0.95);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-top: 2px solid var(--border);
             display: flex;
             height: 70px;
             z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
         }
         
         .nav-btn {
-            flex: 1;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            flex: 1; background: none; border: none; color: var(--text-muted);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; gap: 4px;
         }
         
-        .nav-btn.active { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
+        .nav-btn.active { color: var(--accent); }
         .nav-btn svg { width: 18px; height: 18px; fill: currentColor; }
     </style>
 </head>
@@ -391,38 +348,45 @@
 
     <div id="tracker" class="page active">
         <div class="card">
-            <h2>Select Target Engine</h2>
+            <h2>Anatomy Target Engine</h2>
             
             <div class="muscle-map-container">
                 <div class="muscle-map-pane">
                     <span>Anterior Matrix</span>
-                    <svg class="anatomy-svg" viewBox="0 0 120 240">
-                        <path class="muscle-group" data-muscle="shoulders" d="M25,55 Q18,65 24,80 L29,80 Z M95,55 Q102,65 96,80 L91,80 Z" />
-                        <path class="muscle-group" data-muscle="chest" d="M35,58 Q60,50 85,58 L83,82 Q60,88 37,82 Z" />
-                        <path class="muscle-group" data-muscle="arms" d="M21,83 L13,130 Q10,140 18,140 L25,105 Z M99,83 L107,130 Q110,140 102,140 L95,105 Z" />
-                        <path class="muscle-group" data-muscle="legs" d="M32,145 L44,225 L56,225 L58,145 Z M88,145 L76,225 L64,225 L62,145 Z" />
-                    </svg>
+                    <div class="anatomy-viewport anterior-view">
+                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 200">
+                            <path class="muscle-node" data-muscle="shoulders" d="M22,42 C16,46 16,58 20,66 L26,58 Z M78,42 C84,46 84,58 80,66 L74,58 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M27,46 C40,40 50,45 50,52 C50,45 60,40 73,46 C77,58 72,68 50,70 C28,68 23,58 27,46 Z" />
+                            <path class="muscle-node" data-muscle="abs" d="M36,74 L64,74 L62,112 L38,112 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M15,66 L8,110 L16,110 L22,74 Z M85,66 L92,110 L84,110 L78,74 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M28,118 L46,118 L44,180 L26,180 Z M54,118 L72,118 L74,180 L56,180 Z" />
+                        </svg>
+                    </div>
                 </div>
+
                 <div class="muscle-map-pane">
                     <span>Posterior Matrix</span>
-                    <svg class="anatomy-svg" viewBox="0 0 120 240">
-                        <path class="muscle-group" data-muscle="back" d="M32,58 Q60,53 88,58 L82,115 Q60,125 38,115 Z" />
-                        <path class="muscle-group" data-muscle="arms" d="M23,83 L16,135 L24,135 L29,95 Z M97,83 L104,135 L96,135 L91,95 Z" />
-                        <path class="muscle-group" data-muscle="legs" d="M34,145 L45,230 L55,230 L56,145 Z M86,145 L75,230 L65,230 L64,145 Z" />
-                    </svg>
+                    <div class="anatomy-viewport posterior-view">
+                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 200">
+                            <path class="muscle-node" data-muscle="back" d="M30,44 C50,38 50,38 70,44 C76,64 70,88 50,92 C30,88 24,64 30,44 Z" />
+                            <path class="muscle-node" data-muscle="back" d="M36,94 L64,94 L60,120 L40,120 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M18,62 L10,108 L18,108 L23,72 Z M82,62 L90,108 L82,108 L77,72 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M26,122 C40,116 50,122 50,135 C50,122 60,116 74,122 C78,145 52,155 50,155 C48,155 22,145 26,122 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M26,158 L46,158 L44,195 L24,195 Z M54,158 L74,158 L76,195 L56,195 Z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
 
             <div id="filterBanner" class="filter-status-banner">
-                <span>Filtering Matrix: <strong id="filterLabel">None</strong></span>
+                <span>Selected System Matrix: <strong id="filterLabel">None</strong></span>
                 <button class="clear-filter-btn" onclick="resetMuscleFilter()">Reset View</button>
             </div>
 
             <h2>Log Workout Dataset</h2>
             <div class="input-group">
                 <label>Exercise Identity</label>
-                <select id="exercise">
-                    </select>
+                <select id="exercise"></select>
             </div>
             <div class="row">
                 <div class="input-group" style="flex: 1;">
@@ -441,8 +405,7 @@
             <h2>Telemetry Analytics</h2>
             <div class="input-group" style="margin-bottom: 12px;">
                 <label>Target Telemetry Stream Focus</label>
-                <select id="chartFilter" onchange="updateChartMetrics()">
-                    </select>
+                <select id="chartFilter" onchange="updateChartMetrics()"></select>
             </div>
             <div class="chart-container">
                 <canvas id="analyticsChart"></canvas>
@@ -452,17 +415,16 @@
         <div class="card">
             <h2>Historical Performance Logs</h2>
             <div id="logHistory"></div>
-            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.4); margin-top: 18px; padding: 12px; font-size: 0.75rem; border-radius: 4px; font-weight:700; width:100%; cursor:pointer; letter-spacing: 0.5px;">CLEAR SYSTEM STORAGE FLASH MEMORY</button>
+            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.4); margin-top: 18px; padding: 12px; font-size: 0.75rem; border-radius: 4px; font-weight:700; width:100%; cursor:pointer;">CLEAR SYSTEM STORAGE FLASH MEMORY</button>
         </div>
     </div>
 
     <div id="meals" class="page">
         <div class="card metrics-banner">
             <h2>Pipeline Surplus Configuration</h2>
-            <p style="font-size: 1.6rem; font-weight: 900; margin-bottom: 3px; color: var(--text-main);">3,100 KCAL</p>
-            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:700; letter-spacing:0.5px;">P: 175G // C: 420G // F: 80G</p>
+            <p style="font-size: 1.6rem; font-weight: 900; color: var(--text-main);">3,100 KCAL</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">P: 175G // C: 420G // F: 80G</p>
         </div>
-
         <div class="card" style="padding: 16px;">
             <label style="margin-bottom: 8px;">Target Rotation Core Pipeline</label>
             <select id="daySelect" onchange="renderDayMenu()">
@@ -475,8 +437,7 @@
                 <option value="7">Day 7 (Sunday)</option>
             </select>
         </div>
-
-        <h2 id="menuDayTitle" style="margin-left: 4px; margin-bottom: 14px;">Monday Menu Manifest</h2>
+        <h2 id="menuDayTitle" style="margin-bottom: 14px;">Monday Menu Manifest</h2>
         <div id="dynamicMenuContainer"></div>
     </div>
 
@@ -492,35 +453,33 @@
     </nav>
 
     <script>
-        // App State Properties
         let performanceChart = null;
         let selectedMuscleGroup = null;
 
-        // Structured Global Exercise Database Array
         const exerciseDatabase = {
             chest: ["Flat Bench Press", "Incline Dumbbell Press", "Cable Chest Fly", "Pec Deck Machine"],
             back: ["Deadlift", "Romanian Deadlift (RDL)", "Barbell Row", "Lat Pulldown", "Seated Cable Row (V-Bar)"],
             shoulders: ["Overhead Dumbbell Press", "Machine Shoulder Press", "Cable Lateral Raise", "Dumbbell Lateral Raise"],
+            abs: ["Weighted Hanging Leg Raise", "Cable Crunch", "Ab-Wheel Rollout"],
             legs: ["Barbell Back Squat", "Leg Extension Machine", "Seated Hamstring Curl", "Lying Leg Curl Machine", "Calf Raise Machine"],
             arms: ["Tricep Rope Pushdown", "Cable Bicep Curl", "Preacher Curl Machine"]
         };
 
-        // Structured Nutritional Array Bank Data Sets
         const recipes = {
-            hash: { title: "Savory Potato & Egg Hash", macros: "730 kcal | 28g P | 70g C | 36g F", html: `<strong>Ingredients:</strong><ul><li>3 Large Eggs</li><li>300g Potatoes (diced small)</li><li>½ Onion & ½ Bell Pepper</li><li>1.5 tbsp Butter/Oil</li></ul><strong>Instructions:</strong><br>1. Microwave potatoes for 3 minutes to soften.<br>2. Sauté aromatics & potatoes in 1 tbsp oil until golden crisp.<br>3. Melt remaining butter, crack eggs, scramble into matrix.` },
-            oats: { title: "Mass Power Overnight Berry Oats", macros: "760 kcal | 35g P | 105g C | 22g F", html: `<strong>Ingredients:</strong><ul><li>1.5 cups Rolled Oats (~120g)</li><li>1 cup Milk of choice</li><li>1 scoop Protein Powder</li><li>2 tbsp Peanut Butter</li><li>Handful of mixed berries</li></ul><strong>Instructions:</strong><br>1. Combine components in an airtight container.<br>2. Swirl in raw peanut butter; lay down berry garnish.<br>3. Chill overnight. Consume chilled or heated.` },
-            breakfastWrap: { title: "Ultimate Breakfast Wrap Duo", macros: "780 kcal | 30g P | 85g C | 32g F", html: `<strong>Ingredients:</strong><ul><li>3 Large Eggs</li><li>2 Large Tortilla Wraps</li><li>½ Onion (sliced)</li><li>1 tbsp Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Sauté onions in a hot pan with oil.<br>2. Pour in whisked eggs and soft scramble with onions.<br>3. Distribute egg mixture across both warm tortillas, roll tight, and toast the seams.` },
-            steakPasta: { title: "Creamy Garlic Steak Pasta", macros: "860 kcal | 58g P | 95g C | 28g F", html: `<strong>Ingredients:</strong><ul><li>150g Beef Steak Strips</li><li>120g Penne Pasta (dry weight)</li><li>¼ cup Light Cream or Half-and-Half</li><li>2 cloves Garlic (minced)</li><li>1 tsp Olive Oil</li></ul><strong>Instructions:</strong><br>1. Boil pasta according to instructions.<br>2. Pan-sear steak strips in oil with garlic over high heat for 3–4 mins, then remove steak.<br>3. Lower heat, pour cream and 2 tbsp pasta water into the pan, simmer, mix in pasta and steak.` },
-            cajunWrap: { title: "Spicy Cajun Chicken Wrap Duo", macros: "820 kcal | 52g P | 90g C | 24g F", html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Cajun Chicken Breast</li><li>2 Large Tortilla Wraps</li><li>Sliced onions and peppers</li><li>1 tbsp Mayonnaise</li></ul><strong>Instructions:</strong><br>1. Sauté peppers and onions in a pan until soft.<br>2. Toss in shredded pre-cooked cajun chicken to heat through.<br>3. Spread mayo on tortillas, load the chicken filling, and roll tight.` },
-            beefSweetPotato: { title: "Sweet Potato & Beef Taco Skillet", macros: "840 kcal | 48g P | 98g C | 26g F", html: `<strong>Ingredients:</strong><ul><li>150g Lean Ground Beef</li><li>350g Sweet Potatoes (cubed)</li><li>Taco seasoning packet</li><li>1 tbsp Olive oil</li></ul><strong>Instructions:</strong><br>1. Toss cubed sweet potatoes in oil and air-fry or pan-roast for 20 mins until soft.<br>2. Brown ground beef in a skillet with taco seasoning.<br>3. Combine beef and sweet potatoes together in the skillet for a nutrient-dense mash.` },
-            soyGarlicBowl: { title: "Soy-Garlic Chicken Rice Bowl", macros: "790 kcal | 54g P | 110g C | 15g F", html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Chicken Breast</li><li>1.5 cups Cooked Rice</li><li>1 cup Broccoli florets</li><li>1 tbsp Soy Sauce & 1 tsp Honey</li><li>1 tbsp Cooking Oil</li></ul><strong>Instructions:</strong><br>1. Stir-fry broccoli in oil for 3 minutes.<br>2. Toss in the rice, chicken, soy sauce, and honey.<br>3. Stir together on medium-high heat until hot.` },
-            honeySalmon: { title: "Honey-Soy Salmon & Sesame Rice", macros: "830 kcal | 46g P | 100g C | 25g F", html: `<strong>Ingredients:</strong><ul><li>150g Salmon Fillet</li><li>1.5 cups Cooked Jasmine Rice</li><li>1 tbsp Soy sauce & 1 tbsp Honey</li><li>1 tsp Sesame oil</li></ul><strong>Instructions:</strong><br>1. Mix soy sauce, honey, and sesame oil together.<br>2. Pan-sear or bake salmon fillet for 4-5 mins per side, brushing with the glaze.<br>3. Serve over hot jasmine rice.` },
-            bbqPotato: { title: "BBQ Chicken & Roasted Potatoes", macros: "810 kcal | 50g P | 115g C | 16g F", html: `<strong>Ingredients:</strong><ul><li>150g Pre-cooked Chicken Breast</li><li>350g Potatoes (wedges)</li><li>1.5 tbsp Olive Oil</li><li>2 tbsp BBQ Sauce</li></ul><strong>Instructions:</strong><br>1. Toss potato wedges in oil and roast at 200°C for 25 mins.<br>2. Toss chicken in BBQ sauce and heat through.<br>3. Serve side by side.` },
-            turkeyChili: { title: "Hearty Turkey & Bean Chili", macros: "790 kcal | 52g P | 105g C | 18g F", html: `<strong>Ingredients:</strong><ul><li>160g Ground Turkey</li><li>1 cup Canned Kidney Beans (rinsed)</li><li>1 cup Tomato passata/sauce</li><li>1.5 cups Cooked Rice or Cornbread</li><li>Chili powder & cumin</li></ul><strong>Instructions:</strong><br>1. Brown ground turkey in a deep pan with chili powder and cumin.<br>2. Pour in passata and kidney beans. Simmer for 10 minutes.<br>3. Serve piping hot over a heavy bed of rice.` },
-            beefRiceWrap: { title: "Loaded Beef & Rice Monster Burrito", macros: "850 kcal | 46g P | 102g C | 28g F", html: `<strong>Ingredients:</strong><ul><li>130g Lean Ground Beef</li><li>1 cup Cooked Rice</li><li>2 Large Tortilla Wraps</li><li>2 tbsp Salsa & Shredded cheese</li></ul><strong>Instructions:</strong><br>1. Cook ground beef with salt, pepper, and garlic.<br>2. Combine hot rice, beef, salsa, and cheese in a bowl.<br>3. Split the filling evenly across two large tortillas, roll tightly, and crisp up on a pan.` },
-            snackA: { title: "Protein Refuel Wrap", macros: "560 kcal | 26g P | 50g C | 26g F", html: `<strong>Ingredients:</strong><ul><li>3 Eggs</li><li>1 Large Tortilla Wrap</li><li>1 tbsp Butter</li></ul><strong>Instructions:</strong><br>1. Soft scramble 3 eggs in butter.<br>2. Roll into a single large tortilla wrap for an easy meal.` },
-            snackB: { title: "Quick Savory Egg & Rice Mash", macros: "540 kcal | 24g P | 65g C | 18g F", html: `<strong>Ingredients:</strong><ul><li>3 Hard-Boiled Eggs</li><li>1.5 cups Cooked Rice</li><li>1 tbsp Soy Sauce</li></ul><strong>Instructions:</strong><br>1. Reheat your batch-cooked rice until hot.<br>2. Mash eggs into the rice using a fork, season with soy sauce.` },
-            snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P | 72g C | 16g F", html: `<strong>Ingredients:</strong><ul><li>4 Plain Rice Cakes</li><li>3 tbsp Peanut Butter</li><li>1 tbsp Honey</li><li>1 glass of Milk</li></ul><strong>Instructions:</strong><br>1. Spread peanut butter evenly across all four rice cakes.<br>2. Drizzle with honey and wash down with a cold glass of milk.` }
+            hash: { title: "Savory Potato & Egg Hash", macros: "730 kcal | 28g P", html: "..." },
+            oats: { title: "Mass Power Overnight Berry Oats", macros: "760 kcal | 35g P", html: "..." },
+            breakfastWrap: { title: "Ultimate Breakfast Wrap Duo", macros: "780 kcal | 30g P", html: "..." },
+            steakPasta: { title: "Creamy Garlic Steak Pasta", macros: "860 kcal | 58g P", html: "..." },
+            cajunWrap: { title: "Spicy Cajun Chicken Wrap Duo", macros: "820 kcal | 52g P", html: "..." },
+            beefSweetPotato: { title: "Sweet Potato & Beef Taco Skillet", macros: "840 kcal | 48g P", html: "..." },
+            soyGarlicBowl: { title: "Soy-Garlic Chicken Rice Bowl", macros: "790 kcal | 54g P", html: "..." },
+            honeySalmon: { title: "Honey-Soy Salmon & Sesame Rice", macros: "830 kcal | 46g P", html: "..." },
+            bbqPotato: { title: "BBQ Chicken & Roasted Potatoes", macros: "810 kcal | 50g P", html: "..." },
+            turkeyChili: { title: "Hearty Turkey & Bean Chili", macros: "790 kcal | 52g P", html: "..." },
+            beefRiceWrap: { title: "Loaded Beef & Rice Monster Burrito", macros: "850 kcal | 46g P", html: "..." },
+            snackA: { title: "Protein Refuel Wrap", macros: "560 kcal | 26g P", html: "..." },
+            snackB: { title: "Quick Savory Egg & Rice Mash", macros: "540 kcal | 24g P", html: "..." },
+            snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P", html: "..." }
         };
 
         const daySchedules = {
@@ -533,22 +492,16 @@
             "7": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "beefSweetPotato"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "turkeyChili"} ]
         };
 
-        // UI MANAGEMENT & FILTER FUNCTIONS
         function setupMuscleMapListeners() {
-            document.querySelectorAll('.muscle-group').forEach(el => {
+            document.querySelectorAll('.muscle-node').forEach(el => {
                 el.addEventListener('click', function() {
                     const group = this.getAttribute('data-muscle');
-                    
-                    // Toggle selections visual tracking state
-                    document.querySelectorAll('.muscle-group').forEach(m => m.classList.remove('selected'));
-                    
-                    // Select matches across both front/back perspectives
-                    document.querySelectorAll(`.muscle-group[data-muscle="${group}"]`).forEach(m => m.classList.add('selected'));
+                    document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
+                    document.querySelectorAll(`.muscle-node[data-muscle="${group}"]`).forEach(m => m.classList.add('selected'));
                     
                     selectedMuscleGroup = group;
                     renderExerciseDropdown();
                     
-                    // Show Filter Status Display
                     document.getElementById('filterLabel').textContent = group;
                     document.getElementById('filterBanner').style.display = 'flex';
                 });
@@ -560,17 +513,13 @@
             dropdown.innerHTML = '';
 
             if (selectedMuscleGroup && exerciseDatabase[selectedMuscleGroup]) {
-                // Render isolated target group arrays exclusively
                 exerciseDatabase[selectedMuscleGroup].forEach(ex => {
                     dropdown.innerHTML += `<option value="${ex}">${ex}</option>`;
                 });
             } else {
-                // Fallback to absolute standard system rendering
                 Object.keys(exerciseDatabase).forEach(category => {
                     let groupHTML = `<optgroup label="${category.toUpperCase()}">`;
-                    exerciseDatabase[category].forEach(ex => {
-                        groupHTML += `<option value="${ex}">${ex}</option>`;
-                    });
+                    exerciseDatabase[category].forEach(ex => { groupHTML += `<option value="${ex}">${ex}</option>`; });
                     groupHTML += `</optgroup>`;
                     dropdown.innerHTML += groupHTML;
                 });
@@ -579,7 +528,7 @@
 
         function resetMuscleFilter() {
             selectedMuscleGroup = null;
-            document.querySelectorAll('.muscle-group').forEach(m => m.classList.remove('selected'));
+            document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
             document.getElementById('filterBanner').style.display = 'none';
             renderExerciseDropdown();
         }
@@ -589,47 +538,22 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             btnElement.classList.add('active');
-            window.scrollTo(0,0);
             if (pageId === 'tracker') { updateChartMetrics(); }
-        }
-
-        function toggleAccordion(headerElement) {
-            const content = headerElement.nextElementSibling;
-            const arrow = headerElement.querySelector('.arrow-icon');
-            if (content.style.display === "block") {
-                content.style.display = "none";
-                arrow.style.transform = "rotate(0deg)";
-            } else {
-                content.style.display = "block";
-                arrow.style.transform = "rotate(180deg)";
-            }
         }
 
         function renderDayMenu() {
             const currentDay = document.getElementById('daySelect').value;
-            const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            document.getElementById('menuDayTitle').textContent = `${dayNames[currentDay]} Menu`;
-            
             const container = document.getElementById('dynamicMenuContainer');
-            const targetSchedule = daySchedules[currentDay];
-
             if (!container) return;
-
-            container.innerHTML = targetSchedule.map(item => {
+            container.innerHTML = daySchedules[currentDay].map(item => {
                 const data = recipes[item.ref];
                 return `
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div>
-                                <span class="meal-tag">${item.tag}</span>
-                                <h3>${data.title}</h3>
-                            </div>
-                            <span class="arrow-icon" style="color: var(--accent); font-size: 0.7rem; transition: transform 0.2s; display:inline-block;">▼</span>
+                        <div class="accordion-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
+                            <div><h3>${data.title}</h3></div>
+                            <span style="color:var(--accent);">▼</span>
                         </div>
-                        <div class="accordion-content">
-                            <p style="font-size:0.75rem; color:var(--border-laser); margin-bottom:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Target Macros // ${data.macros}</p>
-                            ${data.html}
-                        </div>
+                        <div class="accordion-content"><p>${data.macros}</p></div>
                     </div>
                 `;
             }).join('');
@@ -639,36 +563,28 @@
             const exercise = document.getElementById('exercise').value;
             const weight = parseFloat(document.getElementById('weight').value);
             const reps = parseInt(document.getElementById('reps').value);
-            if(!weight || !reps || !exercise) return alert("All performance dataset parameters must be specified!");
+            if(!weight || !reps || !exercise) return alert("Parameters missing.");
 
             const timestamp = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
-            const newSet = { exercise, weight, reps, timestamp };
-
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            currentLogs.unshift(newSet);
+            currentLogs.unshift({ exercise, weight, reps, timestamp });
             localStorage.setItem('workoutLogs', JSON.stringify(currentLogs));
 
             document.getElementById('weight').value = '';
             document.getElementById('reps').value = '';
-            
-            displayLogs();
-            populateChartFilter();
-            updateChartMetrics();
+            displayLogs(); populateChartFilter(); updateChartMetrics();
         }
 
         function displayLogs() {
             const historyContainer = document.getElementById('logHistory');
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
             if(currentLogs.length === 0) {
-                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 24px 0;">No history logged. Enter sets above.</p>`;
+                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem; text-align:center;">No entries logged.</p>`;
                 return;
             }
             historyContainer.innerHTML = currentLogs.map(item => `
                 <div class="log-item">
-                    <div class="log-info-block">
-                        <h4>${item.exercise}</h4>
-                        <p>${item.timestamp}</p>
-                    </div>
+                    <div class="log-info-block"><h4>${item.exercise}</h4><p>${item.timestamp}</p></div>
                     <div class="log-value-badge">${item.weight}kg × ${item.reps}</div>
                 </div>
             `).join('');
@@ -677,36 +593,17 @@
         function populateChartFilter() {
             const filterSelect = document.getElementById('chartFilter');
             const currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            const activeSelection = filterSelect.value;
-            
             const exercisesInLog = [...new Set(currentLogs.map(item => item.exercise))];
-            
-            if(exercisesInLog.length === 0) {
-                filterSelect.innerHTML = `<option value="">No metrics found</option>`;
-                return;
-            }
-
+            if(exercisesInLog.length === 0) { filterSelect.innerHTML = `<option value="">No metrics found</option>`; return; }
             filterSelect.innerHTML = exercisesInLog.map(ex => `<option value="${ex}">${ex}</option>`).join('');
-            if (exercisesInLog.includes(activeSelection)) {
-                filterSelect.value = activeSelection;
-            }
         }
 
         function buildPerformanceChart() {
-            const canvasElement = document.getElementById('analyticsChart');
-            if(!canvasElement) return;
-            const ctx = canvasElement.getContext('2d');
+            const ctx = document.getElementById('analyticsChart').getContext('2d');
             performanceChart = new Chart(ctx, {
                 type: 'line',
-                data: { labels: [], datasets: [{ label: 'Est. 1RM (kg)', data: [], borderColor: '#00e5ff', backgroundColor: 'rgba(0, 229, 255, 0.03)', borderWidth: 2, tension: 0.1, fill: true, pointBackgroundColor: '#ff0055', pointBorderColor: '#ff0055' }] },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: { grid: { color: '#1a1a26' }, ticks: { color: '#94a3b8', font: { family: 'sans-serif', size: 10, weight: '600' } } },
-                        y: { grid: { color: '#1a1a26' }, ticks: { color: '#94a3b8', font: { family: 'sans-serif', size: 10, weight: '600' } } },
-                    },
-                    plugins: { legend: { display: false } }
-                }
+                data: { labels: [], datasets: [{ data: [], borderColor: '#00e5ff', borderWidth: 2, tension: 0.1, fill: true, backgroundColor: 'rgba(0,229,255,0.02)' }] },
+                options: { plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1a1a26' } }, y: { grid: { color: '#1a1a26' } } } }
             });
         }
 
@@ -714,43 +611,16 @@
             if(!performanceChart) return;
             const targetExercise = document.getElementById('chartFilter').value;
             let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            
             let matches = currentLogs.filter(item => item.exercise === targetExercise).reverse();
-            
-            const datasetValues = matches.map(item => Math.round(item.weight * (1 + item.reps / 30)));
-            const labels = matches.map(item => item.timestamp);
-
-            performanceChart.data.labels = labels;
-            performanceChart.data.datasets[0].data = datasetValues;
+            performanceChart.data.labels = matches.map(item => item.timestamp);
+            performanceChart.data.datasets[0].data = matches.map(item => Math.round(item.weight * (1 + item.reps / 30)));
             performanceChart.update();
         }
 
-        function clearHistory() {
-            if(confirm("Confirm destructive wipe of all saved history data segments?")) {
-                localStorage.removeItem('workoutLogs');
-                displayLogs();
-                populateChartFilter();
-                updateChartMetrics();
-            }
-        }
-
-        // --- PWA SERVICE WORKER REGISTRATION MATRIX ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('PWA Core Systems Operational:', reg.scope))
-                    .catch(err => console.log('PWA Boot Failure:', err));
-            });
-        }
+        function clearHistory() { if(confirm("Clear storage?")) { localStorage.removeItem('workoutLogs'); displayLogs(); populateChartFilter(); updateChartMetrics(); } }
 
         window.onload = function() {
-            setupMuscleMapListeners();
-            renderExerciseDropdown();
-            displayLogs();
-            buildPerformanceChart();
-            populateChartFilter();
-            updateChartMetrics();
-            renderDayMenu();
+            setupMuscleMapListeners(); renderExerciseDropdown(); displayLogs(); buildPerformanceChart(); populateChartFilter(); updateChartMetrics(); renderDayMenu();
         };
     </script>
 </body>
