@@ -3,14 +3,10 @@
   "name": "Mass Dynamic Pro",
   "icons": [
     {
-      "icons": [
-    {
       "src": "./app-icon.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
-    }
-  ],
     }
   ],
   "start_url": "./index.html",
