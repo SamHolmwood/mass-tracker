@@ -20,6 +20,8 @@
             --border: #222235;
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
+            --muscle-base: #252535;
+            --muscle-highlight: #ff0055;
         }
 
         * {
@@ -39,7 +41,6 @@
             color: var(--text-main);
             padding-bottom: 95px;
             overflow-x: hidden;
-            letter-spacing: -0.2px;
         }
 
         header {
@@ -72,31 +73,15 @@
             align-items: center;
             gap: 8px;
         }
-        
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background-color: var(--border-laser);
-            border-radius: 50%;
-            box-shadow: 0 0 6px var(--border-laser);
-        }
 
         .page {
             display: none;
             padding: 20px 16px;
             max-width: 480px;
             margin: 0 auto;
-            animation: terminalBoot 0.15s ease-out;
         }
 
         .page.active { display: block; }
-
-        @keyframes terminalBoot {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         .card {
             background-color: var(--bg-surface);
@@ -105,10 +90,9 @@
             border-radius: 4px;
             padding: 18px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.7);
         }
 
-        /* PREMIUM HYPER-REALISTIC MESH MAP INTEGRATION */
+        /* ANATOMY VIEWPORT ENGINE */
         .muscle-map-container {
             display: flex;
             justify-content: space-between;
@@ -117,7 +101,6 @@
             border-radius: 6px;
             padding: 12px;
             margin-bottom: 20px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
         .muscle-map-pane {
@@ -126,14 +109,11 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            background-image: 
-                linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(0, 229, 255, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.01) 1px, transparent 1px);
             background-size: 14px 14px;
             border: 1px solid rgba(255,255,255,0.02);
             border-radius: 4px;
             padding: 8px 4px;
-            overflow: hidden;
         }
 
         .muscle-map-pane span {
@@ -143,202 +123,80 @@
             letter-spacing: 1.5px;
             margin-bottom: 12px;
             text-transform: uppercase;
-            z-index: 10;
         }
 
         .anatomy-viewport {
             width: 100%;
-            height: 340px;
+            height: 360px;
             position: relative;
         }
 
-        /* Hyper-Realistic Base Models Render Layer */
-        .anatomy-img-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            pointer-events: none;
-            mix-blend-mode: lighten;
-            filter: brightness(0.9) contrast(1.1);
-            z-index: 1;
-        }
-
-        /* High-Accuracy SVG Interface Mask Layer */
         .anatomy-svg-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            z-index: 5;
         }
 
+        /* Realistic Medical Shading Styles via Pure Code */
+        .body-silhouette { fill: #111116; stroke: #2a2a3a; stroke-width: 1; }
+        .skeletal-spine { stroke: rgba(255,255,255,0.15); stroke-dasharray: 2,2; stroke-width: 1; }
+        
         .muscle-node {
-            fill: rgba(0, 229, 255, 0);
-            stroke: rgba(0, 229, 255, 0);
+            fill: var(--muscle-base);
+            stroke: #07070a;
+            stroke-width: 0.75;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .muscle-node:hover {
-            fill: rgba(0, 229, 255, 0.15);
-            stroke: rgba(0, 229, 255, 0.4);
-            stroke-width: 0.5;
+            fill: rgba(0, 229, 255, 0.4);
         }
 
         .muscle-node.selected {
-            fill: rgba(0, 229, 255, 0.45);
-            stroke: var(--accent);
-            stroke-width: 1.5;
-            filter: drop-shadow(0 0 14px rgba(0, 229, 255, 0.8));
+            fill: var(--accent);
+            stroke: #ffffff;
+            stroke-width: 1;
+            filter: drop-shadow(0 0 8px var(--accent));
         }
 
         .filter-status-banner {
             display: none;
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid var(--accent);
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--accent-dim);
             padding: 12px;
             border-radius: 4px;
             margin-bottom: 18px;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
         }
 
-        .filter-status-banner strong {
-            color: var(--accent);
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        .clear-filter-btn {
-            background: none;
-            border: 1px solid var(--border-laser);
-            color: var(--border-laser);
-            font-size: 0.65rem;
-            font-weight: 900;
-            padding: 6px 10px;
-            border-radius: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
+        .filter-status-banner strong { color: var(--accent); text-transform: uppercase; font-weight: 900; }
+        .clear-filter-btn { background: none; border: 1px solid var(--border-laser); color: var(--border-laser); font-size: 0.65rem; font-weight: 900; padding: 6px 10px; border-radius: 3px; cursor: pointer; text-transform: uppercase;}
 
         .input-group { margin-bottom: 14px; }
-        label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-        
-        input, select {
-            width: 100%;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 12px;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        
-        input:focus, select:focus {
-            border-color: var(--accent);
-            outline: none;
-        }
-
+        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; }
+        input, select { width: 100%; background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 4px; font-size: 0.95rem; font-weight: 600; }
+        input:focus, select:focus { border-color: var(--accent); outline: none; }
         .row { display: flex; gap: 12px; }
 
         button.primary-btn {
-            width: 100%;
-            background: #000;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 14px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            margin-top: 6px;
+            width: 100%; background: #000; color: var(--accent); border: 1px solid var(--accent); padding: 14px; border-radius: 4px; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; margin-top: 6px;
         }
-        button.primary-btn:active { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
+        button.primary-btn:active { background: var(--accent); color: #000; }
 
-        .metrics-banner { border-left: 3px solid var(--border-laser) !important; }
-        
-        .log-item {
-            border-bottom: 1px solid var(--border);
-            padding: 14px 2px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .log-item { border-bottom: 1px solid var(--border); padding: 14px 2px; display: flex; justify-content: space-between; align-items: center; }
         .log-info-block h4 { font-size: 0.9rem; font-weight: 700; }
         .log-info-block p { font-size: 0.75rem; color: var(--text-muted); }
-        .log-value-badge {
-            background-color: var(--bg-card);
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--accent);
-            font-weight: 700;
-        }
+        .log-value-badge { background-color: var(--bg-card); padding: 6px 12px; border: 1px solid var(--border); border-radius: 4px; color: var(--accent); font-weight: 700; }
+        .chart-container { position: relative; width: 100%; margin-top: 8px; background-color: rgba(6,6,8,0.5); padding: 10px; border: 1px dashed var(--border); border-radius: 4px; }
 
-        .chart-container {
-            position: relative;
-            width: 100%;
-            margin-top: 8px;
-            background-color: rgba(6,6,8,0.5);
-            padding: 10px;
-            border: 1px dashed var(--border);
-            border-radius: 4px;
-        }
-
-        .accordion-item {
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            background-color: var(--bg-surface);
-            overflow: hidden;
-        }
-        
-        .accordion-header {
-            padding: 14px 16px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .accordion-header h3 { font-size: 0.95rem; font-weight: 700; }
+        .accordion-item { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 12px; background-color: var(--bg-surface); overflow: hidden; }
+        .accordion-header { padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--accent); }
         .accordion-content { display: none; padding: 16px; border-top: 1px solid var(--border); background-color: var(--bg-card); }
 
-        nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background-color: rgba(14, 14, 18, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 2px solid var(--border);
-            display: flex;
-            height: 70px;
-            z-index: 100;
-        }
-        
-        .nav-btn {
-            flex: 1; background: none; border: none; color: var(--text-muted);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; gap: 4px;
-        }
-        
+        nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(14, 14, 18, 0.95); backdrop-filter: blur(20px); border-top: 2px solid var(--border); display: flex; height: 70px; z-index: 100; }
+        .nav-btn { flex: 1; background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; gap: 4px; }
         .nav-btn.active { color: var(--accent); }
         .nav-btn svg { width: 18px; height: 18px; fill: currentColor; }
     </style>
@@ -357,14 +215,27 @@
                 <div class="muscle-map-pane">
                     <span>Anterior Matrix</span>
                     <div class="anatomy-viewport">
-                        <img class="anatomy-img-layer" src="https://i.ibb.co/6RdfXmF/anterior-anatomy.png" alt="Anterior Base">
-                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
-                            <path class="muscle-node" data-muscle="shoulders" d="M38,36 C42,32 45,35 45,41 L36,41 Z M62,36 C58,32 55,35 55,41 L64,41 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M22,42 C16,46 14,58 19,70 L26,62 Q25,48 29,42 Z M78,42 C84,46 86,58 81,70 L74,62 Q75,48 71,42 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M30,44 C42,42 49,46 50,53 C51,46 58,42 70,44 C75,56 71,68 50,70 C29,68 25,56 30,44 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M35,74 L65,74 L62,118 L38,118 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M18,72 C14,80 10,100 12,116 L19,116 L22,76 Z M82,72 C86,80 90,100 88,116 L81,116 L78,76 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M24,124 L47,124 L44,185 L26,185 Z M53,124 L76,124 L74,185 L56,185 Z" />
+                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
+                            <path class="body-silhouette" d="M50,12 C44,12 40,16 40,24 C40,32 44,36 46,39 L45,46 L32,50 C26,52 22,60 20,72 L14,115 C13,122 17,126 21,124 L25,105 L26,140 L28,190 L24,235 L38,235 L48,180 L50,145 L52,180 L62,235 L76,235 L72,190 L74,140 L75,105 L79,124 C83,126 87,122 86,115 L80,72 C78,60 74,52 68,50 L55,46 L54,39 C56,36 60,32 60,24 C60,16 56,12 50,12 Z" />
+                            
+                            <path class="muscle-node" data-muscle="shoulders" d="M41,39 C44,36 45,39 45,45 L36,44 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M59,39 C56,36 55,39 55,45 L64,44 Z" />
+                            
+                            <path class="muscle-node" data-muscle="shoulders" d="M21,54 C18,60 17,70 21,78 L27,70 C26,62 26,56 24,54 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M79,54 C82,60 83,70 79,78 L73,70 C74,62 74,56 76,54 Z" />
+                            
+                            <path class="muscle-node" data-muscle="chest" d="M30,52 C38,50 47,53 49,58 C46,68 36,74 27,70 C25,62 27,55 30,52 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M70,52 C62,50 53,53 51,58 C54,68 64,74 73,70 C75,62 73,55 70,52 Z" />
+                            
+                            <path class="muscle-node" data-muscle="abs" d="M37,76 L63,76 L61,88 L39,88 Z" />
+                            <path class="muscle-node" data-muscle="abs" d="M39,91 L61,91 L60,103 L40,103 Z" />
+                            <path class="muscle-node" data-muscle="abs" d="M40,106 L60,106 L58,122 L42,122 Z" />
+                            
+                            <path class="muscle-node" data-muscle="arms" d="M19,80 C16,88 15,102 18,114 L23,105 L24,80 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M81,80 C84,88 85,102 82,114 L77,105 L76,80 Z" />
+                            
+                            <path class="muscle-node" data-muscle="legs" d="M27,128 C34,128 47,132 46,175 L30,175 C26,155 26,138 27,128 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M73,128 C66,128 53,132 54,175 L70,175 C74,155 74,138 73,128 Z" />
                         </svg>
                     </div>
                 </div>
@@ -372,13 +243,25 @@
                 <div class="muscle-map-pane">
                     <span>Posterior Matrix</span>
                     <div class="anatomy-viewport">
-                        <img class="anatomy-img-layer" src="https://i.ibb.co/GvX8gNq/posterior-anatomy.png" alt="Posterior Base">
-                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
-                            <path class="muscle-node" data-muscle="back" d="M28,46 C42,48 58,48 72,46 C76,68 68,94 50,98 C32,94 24,68 28,46 Z" />
-                            <path class="muscle-node" data-muscle="back" d="M35,100 L65,100 L61,122 L39,122 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M19,62 L11,110 L18,110 L23,72 Z M81,62 L89,110 L82,110 L77,72 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M25,124 C40,118 50,124 50,138 C50,124 60,118 75,124 C79,148 52,158 50,158 C48,158 21,148 25,124 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M25,160 L46,160 L43,210 L24,210 Z M54,160 L75,160 L76,210 L57,210 Z" />
+                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
+                            <path class="body-silhouette" d="M50,12 C44,12 40,16 40,24 C40,32 44,36 46,39 L45,46 L32,50 C26,52 22,60 20,72 L14,115 C13,122 17,126 21,124 L25,105 L26,140 L28,190 L24,235 L38,235 L48,180 L50,145 L52,180 L62,235 L76,235 L72,190 L74,140 L75,105 L79,124 C83,126 87,122 86,115 L80,72 C78,60 74,52 68,50 L55,46 L54,39 C56,36 60,32 60,24 C60,16 56,12 50,12 Z" />
+                            <line class="skeletal-spine" x1="50" y1="40" x2="50" y2="125" />
+                            
+                            <path class="muscle-node" data-muscle="back" d="M46,39 L54,39 L64,52 C55,55 45,55 36,52 Z" />
+                            
+                            <path class="muscle-node" data-muscle="back" d="M34,55 C44,57 49,65 49,94 C38,90 27,78 27,62 Z" />
+                            <path class="muscle-node" data-muscle="back" d="M66,55 C56,57 51,65 51,94 C62,90 73,78 73,62 Z" />
+                            
+                            <path class="muscle-node" data-muscle="back" d="M36,96 L64,96 L60,122 L40,122 Z" />
+                            
+                            <path class="muscle-node" data-muscle="arms" d="M22,64 L16,106 L21,106 L25,72 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M78,64 L84,106 L79,106 L75,72 Z" />
+                            
+                            <path class="muscle-node" data-muscle="legs" d="M26,124 C36,120 48,124 49,142 C38,145 25,138 26,124 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M74,124 C64,120 52,124 51,142 C62,145 75,138 74,124 Z" />
+                            
+                            <path class="muscle-node" data-muscle="legs" d="M27,146 L47,146 L44,195 L28,195 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M53,146 L73,146 L72,195 L56,195 Z" />
                         </svg>
                     </div>
                 </div>
@@ -464,10 +347,10 @@
 
         const exerciseDatabase = {
             chest: ["Flat Bench Press", "Incline Dumbbell Press", "Cable Chest Fly", "Pec Deck Machine"],
-            back: ["Deadlift", "Romanian Deadlift (RDL)", "Barbell Row", "Lat Pulldown", "Seated Cable Row (V-Bar)"],
+            back: ["Deadlift", "Romanian Deadlift (RDL)", "Barbell Row", "Lat Pulldown", "Seated Cable Row"],
             shoulders: ["Overhead Dumbbell Press", "Machine Shoulder Press", "Cable Lateral Raise", "Dumbbell Lateral Raise"],
             abs: ["Weighted Hanging Leg Raise", "Cable Crunch", "Ab-Wheel Rollout"],
-            legs: ["Barbell Back Squat", "Leg Extension Machine", "Seated Hamstring Curl", "Lying Leg Curl Machine", "Calf Raise Machine"],
+            legs: ["Barbell Back Squat", "Leg Extension Machine", "Seated Hamstring Curl", "Lying Leg Curl Machine"],
             arms: ["Tricep Rope Pushdown", "Cable Bicep Curl", "Preacher Curl Machine"]
         };
 
