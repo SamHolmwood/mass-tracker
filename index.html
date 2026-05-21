@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mass Dynamic Pro</title>
     <link rel="manifest" href="./manifest.json">
-    <!-- Sharp UI Font & Premium Charting Engine -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -33,7 +32,6 @@
 
         body {
             background-color: var(--bg-main);
-            /* Cyberpunk Grid Vector Line Processing Matrix */
             background-image: 
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px),
@@ -125,6 +123,81 @@
             transform: translate(4px, -4px) rotate(45deg);
         }
 
+        /* PREMIUM MUSCLE MAP VISUAL INTERFACE COMPONENT */
+        .muscle-map-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 16px;
+        }
+
+        .muscle-map-pane {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .muscle-map-pane span {
+            font-size: 0.65rem;
+            font-weight: 900;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .anatomy-svg {
+            width: 100%;
+            max-height: 220px;
+        }
+
+        .muscle-group {
+            fill: #252538;
+            stroke: #060608;
+            stroke-width: 1.5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .muscle-group:hover, .muscle-group.selected {
+            fill: var(--accent);
+            filter: drop-shadow(0px 0px 6px var(--accent));
+        }
+
+        .filter-status-banner {
+            display: none;
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px dashed var(--accent-dim);
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .filter-status-banner strong {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .clear-filter-btn {
+            background: none;
+            border: 1px solid var(--border-laser);
+            color: var(--border-laser);
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 4px 8px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
         .input-group {
             margin-bottom: 14px;
         }
@@ -179,13 +252,11 @@
         }
         button.primary-btn:active { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
 
-        /* Metrics Interface Banner Configuration */
         .metrics-banner {
             border-left: 3px solid var(--border-laser) !important;
             background: linear-gradient(135deg, var(--bg-surface) 0%, #1c0f18 100%);
         }
         
-        /* Interactive Tech Log Output Format */
         .log-item {
             border-bottom: 1px solid var(--border);
             padding: 14px 2px;
@@ -206,7 +277,6 @@
             color: var(--accent);
         }
 
-        /* Chart Workspace Canvas Configuration Elements */
         .chart-container {
             position: relative;
             width: 100%;
@@ -217,7 +287,6 @@
             border-radius: 4px;
         }
 
-        /* Enhanced Custom Dropdown Tactical Blueprint Layouts */
         .accordion-item {
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -277,7 +346,6 @@
         .accordion-content ul { padding-left: 20px; margin: 12px 0; }
         .accordion-content li { margin-bottom: 6px; color: #e5e7eb; }
 
-        /* Tactical Core Bottom Navigation Dock */
         nav {
             position: fixed;
             bottom: 0;
@@ -321,39 +389,40 @@
         <h1>MASS DYNAMIC PRO</h1>
     </header>
 
-    <!-- CORE WORKOUT TRACKING COMPONENT -->
     <div id="tracker" class="page active">
         <div class="card">
+            <h2>Select Target Engine</h2>
+            
+            <div class="muscle-map-container">
+                <div class="muscle-map-pane">
+                    <span>Anterior Matrix</span>
+                    <svg class="anatomy-svg" viewBox="0 0 120 240">
+                        <path class="muscle-group" data-muscle="shoulders" d="M25,55 Q18,65 24,80 L29,80 Z M95,55 Q102,65 96,80 L91,80 Z" />
+                        <path class="muscle-group" data-muscle="chest" d="M35,58 Q60,50 85,58 L83,82 Q60,88 37,82 Z" />
+                        <path class="muscle-group" data-muscle="arms" d="M21,83 L13,130 Q10,140 18,140 L25,105 Z M99,83 L107,130 Q110,140 102,140 L95,105 Z" />
+                        <path class="muscle-group" data-muscle="legs" d="M32,145 L44,225 L56,225 L58,145 Z M88,145 L76,225 L64,225 L62,145 Z" />
+                    </svg>
+                </div>
+                <div class="muscle-map-pane">
+                    <span>Posterior Matrix</span>
+                    <svg class="anatomy-svg" viewBox="0 0 120 240">
+                        <path class="muscle-group" data-muscle="back" d="M32,58 Q60,53 88,58 L82,115 Q60,125 38,115 Z" />
+                        <path class="muscle-group" data-muscle="arms" d="M23,83 L16,135 L24,135 L29,95 Z M97,83 L104,135 L96,135 L91,95 Z" />
+                        <path class="muscle-group" data-muscle="legs" d="M34,145 L45,230 L55,230 L56,145 Z M86,145 L75,230 L65,230 L64,145 Z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div id="filterBanner" class="filter-status-banner">
+                <span>Filtering Matrix: <strong id="filterLabel">None</strong></span>
+                <button class="clear-filter-btn" onclick="resetMuscleFilter()">Reset View</button>
+            </div>
+
             <h2>Log Workout Dataset</h2>
             <div class="input-group">
                 <label>Exercise Identity</label>
                 <select id="exercise">
-                    <optgroup label="Compounds">
-                        <option>Flat Bench Press</option>
-                        <option>Incline Dumbbell Press</option>
-                        <option>Barbell Back Squat</option>
-                        <option>Deadlift</option>
-                        <option>Romanian Deadlift (RDL)</option>
-                        <option>Barbell Row</option>
-                        <option>Lat Pulldown</option>
-                        <option>Overhead Dumbbell Press</option>
-                    </optgroup>
-                    <optgroup label="Isolated Machines & Cables">
-                        <option>Leg Extension Machine</option>
-                        <option>Seated Hamstring Curl</option>
-                        <option>Lying Leg Curl Machine</option>
-                        <option>Cable Chest Fly</option>
-                        <option>Pec Deck Machine</option>
-                        <option>Cable Lateral Raise</option>
-                        <option>Dumbbell Lateral Raise</option>
-                        <option>Machine Shoulder Press</option>
-                        <option>Seated Cable Row (V-Bar)</option>
-                        <option>Tricep Rope Pushdown</option>
-                        <option>Cable Bicep Curl</option>
-                        <option>Preacher Curl Machine</option>
-                        <option>Calf Raise Machine</option>
-                    </optgroup>
-                </select>
+                    </select>
             </div>
             <div class="row">
                 <div class="input-group" style="flex: 1;">
@@ -368,14 +437,12 @@
             <button class="primary-btn" onclick="saveSet()">Execute Data Logging</button>
         </div>
 
-        <!-- Telemetry Performance Analytical Systems -->
         <div class="card">
             <h2>Telemetry Analytics</h2>
             <div class="input-group" style="margin-bottom: 12px;">
                 <label>Target Telemetry Stream Focus</label>
                 <select id="chartFilter" onchange="updateChartMetrics()">
-                    <!-- Rendered Core State Arrays -->
-                </select>
+                    </select>
             </div>
             <div class="chart-container">
                 <canvas id="analyticsChart"></canvas>
@@ -389,7 +456,6 @@
         </div>
     </div>
 
-    <!-- CORE DIET OVERVIEW MATRIX INTERFACE -->
     <div id="meals" class="page">
         <div class="card metrics-banner">
             <h2>Pipeline Surplus Configuration</h2>
@@ -397,7 +463,6 @@
             <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:700; letter-spacing:0.5px;">P: 175G // C: 420G // F: 80G</p>
         </div>
 
-        <!-- Tactical Dropdown Timeframe Target Selector -->
         <div class="card" style="padding: 16px;">
             <label style="margin-bottom: 8px;">Target Rotation Core Pipeline</label>
             <select id="daySelect" onchange="renderDayMenu()">
@@ -415,7 +480,6 @@
         <div id="dynamicMenuContainer"></div>
     </div>
 
-    <!-- Footer System Unified Control Interface -->
     <nav>
         <button class="nav-btn active" onclick="switchPage('tracker', this)">
             <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43l-2.86-2.86L17.71 12l2.86 2.86M4.29 12l1.43-1.43L2.86 7.71 1.43 9.14 4.29 12m11.14-5.14L14 8.29l2.86 2.86 1.43-1.43-2.86-2.86M8.29 14l1.43 1.43 2.86-2.86-1.43-1.43L8.29 14M9.71 5.43L11.14 4 8.29 1.14 6.86 2.57l2.85 2.86M14.29 20l-1.43-1.43-2.86 2.86 1.43 1.43 2.86-2.86M22 2v4h-4V2h4zM6 18v4H2v-4h4z"/></svg>
@@ -430,6 +494,16 @@
     <script>
         // App State Properties
         let performanceChart = null;
+        let selectedMuscleGroup = null;
+
+        // Structured Global Exercise Database Array
+        const exerciseDatabase = {
+            chest: ["Flat Bench Press", "Incline Dumbbell Press", "Cable Chest Fly", "Pec Deck Machine"],
+            back: ["Deadlift", "Romanian Deadlift (RDL)", "Barbell Row", "Lat Pulldown", "Seated Cable Row (V-Bar)"],
+            shoulders: ["Overhead Dumbbell Press", "Machine Shoulder Press", "Cable Lateral Raise", "Dumbbell Lateral Raise"],
+            legs: ["Barbell Back Squat", "Leg Extension Machine", "Seated Hamstring Curl", "Lying Leg Curl Machine", "Calf Raise Machine"],
+            arms: ["Tricep Rope Pushdown", "Cable Bicep Curl", "Preacher Curl Machine"]
+        };
 
         // Structured Nutritional Array Bank Data Sets
         const recipes = {
@@ -449,7 +523,6 @@
             snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P | 72g C | 16g F", html: `<strong>Ingredients:</strong><ul><li>4 Plain Rice Cakes</li><li>3 tbsp Peanut Butter</li><li>1 tbsp Honey</li><li>1 glass of Milk</li></ul><strong>Instructions:</strong><br>1. Spread peanut butter evenly across all four rice cakes.<br>2. Drizzle with honey and wash down with a cold glass of milk.` }
         };
 
-        // Complete 7-Day Rotational Strategy Configuration Matrix
         const daySchedules = {
             "1": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "2": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "steakPasta"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "bbqPotato"} ],
@@ -459,6 +532,57 @@
             "6": [ {tag: "Meal 1", ref: "breakfastWrap"}, {tag: "Meal 2", ref: "honeySalmon"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "7": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "beefSweetPotato"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "turkeyChili"} ]
         };
+
+        // UI MANAGEMENT & FILTER FUNCTIONS
+        function setupMuscleMapListeners() {
+            document.querySelectorAll('.muscle-group').forEach(el => {
+                el.addEventListener('click', function() {
+                    const group = this.getAttribute('data-muscle');
+                    
+                    // Toggle selections visual tracking state
+                    document.querySelectorAll('.muscle-group').forEach(m => m.classList.remove('selected'));
+                    
+                    // Select matches across both front/back perspectives
+                    document.querySelectorAll(`.muscle-group[data-muscle="${group}"]`).forEach(m => m.classList.add('selected'));
+                    
+                    selectedMuscleGroup = group;
+                    renderExerciseDropdown();
+                    
+                    // Show Filter Status Display
+                    document.getElementById('filterLabel').textContent = group;
+                    document.getElementById('filterBanner').style.display = 'flex';
+                });
+            });
+        }
+
+        function renderExerciseDropdown() {
+            const dropdown = document.getElementById('exercise');
+            dropdown.innerHTML = '';
+
+            if (selectedMuscleGroup && exerciseDatabase[selectedMuscleGroup]) {
+                // Render isolated target group arrays exclusively
+                exerciseDatabase[selectedMuscleGroup].forEach(ex => {
+                    dropdown.innerHTML += `<option value="${ex}">${ex}</option>`;
+                });
+            } else {
+                // Fallback to absolute standard system rendering
+                Object.keys(exerciseDatabase).forEach(category => {
+                    let groupHTML = `<optgroup label="${category.toUpperCase()}">`;
+                    exerciseDatabase[category].forEach(ex => {
+                        groupHTML += `<option value="${ex}">${ex}</option>`;
+                    });
+                    groupHTML += `</optgroup>`;
+                    dropdown.innerHTML += groupHTML;
+                });
+            }
+        }
+
+        function resetMuscleFilter() {
+            selectedMuscleGroup = null;
+            document.querySelectorAll('.muscle-group').forEach(m => m.classList.remove('selected'));
+            document.getElementById('filterBanner').style.display = 'none';
+            renderExerciseDropdown();
+        }
 
         function switchPage(pageId, btnElement) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -515,7 +639,7 @@
             const exercise = document.getElementById('exercise').value;
             const weight = parseFloat(document.getElementById('weight').value);
             const reps = parseInt(document.getElementById('reps').value);
-            if(!weight || !reps) return alert("All performance dataset parameters must be specified!");
+            if(!weight || !reps || !exercise) return alert("All performance dataset parameters must be specified!");
 
             const timestamp = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
             const newSet = { exercise, weight, reps, timestamp };
@@ -610,21 +734,24 @@
             }
         }
 
+        // --- PWA SERVICE WORKER REGISTRATION MATRIX ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('PWA Core Systems Operational:', reg.scope))
+                    .catch(err => console.log('PWA Boot Failure:', err));
+            });
+        }
+
         window.onload = function() {
+            setupMuscleMapListeners();
+            renderExerciseDropdown();
             displayLogs();
             buildPerformanceChart();
             populateChartFilter();
             updateChartMetrics();
             renderDayMenu();
         };
-        // PWA SERVICE WORKER REGISTRATION MATRIX
-   if ('serviceWorker' in navigator) {
-       window.addEventListener('load', () => {
-           navigator.serviceWorker.register('./sw.js')
-               .then(reg => console.log('PWA Core Systems Operational:', reg.scope))
-               .catch(err => console.log('PWA Boot Failure:', err));
-       });
-   }
     </script>
 </body>
 </html>
