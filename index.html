@@ -21,7 +21,6 @@
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
             --muscle-base: #252535;
-            --muscle-highlight: #ff0055;
         }
 
         * {
@@ -92,7 +91,6 @@
             margin-bottom: 20px;
         }
 
-        /* ANATOMY VIEWPORT ENGINE */
         .muscle-map-container {
             display: flex;
             justify-content: space-between;
@@ -136,7 +134,6 @@
             height: 100%;
         }
 
-        /* Realistic Medical Shading Styles via Pure Code */
         .body-silhouette { fill: #111116; stroke: #2a2a3a; stroke-width: 1; }
         .skeletal-spine { stroke: rgba(255,255,255,0.15); stroke-dasharray: 2,2; stroke-width: 1; }
         
@@ -148,9 +145,7 @@
             transition: all 0.2s ease;
         }
 
-        .muscle-node:hover {
-            fill: rgba(0, 229, 255, 0.4);
-        }
+        .muscle-node:hover { fill: rgba(0, 229, 255, 0.4); }
 
         .muscle-node.selected {
             fill: var(--accent);
@@ -194,6 +189,9 @@
         .accordion-item { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 12px; background-color: var(--bg-surface); overflow: hidden; }
         .accordion-header { padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--accent); }
         .accordion-content { display: none; padding: 16px; border-top: 1px solid var(--border); background-color: var(--bg-card); }
+        .recipe-list { list-style: none; margin-top: 8px; padding-left: 4px; }
+        .recipe-list li { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .recipe-list li::before { content: "▪"; color: var(--accent); font-size: 0.7rem; }
 
         nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(14, 14, 18, 0.95); backdrop-filter: blur(20px); border-top: 2px solid var(--border); display: flex; height: 70px; z-index: 100; }
         .nav-btn { flex: 1; background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; gap: 4px; }
@@ -217,23 +215,17 @@
                     <div class="anatomy-viewport">
                         <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
                             <path class="body-silhouette" d="M50,12 C44,12 40,16 40,24 C40,32 44,36 46,39 L45,46 L32,50 C26,52 22,60 20,72 L14,115 C13,122 17,126 21,124 L25,105 L26,140 L28,190 L24,235 L38,235 L48,180 L50,145 L52,180 L62,235 L76,235 L72,190 L74,140 L75,105 L79,124 C83,126 87,122 86,115 L80,72 C78,60 74,52 68,50 L55,46 L54,39 C56,36 60,32 60,24 C60,16 56,12 50,12 Z" />
-                            
                             <path class="muscle-node" data-muscle="shoulders" d="M41,39 C44,36 45,39 45,45 L36,44 Z" />
                             <path class="muscle-node" data-muscle="shoulders" d="M59,39 C56,36 55,39 55,45 L64,44 Z" />
-                            
                             <path class="muscle-node" data-muscle="shoulders" d="M21,54 C18,60 17,70 21,78 L27,70 C26,62 26,56 24,54 Z" />
                             <path class="muscle-node" data-muscle="shoulders" d="M79,54 C82,60 83,70 79,78 L73,70 C74,62 74,56 76,54 Z" />
-                            
                             <path class="muscle-node" data-muscle="chest" d="M30,52 C38,50 47,53 49,58 C46,68 36,74 27,70 C25,62 27,55 30,52 Z" />
                             <path class="muscle-node" data-muscle="chest" d="M70,52 C62,50 53,53 51,58 C54,68 64,74 73,70 C75,62 73,55 70,52 Z" />
-                            
                             <path class="muscle-node" data-muscle="abs" d="M37,76 L63,76 L61,88 L39,88 Z" />
                             <path class="muscle-node" data-muscle="abs" d="M39,91 L61,91 L60,103 L40,103 Z" />
                             <path class="muscle-node" data-muscle="abs" d="M40,106 L60,106 L58,122 L42,122 Z" />
-                            
                             <path class="muscle-node" data-muscle="arms" d="M19,80 C16,88 15,102 18,114 L23,105 L24,80 Z" />
                             <path class="muscle-node" data-muscle="arms" d="M81,80 C84,88 85,102 82,114 L77,105 L76,80 Z" />
-                            
                             <path class="muscle-node" data-muscle="legs" d="M27,128 C34,128 47,132 46,175 L30,175 C26,155 26,138 27,128 Z" />
                             <path class="muscle-node" data-muscle="legs" d="M73,128 C66,128 53,132 54,175 L70,175 C74,155 74,138 73,128 Z" />
                         </svg>
@@ -246,20 +238,14 @@
                         <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
                             <path class="body-silhouette" d="M50,12 C44,12 40,16 40,24 C40,32 44,36 46,39 L45,46 L32,50 C26,52 22,60 20,72 L14,115 C13,122 17,126 21,124 L25,105 L26,140 L28,190 L24,235 L38,235 L48,180 L50,145 L52,180 L62,235 L76,235 L72,190 L74,140 L75,105 L79,124 C83,126 87,122 86,115 L80,72 C78,60 74,52 68,50 L55,46 L54,39 C56,36 60,32 60,24 C60,16 56,12 50,12 Z" />
                             <line class="skeletal-spine" x1="50" y1="40" x2="50" y2="125" />
-                            
                             <path class="muscle-node" data-muscle="back" d="M46,39 L54,39 L64,52 C55,55 45,55 36,52 Z" />
-                            
                             <path class="muscle-node" data-muscle="back" d="M34,55 C44,57 49,65 49,94 C38,90 27,78 27,62 Z" />
                             <path class="muscle-node" data-muscle="back" d="M66,55 C56,57 51,65 51,94 C62,90 73,78 73,62 Z" />
-                            
                             <path class="muscle-node" data-muscle="back" d="M36,96 L64,96 L60,122 L40,122 Z" />
-                            
                             <path class="muscle-node" data-muscle="arms" d="M22,64 L16,106 L21,106 L25,72 Z" />
                             <path class="muscle-node" data-muscle="arms" d="M78,64 L84,106 L79,106 L75,72 Z" />
-                            
                             <path class="muscle-node" data-muscle="legs" d="M26,124 C36,120 48,124 49,142 C38,145 25,138 26,124 Z" />
                             <path class="muscle-node" data-muscle="legs" d="M74,124 C64,120 52,124 51,142 C62,145 75,138 74,124 Z" />
-                            
                             <path class="muscle-node" data-muscle="legs" d="M27,146 L47,146 L44,195 L28,195 Z" />
                             <path class="muscle-node" data-muscle="legs" d="M53,146 L73,146 L72,195 L56,195 Z" />
                         </svg>
@@ -309,7 +295,7 @@
     </div>
 
     <div id="meals" class="page">
-        <div class="card metrics-banner">
+        <div class="card" style="border-left: 3px solid var(--border-laser);">
             <h2>Pipeline Surplus Configuration</h2>
             <p style="font-size: 1.6rem; font-weight: 900; color: var(--text-main);">3,100 KCAL</p>
             <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">P: 175G // C: 420G // F: 80G</p>
@@ -354,21 +340,78 @@
             arms: ["Tricep Rope Pushdown", "Cable Bicep Curl", "Preacher Curl Machine"]
         };
 
+        // RESTORED: FULL USER INGREDIENT RECIPE ENGINE
         const recipes = {
-            hash: { title: "Savory Potato & Egg Hash", macros: "730 kcal | 28g P" },
-            oats: { title: "Mass Power Overnight Berry Oats", macros: "760 kcal | 35g P" },
-            breakfastWrap: { title: "Ultimate Breakfast Wrap Duo", macros: "780 kcal | 30g P" },
-            steakPasta: { title: "Creamy Garlic Steak Pasta", macros: "860 kcal | 58g P" },
-            cajunWrap: { title: "Spicy Cajun Chicken Wrap Duo", macros: "820 kcal | 52g P" },
-            beefSweetPotato: { title: "Sweet Potato & Beef Taco Skillet", macros: "840 kcal | 48g P" },
-            soyGarlicBowl: { title: "Soy-Garlic Chicken Rice Bowl", macros: "790 kcal | 54g P" },
-            honeySalmon: { title: "Honey-Soy Salmon & Sesame Rice", macros: "830 kcal | 46g P" },
-            bbqPotato: { title: "BBQ Chicken & Roasted Potatoes", macros: "810 kcal | 50g P" },
-            turkeyChili: { title: "Hearty Turkey & Bean Chili", macros: "790 kcal | 52g P" },
-            beefRiceWrap: { title: "Loaded Beef & Rice Monster Burrito", macros: "850 kcal | 46g P" },
-            snackA: { title: "Protein Refuel Wrap", macros: "560 kcal | 26g P" },
-            snackB: { title: "Quick Savory Egg & Rice Mash", macros: "540 kcal | 24g P" },
-            snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P" }
+            hash: { 
+                title: "Savory Potato & Egg Hash", 
+                macros: "730 kcal | 28g P | 95g C | 24g F",
+                ingredients: ["300g White Potatoes (Diced)", "2 Large Whole Eggs", "100g Egg Whites", "5g Olive Oil", "Onion & Bell Pepper Blend"]
+            },
+            oats: { 
+                title: "Mass Power Overnight Berry Oats", 
+                macros: "760 kcal | 35g P | 110g C | 16g F",
+                ingredients: ["100g Rolled Oats", "30g Whey Protein Isolate", "150ml Almond Milk", "80g Mixed Berries", "15g Chia Seeds"]
+            },
+            breakfastWrap: { 
+                title: "Ultimate Breakfast Wrap Duo", 
+                macros: "780 kcal | 30g P | 90g C | 28g F",
+                ingredients: ["2 Large Tortilla Wraps", "3 Large Whole Eggs", "50g Shredded Light Mozzarella", "Spinach & Tomato Dice"]
+            },
+            steakPasta: { 
+                title: "Creamy Garlic Steak Pasta", 
+                macros: "860 kcal | 58g P | 105g C | 22g F",
+                ingredients: ["120g Lean Beef Steak Strips", "100g Uncooked Pasta", "40g Light Cream Cheese", "Garlic Clove & Spinach"]
+            },
+            cajunWrap: { 
+                title: "Spicy Cajun Chicken Wrap Duo", 
+                macros: "820 kcal | 52g P | 98g C | 18g F",
+                ingredients: ["150g Chicken Breast Strips", "2 Large Tortilla Wraps", "Cajun Seasoning Mix", "30g Light Mayonnaise"]
+            },
+            beefSweetPotato: { 
+                title: "Sweet Potato & Beef Taco Skillet", 
+                macros: "840 kcal | 48g P | 102g C | 24g F",
+                ingredients: ["140g Extra Lean Ground Beef", "350g Sweet Potatoes (Cubed)", "Taco Seasoning", "40g Reduced Fat Cheese"]
+            },
+            soyGarlicBowl: { 
+                title: "Soy-Garlic Chicken Rice Bowl", 
+                macros: "790 kcal | 54g P | 100g C | 14g F",
+                ingredients: ["160g Diced Chicken Breast", "110g Dry Jasmine Rice", "Low Sodium Soy Sauce", "Minced Garlic & Green Onion"]
+            },
+            honeySalmon: { 
+                title: "Honey-Soy Salmon & Sesame Rice", 
+                macros: "830 kcal | 46g P | 104g C | 23g F",
+                ingredients: ["150g Fresh Salmon Fillet", "110g dry Basmati Rice", "15g Pure Honey", "Sesame Seeds & Broccoli Florets"]
+            },
+            bbqPotato: { 
+                title: "BBQ Chicken & Roasted Potatoes", 
+                macros: "810 kcal | 50g P | 101g C | 15g F",
+                ingredients: ["160g Chicken Breast Cubes", "350g Russet Potatoes", "40g Low Sugar BBQ Sauce", "Smoked Paprika & Garlic Powder"]
+            },
+            turkeyChili: { 
+                title: "Hearty Turkey & Bean Chili", 
+                macros: "790 kcal | 52g P | 98g C | 16g F",
+                ingredients: ["150g Lean Ground Turkey", "120g Red Kidney Beans", "200g Crushed Tomatoes Base", "Chili Spices Blend"]
+            },
+            beefRiceWrap: { 
+                title: "Loaded Beef & Rice Monster Burrito", 
+                macros: "850 kcal | 46g P | 108g C | 22g F",
+                ingredients: ["120g Lean Ground Beef", "70g Cooked Rice", "1 Jumbo Tortilla Wrap", "Salsa & Lettuce Crunch"]
+            },
+            snackA: { 
+                title: "Protein Refuel Wrap", 
+                macros: "560 kcal | 26g P | 72g C | 12g F",
+                ingredients: ["1 Tortilla Wrap", "20g Peanut Butter", "1 Sliced Banana", "15g Whey Protein Drizzle"]
+            },
+            snackB: { 
+                title: "Quick Savory Egg & Rice Mash", 
+                macros: "540 kcal | 24g P | 70g C | 14g F",
+                ingredients: ["80g Cooked White Rice", "2 Large Whole Eggs", "Soy Sauce Drop", "Toasted Seaweed Flakes"]
+            },
+            snackC: { 
+                title: "Honey Peanut Butter Rice Cakes", 
+                macros: "510 kcal | 20g P | 74g C | 13g F",
+                ingredients: ["4 Puffed Rice Cakes", "25g Smooth Peanut Butter", "15g Honey Drizzle"]
+            }
         };
 
         const daySchedules = {
@@ -430,22 +473,47 @@
             if (pageId === 'tracker') { updateChartMetrics(); }
         }
 
+        // RESTORED: DYNAMIC MENU ENGINE WITH EXPANDABLE INGREDIENT LISTS
         function renderDayMenu() {
             const currentDay = document.getElementById('daySelect').value;
             const container = document.getElementById('dynamicMenuContainer');
             if (!container) return;
+            
+            const daysOfWeek = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            document.getElementById('menuDayTitle').textContent = `${daysOfWeek[parseInt(currentDay)]} Menu Manifest`;
+
             container.innerHTML = daySchedules[currentDay].map(item => {
                 const data = recipes[item.ref];
+                const ingredientItems = data.ingredients.map(ing => `<li>${ing}</li>`).join('');
                 return `
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
-                            <div><h3>${data.title}</h3></div>
-                            <span style="color:var(--accent);">▼</span>
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div>
+                                <span style="font-size:0.7rem; font-weight:900; color:var(--border-laser); text-transform:uppercase; display:block; margin-bottom:2px;">${item.tag}</span>
+                                <h3>${data.title}</h3>
+                            </div>
+                            <span style="color:var(--accent); font-size:0.7rem;">▼</span>
                         </div>
-                        <div class="accordion-content"><p>${data.macros}</p></div>
+                        <div class="accordion-content">
+                            <p style="font-weight:700; color:var(--accent); font-size:0.85rem; margin-bottom:10px;">${data.macros}</p>
+                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted); letter-spacing:0.5px;">Pipelines / Ingredients:</p>
+                            <ul class="recipe-list">${ingredientItems}</ul>
+                        </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function toggleAccordion(headerElement) {
+            const content = headerElement.nextElementSibling;
+            const arrow = headerElement.querySelector('span:last-child');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+            } else {
+                content.style.display = 'block';
+                arrow.textContent = '▲';
+            }
         }
 
         function saveSet() {
