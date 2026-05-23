@@ -3,82 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mass Dynamic Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <title>Mass Dynamic Pro - Anatomy Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-main: #060608;
-            --bg-surface: #0e0e12;
-            --bg-card: #15151f;
-            --accent: #00e5ff;
-            --accent-dim: #008ba3;
-            --accent-glow: rgba(0, 229, 255, 0.15);
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --border: #222235;
-            --border-laser: #ff0055;
-            --grid-color: rgba(0, 229, 255, 0.025);
+            --bg-main: #0a0a0f;
+            --bg-surface: #12121a;
+            --bg-card: #181824;
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.2);
+            --border-laser: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+            --border: #27273a;
             
-            /* SVG Styling variables matching MuscleWiki dark mechanics */
-            --body-outline: #222235;
-            --muscle-idle: rgba(14, 14, 18, 0.6);
-            --muscle-stroke: rgba(0, 229, 255, 0.25);
+            /* MuscleWiki Accurate Mapping Aesthetics */
+            --mw-body: #1e1e2f;
+            --mw-stroke: #2d2d44;
+            --mw-muscle-idle: #242438;
+            --mw-muscle-hover: #38bdf8;
+            --mw-muscle-selected: #f43f5e;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-main);
-            background-image: 
-                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-            background-size: 24px 24px, 24px 24px;
             color: var(--text-main);
             padding-bottom: 95px;
             overflow-x: hidden;
         }
 
         header {
-            background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(14,14,18,0.9) 100%);
+            background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(18,18,26,0.9) 100%);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 20px;
+            padding: 16px;
             text-align: center;
-            border-bottom: 2px solid var(--accent-dim);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         header h1 {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 900;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            text-shadow: 0 0 12px var(--accent);
-        }
-
-        h2 { 
-            font-size: 0.9rem;
-            font-weight: 900; 
-            letter-spacing: 1.5px;
-            margin-bottom: 16px; 
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: var(--text-main);
         }
 
         .page {
             display: none;
-            padding: 20px 16px;
+            padding: 16px;
             max-width: 480px;
             margin: 0 auto;
         }
@@ -88,20 +72,48 @@
         .card {
             background-color: var(--bg-surface);
             border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            border-radius: 4px;
-            padding: 18px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
+        /* MuscleWiki Controller Bar Toggle Button Group */
+        .mw-controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .mw-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mw-toggle-btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* High-Fidelity Muscle Graphic Window Container */
         .muscle-map-container {
             display: flex;
             justify-content: space-between;
-            background-color: #0b0b10;
+            background: #0d0d14;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            padding: 16px 8px;
+            margin-bottom: 16px;
         }
 
         .muscle-map-pane {
@@ -109,28 +121,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
-            background-image: linear-gradient(rgba(0, 229, 255, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.01) 1px, transparent 1px);
-            background-size: 14px 14px;
-            border: 1px solid rgba(255,255,255,0.02);
-            border-radius: 4px;
-            padding: 8px 4px;
         }
 
         .muscle-map-pane span {
             font-size: 0.65rem;
-            font-weight: 900;
+            font-weight: 800;
             color: var(--text-muted);
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            z-index: 10;
+            margin-bottom: 8px;
         }
 
         .anatomy-viewport {
             width: 100%;
-            height: 320px;
-            position: relative;
+            height: 350px;
         }
 
         .anatomy-svg-overlay {
@@ -138,82 +142,82 @@
             height: 100%;
         }
 
-        /* Base Body Proportions Styles */
+        /* SVG Vector Curvatures Definition Architecture */
         .body-silhouette {
-            fill: none;
-            stroke: var(--body-outline);
-            stroke-width: 1.5;
+            fill: var(--mw-body);
+            stroke: var(--mw-stroke);
+            stroke-width: 1;
         }
 
         .muscle-node {
-            fill: var(--muscle-idle);
-            stroke: var(--muscle-stroke);
-            stroke-width: 1;
+            fill: var(--mw-muscle-idle);
+            stroke: var(--mw-stroke);
+            stroke-width: 0.8;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: fill 0.15s ease, stroke 0.15s ease;
         }
 
         .muscle-node:hover { 
-            fill: rgba(0, 229, 255, 0.2);
-            stroke: var(--accent);
+            fill: var(--mw-muscle-hover) !important;
+            stroke: #fff;
         }
 
         .muscle-node.selected {
-            fill: rgba(255, 0, 85, 0.35);
-            stroke: var(--border-laser);
-            stroke-width: 1.5;
-            filter: drop-shadow(0 0 6px var(--border-laser));
+            fill: var(--mw-muscle-selected) !important;
+            stroke: #fff;
+            filter: drop-shadow(0 0 4px rgba(244, 63, 94, 0.5));
         }
 
+        /* Clear Status Bar Info HUD banner */
         .filter-status-banner {
             display: none;
-            background: rgba(0, 229, 255, 0.08);
-            border: 1px solid var(--accent-dim);
+            background: rgba(34, 211, 238, 0.06);
+            border: 1px solid rgba(34, 211, 238, 0.2);
             padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 18px;
+            border-radius: 6px;
+            margin-bottom: 16px;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
         }
 
-        .filter-status-banner strong { color: var(--accent); text-transform: uppercase; font-weight: 900; }
-        .clear-filter-btn { background: none; border: 1px solid var(--border-laser); color: var(--border-laser); font-size: 0.65rem; font-weight: 900; padding: 6px 10px; border-radius: 3px; cursor: pointer; text-transform: uppercase;}
+        .filter-status-banner strong { color: var(--accent); text-transform: uppercase; font-weight: 800; }
+        .clear-filter-btn { background: none; border: 1px solid var(--border-laser); color: var(--border-laser); font-size: 0.65rem; font-weight: 800; padding: 4px 8px; border-radius: 4px; cursor: pointer; text-transform: uppercase;}
 
-        .input-group { margin-bottom: 14px; }
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; }
-        input, select { width: 100%; background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 4px; font-size: 0.95rem; font-weight: 600; }
+        .input-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; }
         input:focus, select:focus { border-color: var(--accent); outline: none; }
-        .row { display: flex; gap: 12px; }
+        .row { display: flex; gap: 8px; }
 
         button.primary-btn {
             width: 100%;
-            background: #000; color: var(--accent); border: 1px solid var(--accent); padding: 14px; border-radius: 4px; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px;
-            cursor: pointer; margin-top: 6px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: var(--accent); border: 1px solid var(--border); padding: 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; margin-top: 4px; transition: all 0.2s;
         }
-        button.primary-btn:active { background: var(--accent); color: #000; }
+        button.primary-btn:active { transform: scale(0.98); background: var(--accent); color: #000; }
 
-        .log-item { border-bottom: 1px solid var(--border); padding: 14px 2px; display: flex; justify-content: space-between; align-items: center; }
-        .log-info-block h4 { font-size: 0.9rem; font-weight: 700; }
-        .log-info-block p { font-size: 0.75rem; color: var(--text-muted); }
-        .log-value-badge { background-color: var(--bg-card); padding: 6px 12px; border: 1px solid var(--border); border-radius: 4px; color: var(--accent); font-weight: 700; }
-        .chart-container { position: relative; width: 100%; margin-top: 8px; background-color: rgba(6,6,8,0.5); padding: 10px; border: 1px dashed var(--border); border-radius: 4px; }
+        .log-item { border-bottom: 1px solid var(--border); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
+        .log-info-block h4 { font-size: 0.85rem; font-weight: 600; }
+        .log-info-block p { font-size: 0.7rem; color: var(--text-muted); }
+        .log-value-badge { background-color: var(--bg-card); padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; color: var(--accent); font-weight: 700; font-size: 0.8rem; }
+        .chart-container { width: 100%; background-color: rgba(0,0,0,0.2); padding: 8px; border: 1px solid var(--border); border-radius: 6px; }
 
-        .accordion-item { border: 1px solid var(--border); border-radius: 4px; margin-bottom: 12px; background-color: var(--bg-surface); overflow: hidden; }
-        .accordion-header { padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--accent); }
-        .accordion-content { display: none; padding: 16px; border-top: 1px solid var(--border); background-color: var(--bg-card); }
-        
-        .recipe-list { list-style: none; margin-top: 6px; margin-bottom: 14px; padding-left: 4px; }
-        .recipe-list li { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .recipe-list li::before { content: "▪"; color: var(--accent); font-size: 0.7rem; }
-        
-        .recipe-steps { padding-left: 16px; margin-top: 6px; color: #cbd5e1; font-size: 0.85rem; }
-        .recipe-steps li { margin-bottom: 8px; line-height: 1.4; }
+        /* Accordion items */
+        .accordion-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; background-color: var(--bg-surface); overflow: hidden; }
+        .accordion-header { padding: 12px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--accent); }
+        .accordion-content { display: none; padding: 14px; border-top: 1px solid var(--border); background-color: var(--bg-card); }
+        .recipe-list { list-style: none; margin: 4px 0 12px 0; }
+        .recipe-list li { font-size: 0.8rem; color: #cbd5e1; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .recipe-list li::before { content: "•"; color: var(--accent); }
+        .recipe-steps { padding-left: 12px; color: #cbd5e1; font-size: 0.8rem; }
+        .recipe-steps li { margin-bottom: 6px; }
 
-        nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(14, 14, 18, 0.95); backdrop-filter: blur(20px); border-top: 2px solid var(--border); display: flex; height: 70px; z-index: 100; }
-        .nav-btn { flex: 1; background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; gap: 4px; }
+        /* Bottom Sticky Global Menu Navigation Hub */
+        nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(18, 18, 26, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; height: 65px; z-index: 100; }
+        .nav-btn { flex: 1; background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; gap: 2px; }
         .nav-btn.active { color: var(--accent); }
-        .nav-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .nav-btn svg { width: 16px; height: 16px; fill: currentColor; }
     </style>
 </head>
 <body>
@@ -224,25 +228,30 @@
 
     <div id="tracker" class="page active">
         <div class="card">
-            <h2>Anatomy Target Engine</h2>
+            <div class="mw-controls">
+                <button class="mw-toggle-btn active" id="genderMale" onclick="setGender('male')">Male Map</button>
+                <button class="mw-toggle-btn" id="genderFemale" onclick="setGender('female')">Female Map</button>
+            </div>
             
             <div class="muscle-map-container">
                 <div class="muscle-map-pane">
                     <span>Anterior</span>
                     <div class="anatomy-viewport">
                         <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
-                            <path class="body-silhouette" d="M50,15 C46,15 44,20 44,28 C44,35 47,38 41,42 C30,44 24,52 22,62 C18,78 14,102 16,115 C17,120 22,120 22,114 C20,98 25,75 25,72 L26,128 C26,135 24,142 25,160 C26,175 22,195 24,212 C25,215 28,215 29,212 C32,202 33,185 36,172 C39,172 43,170 47,140 L50,140" />
-                            <path class="body-silhouette" d="M50,15 C54,15 56,20 56,28 C56,35 53,38 59,42 C70,44 76,52 78,62 C82,78 86,102 84,115 C83,120 78,120 78,114 C80,98 75,75 75,72 L74,128 C74,135 76,142 75,160 C74,175 78,195 76,212 C75,215 72,215 71,212 C68,202 67,185 64,172 C61,172 57,170 53,140 L50,140" />
+                            <path class="body-silhouette" d="M50,15 C45,15 43,18 43,26 C43,32 46,35 40,38 C31,41 24,47 22,57 C19,72 13,95 15,110 C16,115 21,113 21,108 C19,94 24,72 24,69 L25,120 C25,128 23,135 24,155 C25,170 21,190 23,208 C24,212 27,212 28,208 C31,198 32,180 35,168 C38,168 41,166 45,138 L50,138 Z" />
+                            <path class="body-silhouette" d="M50,15 C55,15 57,18 57,26 C57,32 54,35 60,38 C69,41 76,47 78,57 C81,72 87,95 85,110 C84,115 79,113 79,108 C81,94 76,72 76,69 L75,120 C75,128 77,135 76,155 C75,170 79,190 77,208 C76,212 73,212 72,208 C69,198 68,180 65,168 C62,168 59,166 55,138 L50,138 Z" />
                             
-                            <path class="muscle-node" data-muscle="shoulders" d="M25,44 C31,44 35,48 34,56 C33,64 27,68 23,62 C21,56 22,46 25,44 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M75,44 C69,44 65,48 66,56 C67,64 73,68 77,62 C79,56 78,46 75,44 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M35,46 C42,45 49,48 49,58 C41,59 34,56 34,48 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M65,46 C58,45 51,48 51,58 C59,59 66,56 66,48 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M37,64 L63,64 L61,110 L39,110 Z" fill-rule="evenodd" />
-                            <path class="muscle-node" data-muscle="arms" d="M22,66 C26,66 27,78 26,92 C23,92 20,84 21,74 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M78,66 C74,66 73,78 74,92 C77,92 80,84 79,74 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M27,116 C38,114 47,118 46,150 L29,150 C25,136 25,124 27,116 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M73,116 C62,114 53,118 54,150 L71,150 C75,136 75,124 73,116 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M44,28 C46,28 47,33 50,35 C47,35 45,33 44,28" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M56,28 C54,28 53,33 50,35 C53,35 55,33 56,28" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M22,50 C25,44 29,43 31,48 C30,55 26,62 22,57 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M78,50 C75,44 71,43 69,48 C70,55 74,62 78,57 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M32,47 C38,45 48,46 49,56 C41,56 34,55 32,47 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M68,47 C62,45 52,46 51,56 C59,56 66,55 68,47 Z" />
+                            <path class="muscle-node" data-muscle="abs" d="M35,60 L65,60 L62,102 L38,102 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M22,60 C25,60 26,72 25,85 C23,85 20,78 21,68 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M78,60 C75,60 74,72 75,85 C77,85 80,78 79,68 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M26,108 C36,106 46,110 45,142 L28,142 C24,128 24,116 26,108 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M74,108 C64,106 54,110 55,142 L72,142 C76,128 76,116 74,108 Z" />
                         </svg>
                     </div>
                 </div>
@@ -251,18 +260,18 @@
                     <span>Posterior</span>
                     <div class="anatomy-viewport">
                         <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
-                            <path class="body-silhouette" d="M50,15 C46,15 44,20 44,28 C44,35 47,38 41,42 C30,44 24,52 22,62 C18,78 14,102 16,115 C17,120 22,120 22,114 C20,98 25,75 25,72 L26,128 C26,135 24,142 25,160 C26,175 22,195 24,212 C25,215 28,215 29,212 C32,202 33,185 36,172 C39,172 43,170 47,140 L50,140" />
-                            <path class="body-silhouette" d="M50,15 C54,15 56,20 56,28 C56,35 53,38 59,42 C70,44 76,52 78,62 C82,78 86,102 84,115 C83,120 78,120 78,114 C80,98 75,75 75,72 L74,128 C74,135 76,142 75,160 C74,175 78,195 76,212 C75,215 72,215 71,212 C68,202 67,185 64,172 C61,172 57,170 53,140 L50,140" />
+                            <path class="body-silhouette" d="M50,15 C45,15 43,18 43,26 C43,32 46,35 40,38 C31,41 24,47 22,57 C19,72 13,95 15,110 C16,115 21,113 21,108 C19,94 24,72 24,69 L25,120 C25,128 23,135 24,155 C25,170 21,190 23,208 C24,212 27,212 28,208 C31,198 32,180 35,168 C38,168 41,166 45,138 L50,138 Z" />
+                            <path class="body-silhouette" d="M50,15 C55,15 57,18 57,26 C57,32 54,35 60,38 C69,41 76,47 78,57 C81,72 87,95 85,110 C84,115 79,113 79,108 C81,94 76,72 76,69 L75,120 C75,128 77,135 76,155 C75,170 79,190 77,208 C76,212 73,212 72,208 C69,198 68,180 65,168 C62,168 59,166 55,138 L50,138 Z" />
                             
-                            <path class="muscle-node" data-muscle="shoulders" d="M25,44 C31,44 35,48 34,56 C33,64 27,68 23,62 C21,56 22,46 25,44 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M75,44 C69,44 65,48 66,56 C67,64 73,68 77,62 C79,56 78,46 75,44 Z" />
-                            <path class="muscle-node" data-muscle="back" d="M35,46 L65,46 L60,105 L40,105 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M22,66 C26,66 27,78 26,92 C23,92 20,84 21,74 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M78,66 C74,66 73,78 74,92 C77,92 80,84 79,74 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M27,112 C38,110 49,110 49,128 C37,130 26,125 27,112 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M73,112 C62,110 51,110 51,128 C63,130 74,125 73,112 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M28,134 L46,134 L43,195 L27,195 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M72,134 L54,134 L57,195 L73,195 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M22,50 C25,44 29,43 31,48 C30,55 26,62 22,57 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M78,50 C75,44 71,43 69,48 C70,55 74,62 78,57 Z" />
+                            <path class="muscle-node" data-muscle="back" d="M32,48 L68,48 L60,100 L40,100 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M22,60 C25,60 26,72 25,85 C23,85 20,78 21,68 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M78,60 C75,60 74,72 75,85 C77,85 80,78 79,68 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M26,104 C36,102 49,102 49,118 C37,120 26,116 26,104 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M74,104 C64,102 51,102 51,118 C63,120 74,116 74,104 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M27,124 L46,124 L43,180 L26,180 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M73,124 L54,124 L57,180 L74,180 Z" />
                         </svg>
                     </div>
                 </div>
@@ -345,6 +354,7 @@
     <script>
         let performanceChart = null;
         let selectedMuscleGroup = null;
+        let selectedGender = 'male';
 
         const exerciseDatabase = {
             chest: ["Flat Bench Press", "Incline Dumbbell Press", "Cable Chest Fly", "Pec Deck Machine"],
@@ -381,6 +391,22 @@
             "6": [ {tag: "Meal 1", ref: "breakfastWrap"}, {tag: "Meal 2", ref: "honeySalmon"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "7": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "beefSweetPotato"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "turkeyChili"} ]
         };
+
+        function setGender(gender) {
+            selectedGender = gender;
+            document.getElementById('genderMale').classList.toggle('active', gender === 'male');
+            document.getElementById('genderFemale').classList.toggle('active', gender === 'female');
+            
+            // Subtle aesthetic structural shifts to mock real visual targets
+            const silho = document.querySelectorAll('.body-silhouette');
+            silho.forEach(path => {
+                if(gender === 'female') {
+                    path.style.stroke = '#f472b6'; // Custom pink framework hint
+                } else {
+                    path.style.stroke = 'var(--mw-stroke)';
+                }
+            });
+        }
 
         function setupMuscleMapListeners() {
             document.querySelectorAll('.muscle-node').forEach(el => {
@@ -448,16 +474,16 @@
                     <div class="accordion-item">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div>
-                                <span style="font-size:0.7rem; font-weight:900; color:var(--border-laser); text-transform:uppercase; display:block; margin-bottom:2px;">${item.tag}</span>
-                                <h3>${data.title}</h3>
+                                <span style="font-size:0.65rem; font-weight:900; color:var(--border-laser); text-transform:uppercase; display:block; margin-bottom:2px;">${item.tag}</span>
+                                <h3 style="font-size:0.9rem;">${data.title}</h3>
                             </div>
                             <span style="color:var(--accent); font-size:0.7rem;">▼</span>
                         </div>
                         <div class="accordion-content">
-                            <p style="font-weight:700; color:var(--accent); font-size:0.85rem; margin-bottom:12px;">${data.macros}</p>
-                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted);">Ingredients:</p>
+                            <p style="font-weight:700; color:var(--accent); font-size:0.8rem; margin-bottom:10px;">${data.macros}</p>
+                            <p style="font-size:0.7rem; text-transform:uppercase; font-weight:800; color:var(--text-muted);">Ingredients:</p>
                             <ul class="recipe-list">${ingredientItems}</ul>
-                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted); margin-top:4px;">Instructions:</p>
+                            <p style="font-size:0.7rem; text-transform:uppercase; font-weight:800; color:var(--text-muted); margin-top:4px;">Instructions:</p>
                             <ol class="recipe-steps">${stepItems}</ol>
                         </div>
                     </div>
@@ -520,8 +546,8 @@
             const ctx = document.getElementById('analyticsChart').getContext('2d');
             performanceChart = new Chart(ctx, {
                 type: 'line',
-                data: { labels: [], datasets: [{ data: [], borderColor: '#00e5ff', borderWidth: 2, tension: 0.1, fill: true, backgroundColor: 'rgba(0,229,255,0.02)' }] },
-                options: { plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1a1a26' } }, y: { grid: { color: '#1a1a26' } } } }
+                data: { labels: [], datasets: [{ data: [], borderColor: '#22d3ee', borderWidth: 2, tension: 0.1, fill: true, backgroundColor: 'rgba(34,211,238,0.01)' }] },
+                options: { plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1e1e2f' } }, y: { grid: { color: '#1e1e2f' } } } }
             });
         }
 
