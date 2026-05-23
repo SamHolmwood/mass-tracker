@@ -104,7 +104,6 @@
             color: var(--text-bright);
         }
 
-        /* MuscleWiki Component Layout Classes (from muscle-map/index.css) */
         .mw-map-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -145,7 +144,6 @@
             width: 100%;
             height: 100%;
             max-width: 210px;
-            object-fit: contain;
         }
 
         .mw-silhouette {
@@ -242,23 +240,23 @@
                     <span>Anterior</span>
                     <div class="mw-viewport">
                         <svg class="mw-svg" viewBox="0 0 320 620">
-                            <path class="mw-silhouette" d="M160,35 C132,35 125,55 125,90 C125,120 135,130 110,145 C80,160 62,185 58,225 C50,270 35,360 40,410 C42,430 55,425 55,405 C50,350 62,275 62,260 L65,440 C65,470 60,500 62,560 C65,610 55,680 60,740 C62,755 75,755 78,740 C90,700 92,640 105,600 C115,600 128,590 138,500 L160,500 Z" />
-                            <path class="mw-silhouette" d="M160,35 C188,35 195,55 195,90 C195,120 185,130 210,145 C240,160 258,185 262,225 C270,270 285,360 280,410 C278,430 265,425 265,405 C270,350 258,275 258,260 L255,440 C255,470 260,500 258,560 C255,610 265,680 260,740 C258,755 245,755 242,740 C230,700 228,640 215,600 C205,600 192,590 182,500 L160,500 Z" />
+                            <path class="mw-silhouette" d="M160,25 C142,25 135,40 135,70 C135,95 142,102 122,115 C98,128 82,150 80,180 C74,215 62,290 65,330 C67,345 78,340 78,325 C74,280 82,220 82,210 L85,355 C85,380 80,405 82,450 C85,490 78,540 82,590 C84,600 94,600 96,590 C105,560 106,515 116,485 C124,485 134,475 142,400 L160,400 Z" />
+                            <path class="mw-silhouette" d="M160,25 C178,25 185,40 185,70 C185,95 178,102 198,115 C222,128 238,150 240,180 C246,215 258,290 255,330 C253,345 242,340 242,325 C246,280 238,220 238,210 L235,355 C235,380 240,405 238,450 C235,490 242,540 238,590 C236,600 226,600 224,590 C215,560 214,515 204,485 C196,485 186,475 178,400 L160,400 Z" />
                             
-                            <path id="deltoid-left" class="mw-muscle" data-muscle="shoulders" d="M62,210 C70,175 92,160 102,185 C98,220 80,250 62,235 Z" />
-                            <path id="deltoid-right" class="mw-muscle" data-muscle="shoulders" d="M258,210 C250,175 228,160 218,185 C222,220 240,250 258,235 Z" />
+                            <path id="deltoid-left" class="mw-muscle" data-muscle="shoulders" d="M82,170 C88,140 106,130 114,150 C110,180 96,205 82,192 Z" />
+                            <path id="deltoid-right" class="mw-muscle" data-muscle="shoulders" d="M238,170 C232,140 214,130 206,150 C210,180 224,205 238,192 Z" />
                             
-                            <path id="pectoral-left" class="mw-muscle" data-muscle="chest" d="M106,190 C125,180 155,185 160,225 C130,225 112,220 106,190 Z" />
-                            <path id="pectoral-right" class="mw-muscle" data-muscle="chest" d="M214,190 C195,180 165,185 160,225 C190,225 208,220 214,190 Z" />
+                            <path id="pectoral-left" class="mw-muscle" data-muscle="chest" d="M117,155 C132,148 156,152 160,185 C135,185 122,180 117,155 Z" />
+                            <path id="pectoral-right" class="mw-muscle" data-muscle="chest" d="M203,155 C188,148 164,152 160,185 C185,185 198,180 203,155 Z" />
                             
-                            <path id="abs-upper" class="mw-muscle" data-muscle="abs" d="M116,235 L204,235 L198,300 L122,300 Z" />
-                            <path id="abs-lower" class="mw-muscle" data-muscle="abs" d="M122,302 L198,302 L192,370 L128,370 Z" />
+                            <path id="abs-upper" class="mw-muscle" data-muscle="abs" d="M125,195 L195,195 L190,250 L130,250 Z" />
+                            <path id="abs-lower" class="mw-muscle" data-muscle="abs" d="M130,252 L190,252 L185,305 L135,305 Z" />
                             
-                            <path id="bicep-left" class="mw-muscle" data-muscle="arms" d="M58,240 C68,240 76,280 72,320 C64,320 54,300 56,265 Z" />
-                            <path id="bicep-right" class="mw-muscle" data-muscle="arms" d="M262,240 C252,240 244,280 248,320 C256,320 266,300 264,265 Z" />
+                            <path id="bicep-left" class="mw-muscle" data-muscle="arms" d="M78,195 C86,195 93,230 90,260 C83,260 75,245 76,215 Z" />
+                            <path id="bicep-right" class="mw-muscle" data-muscle="arms" d="M242,195 C234,195 227,230 230,260 C237,260 245,245 244,215 Z" />
                             
-                            <path id="quad-left" class="mw-muscle" data-muscle="legs" d="M75,385 C115,380 150,390 148,510 L85,510 C72,460 70,420 75,385 Z" />
-                            <path id="quad-right" class="mw-muscle" data-muscle="legs" d="M245,385 C205,380 170,390 172,510 L235,510 C248,460 250,420 245,385 Z" />
+                            <path id="quad-left" class="mw-muscle" data-muscle="legs" d="M92,315 C125,310 152,320 150,410 L100,410 C90,375 88,345 92,315 Z" />
+                            <path id="quad-right" class="mw-muscle" data-muscle="legs" d="M228,315 C195,310 168,320 170,410 L220,410 C230,375 232,345 228,315 Z" />
                         </svg>
                     </div>
                 </div>
@@ -267,24 +265,24 @@
                     <span>Posterior</span>
                     <div class="mw-viewport">
                         <svg class="mw-svg" viewBox="0 0 320 620">
-                            <path class="mw-silhouette" d="M160,35 C132,35 125,55 125,90 C125,120 135,130 110,145 C80,160 62,185 58,225 C50,270 35,360 40,410 C42,430 55,425 55,405 C50,350 62,275 62,260 L65,440 C65,470 60,500 62,560 C65,610 55,680 60,740 C62,755 75,755 78,740 C90,700 92,640 105,600 C115,600 128,590 138,500 L160,500 Z" />
-                            <path class="mw-silhouette" d="M160,35 C188,35 195,55 195,90 C195,120 185,130 210,145 C240,160 258,185 262,225 C270,270 285,360 280,410 C278,430 265,425 265,405 C270,350 258,275 258,260 L255,440 C255,470 260,500 258,560 C255,610 265,680 260,740 C258,755 245,755 242,740 C230,700 228,640 215,600 C205,600 192,590 182,500 L160,500 Z" />
+                            <path class="mw-silhouette" d="M160,25 C142,25 135,40 135,70 C135,95 142,102 122,115 C98,128 82,150 80,180 C74,215 62,290 65,330 C67,345 78,340 78,325 C74,280 82,220 82,210 L85,355 C85,380 80,405 82,450 C85,490 78,540 82,590 C84,600 94,600 96,590 C105,560 106,515 116,485 C124,485 134,475 142,400 L160,400 Z" />
+                            <path class="mw-silhouette" d="M160,25 C178,25 185,40 185,70 C185,95 178,102 198,115 C222,128 238,150 240,180 C246,215 258,290 255,330 C253,345 242,340 242,325 C246,280 238,220 238,210 L235,355 C235,380 240,405 238,450 C235,490 242,540 238,590 C236,600 226,600 224,590 C215,560 214,515 204,485 C196,485 186,475 178,400 L160,400 Z" />
                             
-                            <path id="rear-deltoid-left" class="mw-muscle" data-muscle="shoulders" d="M62,210 C70,175 92,160 102,185 C98,220 80,250 62,235 Z" />
-                            <path id="rear-deltoid-right" class="mw-muscle" data-muscle="shoulders" d="M258,210 C250,175 228,160 218,185 C222,220 240,250 258,235 Z" />
+                            <path id="rear-deltoid-left" class="mw-muscle" data-muscle="shoulders" d="M82,170 C88,140 106,130 114,150 C110,180 96,205 82,192 Z" />
+                            <path id="rear-deltoid-right" class="mw-muscle" data-muscle="shoulders" d="M238,170 C232,140 214,130 206,150 C210,180 224,205 238,192 Z" />
                             
-                            <path id="traps-upper" class="mw-muscle" data-muscle="back" d="M104,185 L216,185 L190,240 L130,240 Z" />
-                            <path id="lats-left" class="mw-muscle" data-muscle="back" d="M106,242 L148,242 L144,320 L118,320 Z" />
-                            <path id="lats-right" class="mw-muscle" data-muscle="back" d="M214,242 L172,242 L176,320 L202,320 Z" />
+                            <path id="traps-upper" class="mw-muscle" data-muscle="back" d="M115,150 L205,150 L184,195 L136,195 Z" />
+                            <path id="lats-left" class="mw-muscle" data-muscle="back" d="M116,198 L149,198 L146,260 L126,260 Z" />
+                            <path id="lats-right" class="mw-muscle" data-muscle="back" d="M204,198 L171,198 L174,260 L194,260 Z" />
                             
-                            <path id="tricep-left" class="mw-muscle" data-muscle="arms" d="M58,240 C68,240 76,280 72,320 C64,320 54,300 56,265 Z" />
-                            <path id="tricep-right" class="mw-muscle" data-muscle="arms" d="M262,240 C252,240 244,280 248,320 C256,320 266,300 264,265 Z" />
+                            <path id="tricep-left" class="mw-muscle" data-muscle="arms" d="M78,195 C86,195 93,230 90,260 C83,260 75,245 76,215 Z" />
+                            <path id="tricep-right" class="mw-muscle" data-muscle="arms" d="M242,195 C234,195 227,230 230,260 C237,260 245,245 244,215 Z" />
                             
-                            <path id="glute-left" class="mw-muscle" data-muscle="legs" d="M78,375 C112,370 150,370 150,420 C110,425 78,415 78,375 Z" />
-                            <path id="glute-right" class="mw-muscle" data-muscle="legs" d="M242,375 C208,370 170,370 170,420 C210,425 242,415 242,375 Z" />
+                            <path id="glute-left" class="mw-muscle" data-muscle="legs" d="M94,305 C122,300 150,300 150,340 C118,345 94,338 94,305 Z" />
+                            <path id="glute-right" class="mw-muscle" data-muscle="legs" d="M226,305 C198,300 170,300 170,340 C202,345 226,338 226,305 Z" />
                             
-                            <path id="hamstring-left" class="mw-muscle" data-muscle="legs" d="M80,435 L145,435 L138,550 L82,550 Z" />
-                            <path id="hamstring-right" class="mw-muscle" data-muscle="legs" d="M240,435 L175,435 L182,550 L238,550 Z" />
+                            <path id="hamstring-left" class="mw-muscle" data-muscle="legs" d="M96,355 L146,355 L141,450 L98,450 Z" />
+                            <path id="hamstring-right" class="mw-muscle" data-muscle="legs" d="M224,355 L174,355 L179,450 L222,450 Z" />
                         </svg>
                     </div>
                 </div>
