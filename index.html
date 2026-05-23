@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mass Dynamic Pro</title>
-    <link rel="manifest" href="./manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -20,9 +19,11 @@
             --border: #222235;
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
-            /* Interaction colors set to transparent to keep graphic clean */
-            --muscle-base: transparent;
-            --muscle-stroke: transparent;
+            
+            /* SVG Styling variables matching MuscleWiki dark mechanics */
+            --body-outline: #222235;
+            --muscle-idle: rgba(14, 14, 18, 0.6);
+            --muscle-stroke: rgba(0, 229, 255, 0.25);
         }
 
         * {
@@ -126,63 +127,42 @@
             z-index: 10;
         }
 
-        /* FIXED BACKGROUND ENGINE: SINGLE SLIMMED PROFILE */
         .anatomy-viewport {
             width: 100%;
-            height: 340px;
+            height: 320px;
             position: relative;
-            background-image: url('Gemini_Generated_Image_dtklxndtklxndtkl.png');
-            background-repeat: no-repeat;
-            background-size: 200% auto; /* Scaled cleanly horizontally to fit anterior/posterior side-by-side */
-        }
-
-        .anatomy-viewport.anterior {
-            background-position: left center;
-        }
-
-        .anatomy-viewport.posterior {
-            background-position: right center;
         }
 
         .anatomy-svg-overlay {
             width: 100%;
             height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 5;
         }
 
-        .body-silhouette { 
-            fill: none; 
-            stroke: none; 
+        /* Base Body Proportions Styles */
+        .body-silhouette {
+            fill: none;
+            stroke: var(--body-outline);
+            stroke-width: 1.5;
         }
-        
-        .skeletal-spine { 
-            stroke: rgba(0, 229, 255, 0.15); 
-            stroke-dasharray: 2,3; 
-            stroke-width: 1.2; 
-        }
-        
+
         .muscle-node {
-            fill: var(--muscle-base);
+            fill: var(--muscle-idle);
             stroke: var(--muscle-stroke);
-            stroke-width: 0.9;
+            stroke-width: 1;
             cursor: pointer;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.2s ease-in-out;
         }
 
         .muscle-node:hover { 
-            fill: rgba(0, 229, 255, 0.25);
+            fill: rgba(0, 229, 255, 0.2);
             stroke: var(--accent);
-            stroke-width: 1px;
         }
 
         .muscle-node.selected {
-            fill: rgba(255, 0, 85, 0.45);
-            stroke: #ffffff;
-            stroke-width: 1.2;
-            filter: drop-shadow(0 0 8px var(--border-laser));
+            fill: rgba(255, 0, 85, 0.35);
+            stroke: var(--border-laser);
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 6px var(--border-laser));
         }
 
         .filter-status-banner {
@@ -248,41 +228,49 @@
             
             <div class="muscle-map-container">
                 <div class="muscle-map-pane">
-                    <span>Anterior Matrix</span>
-                    <div class="anatomy-viewport anterior">
-                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
-                            <path class="muscle-node" data-muscle="shoulders" d="M21,38 C14,40 6,48 4,58 C2,68 1,78 3,84 L14,76 C13,64 15,50 21,38 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M79,38 C86,40 94,48 96,58 C98,68 99,78 97,84 L86,76 C87,64 85,50 79,38 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M24,43 C34,40 45,44 49,52 C46,68 34,71 23,66 C20,58 21,50 24,43 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M76,43 C66,40 55,44 51,52 C54,68 66,71 77,66 C80,58 79,50 76,43 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M36,70 L64,70 L64,122 L36,122 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M12,74 C7,80 5,90 8,100 L14,94 L15,76 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M88,74 C93,80 95,90 92,100 L86,94 L85,76 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M18,126 C28,126 47,129 46,174 L24,174 C11,152 13,138 18,126 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M82,126 C72,126 53,129 54,174 L76,174 C89,152 87,138 82,126 Z" />
+                    <span>Anterior</span>
+                    <div class="anatomy-viewport">
+                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
+                            <path class="body-silhouette" d="M50,15 C46,15 44,20 44,28 C44,35 47,38 41,42 C30,44 24,52 22,62 C18,78 14,102 16,115 C17,120 22,120 22,114 C20,98 25,75 25,72 L26,128 C26,135 24,142 25,160 C26,175 22,195 24,212 C25,215 28,215 29,212 C32,202 33,185 36,172 C39,172 43,170 47,140 L50,140" />
+                            <path class="body-silhouette" d="M50,15 C54,15 56,20 56,28 C56,35 53,38 59,42 C70,44 76,52 78,62 C82,78 86,102 84,115 C83,120 78,120 78,114 C80,98 75,75 75,72 L74,128 C74,135 76,142 75,160 C74,175 78,195 76,212 C75,215 72,215 71,212 C68,202 67,185 64,172 C61,172 57,170 53,140 L50,140" />
+                            
+                            <path class="muscle-node" data-muscle="shoulders" d="M25,44 C31,44 35,48 34,56 C33,64 27,68 23,62 C21,56 22,46 25,44 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M75,44 C69,44 65,48 66,56 C67,64 73,68 77,62 C79,56 78,46 75,44 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M35,46 C42,45 49,48 49,58 C41,59 34,56 34,48 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M65,46 C58,45 51,48 51,58 C59,59 66,56 66,48 Z" />
+                            <path class="muscle-node" data-muscle="abs" d="M37,64 L63,64 L61,110 L39,110 Z" fill-rule="evenodd" />
+                            <path class="muscle-node" data-muscle="arms" d="M22,66 C26,66 27,78 26,92 C23,92 20,84 21,74 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M78,66 C74,66 73,78 74,92 C77,92 80,84 79,74 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M27,116 C38,114 47,118 46,150 L29,150 C25,136 25,124 27,116 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M73,116 C62,114 53,118 54,150 L71,150 C75,136 75,124 73,116 Z" />
                         </svg>
                     </div>
                 </div>
 
                 <div class="muscle-map-pane">
-                    <span>Posterior Matrix</span>
-                    <div class="anatomy-viewport posterior">
-                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
-                            <path class="muscle-node" data-muscle="back" d="M20,40 L80,40 L70,124 L30,124 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M16,54 L9,92 L14,92 L19,64 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M84,54 L91,92 L86,92 L81,64 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M17,124 C32,118 48,122 49,142 C34,145 16,138 17,124 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M83,124 C68,118 52,122 51,142 C66,145 84,138 83,124 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M18,145 L47,145 L44,230 L16,230 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M53,145 L82,145 L80,230 L56,230 Z" />
+                    <span>Posterior</span>
+                    <div class="anatomy-viewport">
+                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
+                            <path class="body-silhouette" d="M50,15 C46,15 44,20 44,28 C44,35 47,38 41,42 C30,44 24,52 22,62 C18,78 14,102 16,115 C17,120 22,120 22,114 C20,98 25,75 25,72 L26,128 C26,135 24,142 25,160 C26,175 22,195 24,212 C25,215 28,215 29,212 C32,202 33,185 36,172 C39,172 43,170 47,140 L50,140" />
+                            <path class="body-silhouette" d="M50,15 C54,15 56,20 56,28 C56,35 53,38 59,42 C70,44 76,52 78,62 C82,78 86,102 84,115 C83,120 78,120 78,114 C80,98 75,75 75,72 L74,128 C74,135 76,142 75,160 C74,175 78,195 76,212 C75,215 72,215 71,212 C68,202 67,185 64,172 C61,172 57,170 53,140 L50,140" />
+                            
+                            <path class="muscle-node" data-muscle="shoulders" d="M25,44 C31,44 35,48 34,56 C33,64 27,68 23,62 C21,56 22,46 25,44 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M75,44 C69,44 65,48 66,56 C67,64 73,68 77,62 C79,56 78,46 75,44 Z" />
+                            <path class="muscle-node" data-muscle="back" d="M35,46 L65,46 L60,105 L40,105 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M22,66 C26,66 27,78 26,92 C23,92 20,84 21,74 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M78,66 C74,66 73,78 74,92 C77,92 80,84 79,74 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M27,112 C38,110 49,110 49,128 C37,130 26,125 27,112 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M73,112 C62,110 51,110 51,128 C63,130 74,125 73,112 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M28,134 L46,134 L43,195 L27,195 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M72,134 L54,134 L57,195 L73,195 Z" />
                         </svg>
                     </div>
                 </div>
             </div>
 
             <div id="filterBanner" class="filter-status-banner">
-                <span>FILTER BANNER: <strong id="filterLabel">NONE</strong> SELECTED</span>
-                <button class="clear-filter-btn" onclick="resetMuscleFilter()">Reset View</button>
+                <span>ISOLATED INTENSITY TARGET: <strong id="filterLabel">NONE</strong></span>
+                <button class="clear-filter-btn" onclick="resetMuscleFilter()">Show All Elements</button>
             </div>
 
             <h2>Log Workout Dataset</h2>
@@ -368,90 +356,20 @@
         };
 
         const recipes = {
-            hash: { 
-                title: "Savory Potato & Egg Hash", 
-                macros: "730 kcal | 28g P | 95g C | 24g F",
-                ingredients: ["300g White Potatoes (Diced)", "2 Large Whole Eggs", "100g Egg Whites", "5g Olive Oil", "Onion & Bell Pepper Blend"],
-                steps: ["Toss diced potatoes in olive oil and seasonings of choice.", "Air fry at 200°C for 18-20 minutes until crisp.", "Pan-fry the onion and peppers, then scramble in the eggs and egg whites.", "Mix the crisp potatoes into the egg scramble and serve hot."]
-            },
-            oats: { 
-                title: "Mass Power Overnight Berry Oats", 
-                macros: "760 kcal | 35g P | 110g C | 16g F",
-                ingredients: ["100g Rolled Oats", "30g Whey Protein Isolate", "150ml Almond Milk", "80g Mixed Berries", "15g Chia Seeds"],
-                steps: ["In a sealable container, mix rolled oats, whey protein, and chia seeds together.", "Pour in almond milk and stir thoroughly until well mixed.", "Top with fresh or frozen mixed berries.", "Seal container and leave to rest in the refrigerator overnight."]
-            },
-            breakfastWrap: { 
-                title: "Ultimate Breakfast Wrap Duo", 
-                macros: "780 kcal | 30g P | 90g C | 28g F",
-                ingredients: ["2 Large Tortilla Wraps", "3 Large Whole Eggs", "50g Shredded Light Mozzarella", "Spinach & Tomato Dice"],
-                steps: ["Whisk whole eggs together and scramble in a pan with diced tomatoes and spinach.", "Lay out both tortilla wraps and divide the scrambled eggs evenly between them.", "Top with shredded mozzarella cheese.", "Fold tightly and optionally toast on a hot pan for 1-2 minutes per side to melt cheese."]
-            },
-            steakPasta: { 
-                title: "Creamy Garlic Steak Pasta", 
-                macros: "860 kcal | 58g P | 105g C | 22g F",
-                ingredients: ["120g Lean Beef Steak Strips", "100g Uncooked Pasta", "40g Light Cream Cheese", "Garlic Clove & Spinach"],
-                steps: ["Boil pasta in salted water according to box instructions.", "Season steak strips and sear on a high-heat pan for 2-3 minutes per side. Set aside.", "In the same pan, lower heat and melt cream cheese with minced garlic and a splash of pasta water.", "Toss drained pasta, spinach, and steak back into the cream sauce until wilted."]
-            },
-            cajunWrap: { 
-                title: "Spicy Cajun Chicken Wrap Duo", 
-                macros: "820 kcal | 52g P | 98g C | 18g F",
-                ingredients: ["150g Chicken Breast Strips", "2 Large Tortilla Wraps", "Cajun Seasoning Mix", "30g Light Mayonnaise"],
-                steps: ["Coat chicken breast strips heavily in Cajun seasoning.", "Pan-sear or air-fry chicken until cooked through (approx. 10-12 mins mins).", "Spread light mayonnaise evenly across both tortilla wraps.", "Assemble wraps with the warm chicken strips and roll tightly."]
-            },
-            beefSweetPotato: { 
-                title: "Sweet Potato & Beef Taco Skillet", 
-                macros: "840 kcal | 48g P | 102g C | 24g F",
-                ingredients: ["140g Extra Lean Ground Beef", "350g Sweet Potatoes (Cubed)", "Taco Seasoning", "40g Reduced Fat Cheese"],
-                steps: ["Steam or microwave cubed sweet potatoes for 5 minutes to soften.", "Brown ground beef in a skillet, draining any excess fat.", "Add taco seasoning, a splash of water, and the sweet potatoes to the skillet.", "Simmer for 5 minutes, top with cheese, and cover with a lid until melted."]
-            },
-            soyGarlicBowl: { 
-                title: "Soy-Garlic Chicken Rice Bowl", 
-                macros: "790 kcal | 54g P | 100g C | 14g F",
-                ingredients: ["160g Diced Chicken Breast", "110g Dry Jasmine Rice", "Low Sodium Soy Sauce", "Minced Garlic & Green Onion"],
-                steps: ["Cook jasmine rice using a rice cooker or stovetop method.", "Sauté diced chicken breast with minced garlic in a hot pan.", "Pour low sodium soy sauce over the chicken and reduce heat until fully glazed.", "Serve chicken over the hot rice base and garnish with chopped green onions."]
-            },
-            honeySalmon: { 
-                title: "Honey-Soy Salmon & Sesame Rice", 
-                macros: "830 kcal | 46g P | 104g C | 23g F",
-                ingredients: ["150g Fresh Salmon Fillet", "110g dry Basmati Rice", "15g Pure Honey", "Sesame Seeds & Broccoli Florets"],
-                steps: ["Prepare basmati rice according to standard instructions.", "Pan-sear salmon fillet skin-side down for 4 minutes, then flip.", "Drizzle honey and a dash of soy sauce into the pan to glaze the salmon.", "Steam broccoli alongside, then plate over rice and sprinkle with sesame seeds."]
-            },
-            bbqPotato: { 
-                title: "BBQ Chicken & Roasted Potatoes", 
-                macros: "810 kcal | 50g P | 101g C | 15g F",
-                ingredients: ["160g Chicken Breast Cubes", "350g Russet Potatoes", "40g Low Sugar BBQ Sauce", "Smoked Paprika & Garlic Powder"],
-                steps: ["Cut potatoes into wedges, season with paprika and garlic, then roast at 200°C for 25 mins.", "Cook chicken breast cubes in a hot pan until golden and cooked through.", "Turn off heat, pour BBQ sauce over chicken, and toss to coat completely.", "Serve the glazed chicken alongside the crispy roasted potatoes."]
-            },
-            turkeyChili: { 
-                title: "Hearty Turkey & Bean Chili", 
-                macros: "790 kcal | 52g P | 98g C | 16g F",
-                ingredients: ["150g Lean Ground Turkey", "120g Red Kidney Beans", "200g Crushed Tomatoes Base", "Chili Spices Blend"],
-                steps: ["Brown ground turkey in a deep pot with chili powder, cumin, and garlic.", "Pour in crushed tomatoes and rinsed red kidney beans.", "Bring chili to a boil, then reduce heat to low.", "Cover and simmer for 15-20 minutes to allow flavors to combine completely."]
-            },
-            beefRiceWrap: { 
-                title: "Loaded Beef & Rice Monster Burrito", 
-                macros: "850 kcal | 46g P | 108g C | 22g F",
-                ingredients: ["120g Lean Ground Beef", "70g Cooked Rice", "1 Jumbo Tortilla Wrap", "Salsa & Lettuce Crunch"],
-                steps: ["Cook ground beef with taco spices until fully browned.", "Warm the jumbo tortilla wrap slightly to prevent tearing.", "Layer cooked rice, seasoned beef, salsa, and shredded lettuce in the center.", "Fold the sides inward and roll up tightly into a dense burrito profile."]
-            },
-            snackA: { 
-                title: "Protein Refuel Wrap", 
-                macros: "560 kcal | 26g P | 72g C | 12g F",
-                ingredients: ["1 Tortilla Wrap", "20g Peanut Butter", "1 Sliced Banana", "15g Whey Protein Drizzle"],
-                steps: ["Lay out the tortilla wrap flat.", "Spread peanut butter evenly across the wrap surface.", "Place banana slices along the center line.", "Mix protein powder with a tiny drop of water to make a paste, drizzle it over, and roll."]
-            },
-            snackB: { 
-                title: "Quick Savory Egg & Rice Mash", 
-                macros: "540 kcal | 24g P | 70g C | 14g F",
-                ingredients: ["80g Cooked White Rice", "2 Large Whole Eggs", "Soy Sauce Drop", "Toasted Seaweed Flakes"],
-                steps: ["Reheat cooked white rice until steaming hot.", "Fry two eggs in a separate pan keeping the yolks slightly runny.", "Slide the eggs directly onto the rice bowl.", "Add a drop of soy sauce, crush seaweed flakes over the top, and mash together with a fork."]
-            },
-            snackC: { 
-                title: "Honey Peanut Butter Rice Cakes", 
-                macros: "510 kcal | 20g P | 74g C | 13g F",
-                ingredients: ["4 Puffed Rice Cakes", "25g Smooth Peanut Butter", "15g Honey Drizzle"],
-                steps: ["Arrange 4 crisp puffed rice cakes on a flat surface.", "Divide peanut butter evenly and spread across each cake surface.", "Drizzle raw honey in a zigzag pattern across all cakes.", "Consume immediately to maintain maximum rice cake crunch."]
-            }
+            hash: { title: "Savory Potato & Egg Hash", macros: "730 kcal | 28g P | 95g C | 24g F", ingredients: ["300g White Potatoes", "2 Whole Eggs", "100g Egg Whites"], steps: ["Air fry potatoes.", "Scramble eggs."] },
+            oats: { title: "Mass Power Overnight Berry Oats", macros: "760 kcal | 35g P | 110g C | 16g F", ingredients: ["100g Rolled Oats", "30g Whey"], steps: ["Mix items.", "Refrigerate."] },
+            breakfastWrap: { title: "Ultimate Breakfast Wrap Duo", macros: "780 kcal | 30g P | 90g C | 28g F", ingredients: ["2 Tortilla Wraps", "3 Eggs"], steps: ["Scramble eggs.", "Wrap items."] },
+            steakPasta: { title: "Creamy Garlic Steak Pasta", macros: "860 kcal | 58g P | 105g C | 22g F", ingredients: ["120g Steak Strips", "100g Pasta"], steps: ["Boil pasta.", "Sear steak."] },
+            cajunWrap: { title: "Spicy Cajun Chicken Wrap Duo", macros: "820 kcal | 52g P | 98g C | 18g F", ingredients: ["150g Chicken", "2 Wraps"], steps: ["Cook chicken.", "Assemble wraps."] },
+            beefSweetPotato: { title: "Sweet Potato & Beef Taco Skillet", macros: "840 kcal | 48g P | 102g C | 24g F", ingredients: ["140g Ground Beef", "350g Sweet Potatoes"], steps: ["Brown beef.", "Simmer potato."] },
+            soyGarlicBowl: { title: "Soy-Garlic Chicken Rice Bowl", macros: "790 kcal | 54g P | 100g C | 14g F", ingredients: ["160g Chicken", "110g Jasmine Rice"], steps: ["Cook rice.", "Sauté chicken."] },
+            honeySalmon: { title: "Honey-Soy Salmon & Sesame Rice", macros: "830 kcal | 46g P | 104g C | 23g F", ingredients: ["150g Salmon Fillet", "110g Basmati Rice"], steps: ["Cook rice.", "Pan-sear salmon."] },
+            bbqPotato: { title: "BBQ Chicken & Roasted Potatoes", macros: "810 kcal | 50g P | 101g C | 15g F", ingredients: ["160g Chicken", "350g Potatoes"], steps: ["Roast potatoes.", "Glaze chicken."] },
+            turkeyChili: { title: "Hearty Turkey & Bean Chili", macros: "790 kcal | 52g P | 98g C | 16g F", ingredients: ["150g Ground Turkey", "120g Kidney Beans"], steps: ["Brown turkey.", "Simmer beans."] },
+            beefRiceWrap: { title: "Loaded Beef & Rice Monster Burrito", macros: "850 kcal | 46g P | 108g C | 22g F", ingredients: ["120g Ground Beef", "70g Rice"], steps: ["Brown beef.", "Assemble burrito."] },
+            snackA: { title: "Protein Refuel Wrap", macros: "560 kcal | 26g P | 72g C | 12g F", ingredients: ["1 Tortilla", "20g Peanut Butter"], steps: ["Spread PB.", "Roll wrap."] },
+            snackB: { title: "Quick Savory Egg & Rice Mash", macros: "540 kcal | 24g P | 70g C | 14g F", ingredients: ["80g White Rice", "2 Eggs"], steps: ["Fry eggs.", "Mash with rice."] },
+            snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P | 74g C | 13g F", ingredients: ["4 Rice Cakes", "25g Peanut Butter"], steps: ["Spread PB.", "Drizzle honey."] }
         };
 
         const daySchedules = {
@@ -468,6 +386,7 @@
             document.querySelectorAll('.muscle-node').forEach(el => {
                 el.addEventListener('click', function() {
                     const group = this.getAttribute('data-muscle');
+                    
                     document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
                     document.querySelectorAll(`.muscle-node[data-muscle="${group}"]`).forEach(m => m.classList.add('selected'));
                     
@@ -536,11 +455,9 @@
                         </div>
                         <div class="accordion-content">
                             <p style="font-weight:700; color:var(--accent); font-size:0.85rem; margin-bottom:12px;">${data.macros}</p>
-                            
-                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted); letter-spacing:0.5px;">Pipelines / Ingredients:</p>
+                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted);">Ingredients:</p>
                             <ul class="recipe-list">${ingredientItems}</ul>
-                            
-                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted); letter-spacing:0.5px; margin-top:4px;">Preparation Instructions:</p>
+                            <p style="font-size:0.75rem; text-transform:uppercase; font-weight:900; color:var(--text-muted); margin-top:4px;">Instructions:</p>
                             <ol class="recipe-steps">${stepItems}</ol>
                         </div>
                     </div>
