@@ -20,9 +20,13 @@
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
             
-            /* Graphic Interaction Colors - transparent until hover/select */
-            --muscle-base: transparent;
-            --muscle-stroke: transparent;
+            /* Body Frame Aesthetics */
+            --body-silhouette-fill: rgba(255, 255, 255, 0.05);
+            --body-silhouette-stroke: rgba(255, 255, 255, 0.15);
+            
+            /* Interactive Area Presets */
+            --muscle-base: rgba(0, 229, 255, 0.03);
+            --muscle-stroke: rgba(0, 229, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -65,25 +69,31 @@
 
         .card { background-color: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 4px; padding: 18px; margin-bottom: 20px; }
 
-        .muscle-map-container { display: flex; justify-content: space-between; background-color: #0b0b10; border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 20px; }
-        .muscle-map-pane { width: 49%; display: flex; flex-direction: column; align-items: center; position: relative; background-image: linear-gradient(rgba(0, 229, 255, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.01) 1px, transparent 1px); background-size: 14px 14px; border: 1px solid rgba(255,255,255,0.02); border-radius: 4px; padding: 8px 4px; }
-        .muscle-map-pane span { font-size: 0.65rem; font-weight: 900; color: var(--text-muted); letter-spacing: 1.5px; margin-bottom: 12px; text-transform: uppercase; z-index: 10; }
-
-        /* FIXED BACKGROUND ENGINE: SINGLE SLIMMED PROFILE */
+        .muscle-map-container { display: flex; justify-content: center; background-color: #0b0b10; border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin-bottom: 20px; }
+        
         .anatomy-viewport {
             width: 100%;
-            height: 340px;
+            max-width: 260px;
+            height: 380px;
             position: relative;
-            /* Update to use the combined/slimmed profile graphic (Figure 1: slim_combined_figure.png) */
-            background-image: url('slim_combined_figure.png');
-            background-repeat: no-repeat;
-            background-size: contain; /* Combined figure fits in container */
-            background-position: center;
         }
 
-        /* SVG Overlays align with standard silhouette data */
-        .anatomy-svg-overlay { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 5; }
+        .anatomy-svg-overlay { width: 100%; height: 100%; }
         
+        /* Structural Human Backing Style */
+        .body-silhouette-base {
+            fill: var(--body-silhouette-fill);
+            stroke: var(--body-silhouette-stroke);
+            stroke-width: 1.2;
+        }
+
+        .skeletal-spine {
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 1;
+            stroke-dasharray: 3 3;
+            fill: none;
+        }
+
         .muscle-node {
             fill: var(--muscle-base);
             stroke: var(--muscle-stroke);
@@ -92,8 +102,8 @@
             transition: all 0.15s ease-in-out;
         }
 
-        .muscle-node:hover { fill: rgba(0, 229, 255, 0.25); stroke: var(--accent); stroke-width: 1px; }
-        .muscle-node.selected { fill: rgba(255, 0, 85, 0.45); stroke: #ffffff; stroke-width: 1.2; filter: drop-shadow(0 0 8px var(--border-laser)); }
+        .muscle-node:hover { fill: rgba(0, 229, 255, 0.25); stroke: var(--accent); stroke-width: 1.2px; }
+        .muscle-node.selected { fill: rgba(255, 0, 85, 0.45); stroke: #ffffff; stroke-width: 1.5; filter: drop-shadow(0 0 8px var(--border-laser)); }
 
         .filter-status-banner { display: none; background: rgba(0, 229, 255, 0.08); border: 1px solid var(--accent-dim); padding: 12px; border-radius: 4px; margin-bottom: 18px; justify-content: space-between; align-items: center; font-size: 0.8rem; }
         .filter-status-banner strong { color: var(--accent); text-transform: uppercase; font-weight: 900; }
@@ -148,13 +158,16 @@
             <div class="muscle-map-container">
                 <div class="anatomy-viewport">
                     <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
-                        <path id="skeletal-spine-line" class="muscle-node skeletal-spine" d="M50,42 L50,118" />
+                        <path class="body-silhouette-base" d="M50,12 C44,12 40,16 40,24 C40,32 44,36 50,36 C56,36 60,32 60,24 C60,16 56,12 50,12 Z M40,36 C32,38 22,44 18,52 C14,60 11,85 13,100 C15,108 19,105 18,95 C16,80 17,65 21,58 L24,54 L22,118 C22,130 14,142 16,160 C18,175 14,200 16,234 C17,238 23,238 24,234 C28,215 31,190 35,178 C39,178 44,172 47,145 L50,145 L53,145 C56,172 61,178 65,178 C69,190 72,215 76,234 C77,238 83,238 84,234 C86,200 82,175 84,160 C86,142 78,130 78,118 L76,54 L79,58 C83,65 84,80 82,95 C81,105 85,108 87,100 C89,85 86,60 82,52 C78,44 68,38 60,36 Z" />
+                        
+                        <path id="skeletal-spine-line" class="skeletal-spine" d="M50,36 L50,144" />
+                        
                         <path class="muscle-node" data-muscle="shoulders" d="M21,38 C14,40 6,48 4,58 C2,68 1,78 3,84 L14,76 C13,64 15,50 21,38 Z" />
                         <path class="muscle-node" data-muscle="shoulders" d="M79,38 C86,40 94,48 96,58 C98,68 99,78 97,84 L86,76 C87,64 85,50 79,38 Z" />
                         <path class="muscle-node" data-muscle="chest" d="M24,43 C34,40 45,44 49,52 C46,68 34,71 23,66 C20,58 21,50 24,43 Z" />
                         <path class="muscle-node" data-muscle="chest" d="M76,43 C66,40 55,44 51,52 C54,68 66,71 77,66 C80,58 79,50 76,43 Z" />
                         <path class="muscle-node" data-muscle="abs" d="M36,70 L64,70 L64,122 L36,122 Z" />
-                        <path class="muscle-node" data-muscle="back" d="M20,40 L80,40 L70,124 L30,124 Z" />
+                        <path class="muscle-node" data-muscle="back" d="M30,48 L70,48 L64,115 L36,115 Z" />
                         <path class="muscle-node" data-muscle="arms" d="M12,74 C7,80 5,90 8,100 L14,94 L15,76 Z" />
                         <path class="muscle-node" data-muscle="arms" d="M88,74 C93,80 95,90 92,100 L86,94 L85,76 Z" />
                         <path class="muscle-node" data-muscle="arms" d="M16,54 L9,92 L14,92 L19,64 Z" />
@@ -258,7 +271,7 @@
 
         const recipes = {
             hash: { 
-                title: "Savory Sweet Potato & Egg Power Mash", 
+                title: "Savory Sweet Potato & Egg Power Hash", 
                 macros: "730 kcal | 28g P | 95g C | 24g F",
                 ingredients: ["300g Sweet Potato (Cubed)", "2 Large Whole Eggs", "100g Extra Lean Ground Turkey", "5g Olive Oil", "Spinach & Pepper Medley"],
                 steps: ["Roast sweet potato cubes in olive oil and seasoning until soft.", "Brown ground turkey in a pan, then drain any excess fat.", "Scramble eggs into the turkey pan, folding in spinach and peppers.", "Mash roasted sweet potato in a bowl, top with the egg/turkey scramble and serve hot."]
@@ -357,7 +370,6 @@
             document.querySelectorAll('.muscle-node').forEach(el => {
                 el.addEventListener('click', function() {
                     const group = this.getAttribute('data-muscle');
-                    // Posterior spine marker is not interactive
                     if (this.id === 'skeletal-spine-line') return; 
 
                     document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
