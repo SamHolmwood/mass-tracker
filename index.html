@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mass Dynamic Pro - Anatomy Engine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <title>Mass Dynamic Pro — Anatomy Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-main: #0a0a0f;
-            --bg-surface: #12121a;
-            --bg-card: #181824;
-            --accent: #22d3ee;
-            --accent-glow: rgba(34, 211, 238, 0.2);
-            --border-laser: #f43f5e;
-            --text-main: #f8fafc;
-            --text-muted: #64748b;
-            --border: #27273a;
+            --bg-darken: #050507;
+            --bg-workspace: #0b0c10;
+            --bg-panels: #111217;
+            --border-subtle: #1f2029;
             
-            /* MuscleWiki Accurate Mapping Aesthetics */
-            --mw-body: #1e1e2f;
-            --mw-stroke: #2d2d44;
-            --mw-muscle-idle: #242438;
-            --mw-muscle-hover: #38bdf8;
-            --mw-muscle-selected: #f43f5e;
+            /* MuscleWiki Interaction Colors */
+            --mw-body-base: #1c1d24;
+            --mw-stroke-line: #2a2b35;
+            --mw-muscle-idle: #23242e;
+            --mw-hover-neon: #38bdf8;
+            --mw-select-neon: #f43f5e;
+            
+            --text-bright: #f8fafc;
+            --text-darken: #64748b;
         }
 
         * {
@@ -35,29 +33,28 @@
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            padding-bottom: 95px;
+            background-color: var(--bg-darken);
+            color: var(--text-bright);
+            padding-bottom: 90px;
             overflow-x: hidden;
         }
 
         header {
-            background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(18,18,26,0.9) 100%);
-            backdrop-filter: blur(12px);
-            padding: 16px;
+            background-color: var(--bg-panels);
+            padding: 18px;
             text-align: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-subtle);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         header h1 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 900;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--text-main);
+            color: var(--text-bright);
         }
 
         .page {
@@ -69,155 +66,154 @@
 
         .page.active { display: block; }
 
-        .card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px;
+        .mw-interface-card {
+            background-color: var(--bg-panels);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
         }
 
-        /* MuscleWiki Controller Bar Toggle Button Group */
-        .mw-controls {
+        .mw-gender-tabs {
             display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 16px;
+            background: var(--bg-workspace);
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-subtle);
         }
 
-        .mw-toggle-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 20px;
+        .mw-tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-darken);
+            padding: 10px;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
+            border-radius: 6px;
             transition: all 0.2s ease;
         }
 
-        .mw-toggle-btn.active {
-            background: var(--accent);
-            color: #000;
-            border-color: var(--accent);
-            box-shadow: 0 0 10px var(--accent-glow);
+        .mw-tab-btn.active {
+            background: var(--border-subtle);
+            color: var(--text-bright);
         }
 
-        /* High-Fidelity Muscle Graphic Window Container */
-        .muscle-map-container {
-            display: flex;
-            justify-content: space-between;
-            background: #0d0d14;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px 8px;
-            margin-bottom: 16px;
+        .mw-map-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            background: var(--bg-workspace);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 14px 8px;
+            margin-bottom: 20px;
         }
 
-        .muscle-map-pane {
-            width: 49%;
+        .mw-map-pane {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .muscle-map-pane span {
+        .mw-map-pane span {
             font-size: 0.65rem;
             font-weight: 800;
-            color: var(--text-muted);
+            color: var(--text-darken);
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
-        .anatomy-viewport {
+        .mw-viewport {
             width: 100%;
-            height: 350px;
+            height: 380px;
         }
 
-        .anatomy-svg-overlay {
+        .mw-svg {
             width: 100%;
             height: 100%;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
         }
 
-        /* SVG Vector Curvatures Definition Architecture */
-        .body-silhouette {
-            fill: var(--mw-body);
-            stroke: var(--mw-stroke);
-            stroke-width: 1;
+        .mw-silhouette {
+            fill: var(--mw-body-base);
+            stroke: var(--mw-stroke-line);
+            stroke-width: 1.2;
         }
 
-        .muscle-node {
+        .mw-muscle {
             fill: var(--mw-muscle-idle);
-            stroke: var(--mw-stroke);
+            stroke: var(--mw-stroke-line);
             stroke-width: 0.8;
             cursor: pointer;
-            transition: fill 0.15s ease, stroke 0.15s ease;
+            transition: fill 0.1s ease-out, stroke 0.1s ease-out;
         }
 
-        .muscle-node:hover { 
-            fill: var(--mw-muscle-hover) !important;
-            stroke: #fff;
+        .mw-muscle:hover {
+            fill: var(--mw-hover-neon) !important;
+            stroke: #ffffff;
+            stroke-width: 1.2;
         }
 
-        .muscle-node.selected {
-            fill: var(--mw-muscle-selected) !important;
-            stroke: #fff;
-            filter: drop-shadow(0 0 4px rgba(244, 63, 94, 0.5));
+        .mw-muscle.selected {
+            fill: var(--mw-select-neon) !important;
+            stroke: #ffffff;
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.6));
         }
 
-        /* Clear Status Bar Info HUD banner */
-        .filter-status-banner {
+        .mw-hud-banner {
             display: none;
-            background: rgba(34, 211, 238, 0.06);
-            border: 1px solid rgba(34, 211, 238, 0.2);
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 16px;
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
         }
 
-        .filter-status-banner strong { color: var(--accent); text-transform: uppercase; font-weight: 800; }
-        .clear-filter-btn { background: none; border: 1px solid var(--border-laser); color: var(--border-laser); font-size: 0.65rem; font-weight: 800; padding: 4px 8px; border-radius: 4px; cursor: pointer; text-transform: uppercase;}
+        .mw-hud-banner strong { color: var(--mw-hover-neon); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+        .mw-clear-btn { background: #1e2029; border: 1px solid #2e303d; color: var(--text-bright); font-size: 0.65rem; font-weight: 700; padding: 6px 10px; border-radius: 4px; cursor: pointer; text-transform: uppercase;}
 
-        .input-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; }
-        input:focus, select:focus { border-color: var(--accent); outline: none; }
-        .row { display: flex; gap: 8px; }
+        h2 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: var(--text-bright); }
+        .input-group { margin-bottom: 14px; }
+        label { display: block; font-size: 0.68rem; font-weight: 700; color: var(--text-darken); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; background-color: var(--bg-workspace); border: 1px solid var(--border-subtle); color: var(--text-bright); padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 500; transition: border 0.2s; }
+        input:focus, select:focus { border-color: var(--mw-hover-neon); outline: none; }
+        .row { display: flex; gap: 10px; }
 
-        button.primary-btn {
+        button.action-submit-btn {
             width: 100%;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: var(--accent); border: 1px solid var(--border); padding: 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-            cursor: pointer; margin-top: 4px; transition: all 0.2s;
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%); color: #050507; border: none; padding: 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer; margin-top: 6px; transition: opacity 0.2s;
         }
-        button.primary-btn:active { transform: scale(0.98); background: var(--accent); color: #000; }
+        button.action-submit-btn:active { opacity: 0.85; }
 
-        .log-item { border-bottom: 1px solid var(--border); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
-        .log-info-block h4 { font-size: 0.85rem; font-weight: 600; }
-        .log-info-block p { font-size: 0.7rem; color: var(--text-muted); }
-        .log-value-badge { background-color: var(--bg-card); padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; color: var(--accent); font-weight: 700; font-size: 0.8rem; }
-        .chart-container { width: 100%; background-color: rgba(0,0,0,0.2); padding: 8px; border: 1px solid var(--border); border-radius: 6px; }
+        .log-entry-row { border-bottom: 1px solid var(--border-subtle); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
+        .log-entry-row h4 { font-size: 0.85rem; font-weight: 600; color: var(--text-bright); }
+        .log-entry-row p { font-size: 0.7rem; color: var(--text-darken); margin-top: 2px; }
+        .log-badge-spec { background-color: var(--bg-workspace); padding: 6px 12px; border: 1px solid var(--border-subtle); border-radius: 6px; color: var(--mw-hover-neon); font-weight: 700; font-size: 0.78rem; }
+        .chart-module-wrap { width: 100%; background-color: var(--bg-workspace); padding: 10px; border: 1px solid var(--border-subtle); border-radius: 8px; }
 
-        /* Accordion items */
-        .accordion-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; background-color: var(--bg-surface); overflow: hidden; }
-        .accordion-header { padding: 12px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--accent); }
-        .accordion-content { display: none; padding: 14px; border-top: 1px solid var(--border); background-color: var(--bg-card); }
-        .recipe-list { list-style: none; margin: 4px 0 12px 0; }
-        .recipe-list li { font-size: 0.8rem; color: #cbd5e1; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-        .recipe-list li::before { content: "•"; color: var(--accent); }
-        .recipe-steps { padding-left: 12px; color: #cbd5e1; font-size: 0.8rem; }
-        .recipe-steps li { margin-bottom: 6px; }
+        .accordion-block { border: 1px solid var(--border-subtle); border-radius: 8px; margin-bottom: 10px; background-color: var(--bg-panels); overflow: hidden; }
+        .accordion-header-bar { padding: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-body-content { display: none; padding: 14px; border-top: 1px solid var(--border-subtle); background-color: var(--bg-workspace); }
+        .diet-items-list { list-style: none; margin: 4px 0 12px 0; }
+        .diet-items-list li { font-size: 0.8rem; color: #e2e8f0; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+        .diet-items-list li::before { content: "•"; color: var(--mw-hover-neon); }
 
-        /* Bottom Sticky Global Menu Navigation Hub */
-        nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(18, 18, 26, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; height: 65px; z-index: 100; }
-        .nav-btn { flex: 1; background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; gap: 2px; }
-        .nav-btn.active { color: var(--accent); }
-        .nav-btn svg { width: 16px; height: 16px; fill: currentColor; }
+        nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(17, 18, 23, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-subtle); display: flex; height: 68px; z-index: 100; }
+        .nav-link-item { flex: 1; background: none; border: none; color: var(--text-darken); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; gap: 4px; }
+        .nav-link-item.active { color: var(--mw-hover-neon); }
+        .nav-link-item svg { width: 18px; height: 18px; fill: currentColor; }
     </style>
 </head>
 <body>
@@ -227,136 +223,138 @@
     </header>
 
     <div id="tracker" class="page active">
-        <div class="card">
-            <div class="mw-controls">
-                <button class="mw-toggle-btn active" id="genderMale" onclick="setGender('male')">Male Map</button>
-                <button class="mw-toggle-btn" id="genderFemale" onclick="setGender('female')">Female Map</button>
+        <div class="mw-interface-card">
+            
+            <div class="mw-gender-tabs">
+                <button class="mw-tab-btn active" id="tabMale" onclick="toggleGenderSystem('male')">Male Framework</button>
+                <button class="mw-tab-btn" id="tabFemale" onclick="toggleGenderSystem('female')">Female Framework</button>
             </div>
             
-            <div class="muscle-map-container">
-                <div class="muscle-map-pane">
+            <div class="mw-map-grid">
+                <div class="mw-map-pane">
                     <span>Anterior</span>
-                    <div class="anatomy-viewport">
-                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
-                            <path class="body-silhouette" d="M50,15 C45,15 43,18 43,26 C43,32 46,35 40,38 C31,41 24,47 22,57 C19,72 13,95 15,110 C16,115 21,113 21,108 C19,94 24,72 24,69 L25,120 C25,128 23,135 24,155 C25,170 21,190 23,208 C24,212 27,212 28,208 C31,198 32,180 35,168 C38,168 41,166 45,138 L50,138 Z" />
-                            <path class="body-silhouette" d="M50,15 C55,15 57,18 57,26 C57,32 54,35 60,38 C69,41 76,47 78,57 C81,72 87,95 85,110 C84,115 79,113 79,108 C81,94 76,72 76,69 L75,120 C75,128 77,135 76,155 C75,170 79,190 77,208 C76,212 73,212 72,208 C69,198 68,180 65,168 C62,168 59,166 55,138 L50,138 Z" />
+                    <div class="mw-viewport">
+                        <svg class="mw-svg" viewBox="0 0 100 220">
+                            <path class="mw-muscle" data-muscle="chest" d="M50,43 C42,43 35,46 31,52 C35,62 45,64 50,65 Z" />
+                            <path class="mw-muscle" data-muscle="chest" d="M50,43 C58,43 65,46 69,52 C65,62 55,64 50,65 Z" />
                             
-                            <path class="muscle-node" data-muscle="shoulders" d="M44,28 C46,28 47,33 50,35 C47,35 45,33 44,28" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M56,28 C54,28 53,33 50,35 C53,35 55,33 56,28" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M22,50 C25,44 29,43 31,48 C30,55 26,62 22,57 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M78,50 C75,44 71,43 69,48 C70,55 74,62 78,57 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M32,47 C38,45 48,46 49,56 C41,56 34,55 32,47 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M68,47 C62,45 52,46 51,56 C59,56 66,55 68,47 Z" />
-                            <path class="muscle-node" data-muscle="abs" d="M35,60 L65,60 L62,102 L38,102 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M22,60 C25,60 26,72 25,85 C23,85 20,78 21,68 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M78,60 C75,60 74,72 75,85 C77,85 80,78 79,68 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M26,108 C36,106 46,110 45,142 L28,142 C24,128 24,116 26,108 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M74,108 C64,106 54,110 55,142 L72,142 C76,128 76,116 74,108 Z" />
+                            <path class="mw-muscle" data-muscle="abs" d="M35,68 L65,68 L62,110 L38,110 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="shoulders" d="M30,47 C24,47 21,55 20,62 C23,65 28,60 31,51 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M70,47 C76,47 79,55 80,62 C77,65 72,60 69,51 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="arms" d="M19,65 C16,75 16,90 19,102 C21,102 23,92 22,75 Z" />
+                            <path class="mw-muscle" data-muscle="arms" d="M81,65 C84,75 84,90 81,102 C79,102 77,92 78,75 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="legs" d="M32,114 C38,114 48,116 48,148 L31,148 C28,135 29,122 32,114 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M68,114 C62,114 52,116 52,148 L69,148 C72,135 71,122 68,114 Z" />
                         </svg>
                     </div>
                 </div>
 
-                <div class="muscle-map-pane">
+                <div class="mw-map-pane">
                     <span>Posterior</span>
-                    <div class="anatomy-viewport">
-                        <svg class="anatomy-svg-overlay" viewBox="0 0 100 220">
-                            <path class="body-silhouette" d="M50,15 C45,15 43,18 43,26 C43,32 46,35 40,38 C31,41 24,47 22,57 C19,72 13,95 15,110 C16,115 21,113 21,108 C19,94 24,72 24,69 L25,120 C25,128 23,135 24,155 C25,170 21,190 23,208 C24,212 27,212 28,208 C31,198 32,180 35,168 C38,168 41,166 45,138 L50,138 Z" />
-                            <path class="body-silhouette" d="M50,15 C55,15 57,18 57,26 C57,32 54,35 60,38 C69,41 76,47 78,57 C81,72 87,95 85,110 C84,115 79,113 79,108 C81,94 76,72 76,69 L75,120 C75,128 77,135 76,155 C75,170 79,190 77,208 C76,212 73,212 72,208 C69,198 68,180 65,168 C62,168 59,166 55,138 L50,138 Z" />
+                    <div class="mw-viewport">
+                        <svg class="mw-svg" viewBox="0 0 100 220">
+                            <path class="mw-muscle" data-muscle="back" d="M34,44 L66,44 L60,65 L40,65 Z" />
+                            <path class="mw-muscle" data-muscle="back" d="M36,67 L64,67 L61,104 L39,104 Z" />
                             
-                            <path class="muscle-node" data-muscle="shoulders" d="M22,50 C25,44 29,43 31,48 C30,55 26,62 22,57 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M78,50 C75,44 71,43 69,48 C70,55 74,62 78,57 Z" />
-                            <path class="muscle-node" data-muscle="back" d="M32,48 L68,48 L60,100 L40,100 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M22,60 C25,60 26,72 25,85 C23,85 20,78 21,68 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M78,60 C75,60 74,72 75,85 C77,85 80,78 79,68 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M26,104 C36,102 49,102 49,118 C37,120 26,116 26,104 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M74,104 C64,102 51,102 51,118 C63,120 74,116 74,104 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M27,124 L46,124 L43,180 L26,180 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M73,124 L54,124 L57,180 L74,180 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M32,46 C26,46 22,52 21,60 C24,61 29,56 32,48 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M68,46 C74,46 78,52 79,60 C76,61 71,56 68,48 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="arms" d="M20,62 C17,72 17,85 19,98 C21,98 22,88 22,72 Z" />
+                            <path class="mw-muscle" data-muscle="arms" d="M80,62 C83,72 83,85 81,98 C79,98 78,88 78,72 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="legs" d="M30,108 C40,106 50,106 50,123 C38,125 30,121 30,108 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M70,108 C60,106 50,106 50,123 C62,125 70,121 70,108 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="legs" d="M31,128 L48,128 L45,182 L30,182 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M69,128 L52,128 L55,182 L70,182 Z" />
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div id="filterBanner" class="filter-status-banner">
-                <span>ISOLATED INTENSITY TARGET: <strong id="filterLabel">NONE</strong></span>
-                <button class="clear-filter-btn" onclick="resetMuscleFilter()">Show All Elements</button>
+            <div id="filterBanner" class="mw-hud-banner">
+                <span>TARGET ISOLATION: <strong id="filterLabel">NONE</strong></span>
+                <button class="mw-clear-btn" onclick="clearActiveSystemFilters()">Clear Focus</button>
             </div>
 
-            <h2>Log Workout Dataset</h2>
+            <h2>Log Exercise Metrics</h2>
             <div class="input-group">
-                <label>Exercise Identity</label>
+                <label>Selected Movement Profile Identity</label>
                 <select id="exercise"></select>
             </div>
             <div class="row">
                 <div class="input-group" style="flex: 1;">
-                    <label>Mass Load (kg)</label>
-                    <input type="number" id="weight" placeholder="70" step="2.5">
+                    <label>Absolute Load (kg)</label>
+                    <input type="number" id="weight" placeholder="0.0" step="2.5">
                 </div>
                 <div class="input-group" style="flex: 1;">
-                    <label>Rep Count</label>
-                    <input type="number" id="reps" placeholder="8">
+                    <label>Terminal Reps</label>
+                    <input type="number" id="reps" placeholder="0">
                 </div>
             </div>
-            <button class="primary-btn" onclick="saveSet()">Execute Data Logging</button>
+            <button class="action-submit-btn" onclick="commitPerformanceLog()">Commit Set To Storage</button>
         </div>
 
-        <div class="card">
-            <h2>Telemetry Analytics</h2>
-            <div class="input-group" style="margin-bottom: 12px;">
-                <label>Target Telemetry Stream Focus</label>
-                <select id="chartFilter" onchange="updateChartMetrics()"></select>
+        <div class="mw-interface-card">
+            <h2>Volumetric Telemetry Stream</h2>
+            <div class="input-group" style="margin-bottom: 14px;">
+                <label>Filter Analytics Target Stream</label>
+                <select id="chartFilter" onchange="refreshTelemetryChart()"></select>
             </div>
-            <div class="chart-container">
+            <div class="chart-module-wrap">
                 <canvas id="analyticsChart"></canvas>
             </div>
         </div>
 
-        <div class="card">
-            <h2>Historical Performance Logs</h2>
+        <div class="mw-interface-card">
+            <h2>Performance History Matrix</h2>
             <div id="logHistory"></div>
-            <button onclick="clearHistory()" style="background: none; color: var(--border-laser); border: 1px dashed rgba(255,0,85,0.4); margin-top: 18px; padding: 12px; font-size: 0.75rem; border-radius: 4px; font-weight:700; width:100%; cursor:pointer;">CLEAR SYSTEM STORAGE FLASH MEMORY</button>
+            <button onclick="wipeLocalStorageData()" style="background: none; color: var(--mw-select-neon); border: 1px dashed rgba(244,63,94,0.3); margin-top: 16px; padding: 12px; font-size: 0.72rem; border-radius: 6px; font-weight:700; width:100%; cursor:pointer; text-transform: uppercase;">Wipe Engine Storage</button>
         </div>
     </div>
 
     <div id="meals" class="page">
-        <div class="card" style="border-left: 3px solid var(--border-laser);">
-            <h2>Pipeline Surplus Configuration</h2>
-            <p style="font-size: 1.6rem; font-weight: 900; color: var(--text-main);">3,100 KCAL</p>
-            <p style="font-size: 0.8rem; color: var(--text-muted); font-weight:700;">P: 175G // C: 420G // F: 80G</p>
+        <div class="mw-interface-card" style="border-left: 4px solid var(--mw-select-neon);">
+            <h2>Hypertrophic Fuel Matrix</h2>
+            <p style="font-size: 1.7rem; font-weight: 900; color: var(--text-bright); letter-spacing: -0.5px;">3,100 KCAL</p>
+            <p style="font-size: 0.75rem; color: var(--text-darken); font-weight:700; margin-top: 2px; letter-spacing: 0.5px;">PRO: 175G // CARBS: 420G // FATS: 80G</p>
         </div>
-        <div class="card" style="padding: 16px;">
-            <label style="margin-bottom: 8px;">Target Rotation Core Pipeline</label>
-            <select id="daySelect" onchange="renderDayMenu()">
-                <option value="1">Day 1 (Monday)</option>
-                <option value="2">Day 2 (Tuesday)</option>
-                <option value="3">Day 3 (Wednesday)</option>
-                <option value="4">Day 4 (Thursday)</option>
-                <option value="5">Day 5 (Friday)</option>
-                <option value="6">Day 6 (Saturday)</option>
-                <option value="7">Day 7 (Sunday)</option>
+        <div class="mw-interface-card">
+            <label style="margin-bottom: 8px;">Pipeline Micro-Rotation Segment Focus</label>
+            <select id="daySelect" onchange="buildNutritionPlanManifest()">
+                <option value="1">Rotation Pipeline Alpha (Monday)</option>
+                <option value="2">Rotation Pipeline Beta (Tuesday)</option>
+                <option value="3">Rotation Pipeline Gamma (Wednesday)</option>
+                <option value="4">Rotation Pipeline Delta (Thursday)</option>
+                <option value="5">Rotation Pipeline Epsilon (Friday)</option>
+                <option value="6">Rotation Pipeline Zeta (Saturday)</option>
+                <option value="7">Rotation Pipeline Eta (Sunday)</option>
             </select>
         </div>
-        <h2 id="menuDayTitle" style="margin-bottom: 14px;">Monday Menu Manifest</h2>
+        <h2 id="menuDayTitle" style="margin-bottom: 12px; padding-left: 4px;">Menu Manifest</h2>
         <div id="dynamicMenuContainer"></div>
     </div>
 
     <nav>
-        <button class="nav-btn active" onclick="switchPage('tracker', this)">
+        <button class="nav-link-item active" onclick="navigateActiveViewport('tracker', this)">
             <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43l-2.86-2.86L17.71 12l2.86 2.86M4.29 12l1.43-1.43L2.86 7.71 1.43 9.14 4.29 12m11.14-5.14L14 8.29l2.86 2.86 1.43-1.43-2.86-2.86M8.29 14l1.43 1.43 2.86-2.86-1.43-1.43L8.29 14M9.71 5.43L11.14 4 8.29 1.14 6.86 2.57l2.85 2.86M14.29 20l-1.43-1.43-2.86 2.86 1.43 1.43 2.86-2.86M22 2v4h-4V2h4zM6 18v4H2v-4h4z"/></svg>
             <span>Telemetry</span>
         </button>
-        <button class="nav-btn" onclick="switchPage('meals', this)">
+        <button class="nav-link-item" onclick="navigateActiveViewport('meals', this)">
             <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7m8-3h-3v14h-2.5V6h-3V2h8.5v4z"/></svg>
             <span>Nutrition</span>
         </button>
     </nav>
 
     <script>
-        let performanceChart = null;
-        let selectedMuscleGroup = null;
-        let selectedGender = 'male';
+        let telemetryChartInstance = null;
+        let globalSelectedMuscleNode = null;
+        let internalGenderMetricsSystem = 'male';
 
-        const exerciseDatabase = {
+        const dynamicExerciseMatrixMap = {
             chest: ["Flat Bench Press", "Incline Dumbbell Press", "Cable Chest Fly", "Pec Deck Machine"],
             back: ["Deadlift", "Romanian Deadlift (RDL)", "Barbell Row", "Lat Pulldown", "Seated Cable Row"],
             shoulders: ["Overhead Dumbbell Press", "Machine Shoulder Press", "Cable Lateral Raise", "Dumbbell Lateral Raise"],
@@ -382,7 +380,7 @@
             snackC: { title: "Honey Peanut Butter Rice Cakes", macros: "510 kcal | 20g P | 74g C | 13g F", ingredients: ["4 Rice Cakes", "25g Peanut Butter"], steps: ["Spread PB.", "Drizzle honey."] }
         };
 
-        const daySchedules = {
+        const mealRotationPipelines = {
             "1": [ {tag: "Meal 1", ref: "hash"}, {tag: "Meal 2", ref: "cajunWrap"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "soyGarlicBowl"} ],
             "2": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "steakPasta"}, {tag: "Meal 3", ref: "snackB"}, {tag: "Meal 4", ref: "bbqPotato"} ],
             "3": [ {tag: "Meal 1", ref: "breakfastWrap"}, {tag: "Meal 2", ref: "beefSweetPotato"}, {tag: "Meal 3", ref: "snackC"}, {tag: "Meal 4", ref: "honeySalmon"} ],
@@ -392,180 +390,176 @@
             "7": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "beefSweetPotato"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "turkeyChili"} ]
         };
 
-        function setGender(gender) {
-            selectedGender = gender;
-            document.getElementById('genderMale').classList.toggle('active', gender === 'male');
-            document.getElementById('genderFemale').classList.toggle('active', gender === 'female');
-            
-            // Subtle aesthetic structural shifts to mock real visual targets
-            const silho = document.querySelectorAll('.body-silhouette');
-            silho.forEach(path => {
-                if(gender === 'female') {
-                    path.style.stroke = '#f472b6'; // Custom pink framework hint
-                } else {
-                    path.style.stroke = 'var(--mw-stroke)';
-                }
-            });
+        function toggleGenderSystem(genderToken) {
+            internalGenderMetricsSystem = genderToken;
+            document.getElementById('tabMale').classList.toggle('active', genderToken === 'male');
+            document.getElementById('tabFemale').classList.toggle('active', genderToken === 'female');
         }
 
-        function setupMuscleMapListeners() {
-            document.querySelectorAll('.muscle-node').forEach(el => {
-                el.addEventListener('click', function() {
-                    const group = this.getAttribute('data-muscle');
+        function buildInteractiveNodeListeners() {
+            document.querySelectorAll('.mw-muscle').forEach(nodeElement => {
+                nodeElement.addEventListener('click', function() {
+                    const groupKey = this.getAttribute('data-muscle');
                     
-                    document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
-                    document.querySelectorAll(`.muscle-node[data-muscle="${group}"]`).forEach(m => m.classList.add('selected'));
+                    document.querySelectorAll('.mw-muscle').forEach(m => m.classList.remove('selected'));
+                    document.querySelectorAll(`.mw-muscle[data-muscle="${groupKey}"]`).forEach(m => m.classList.add('selected'));
                     
-                    selectedMuscleGroup = group;
-                    renderExerciseDropdown();
+                    globalSelectedMuscleNode = groupKey;
+                    refreshMovementSelectionOptions();
                     
-                    document.getElementById('filterLabel').textContent = group;
+                    document.getElementById('filterLabel').textContent = groupKey;
                     document.getElementById('filterBanner').style.display = 'flex';
                 });
             });
         }
 
-        function renderExerciseDropdown() {
-            const dropdown = document.getElementById('exercise');
-            dropdown.innerHTML = '';
+        function refreshMovementSelectionOptions() {
+            const exerciseSelect = document.getElementById('exercise');
+            exerciseSelect.innerHTML = '';
 
-            if (selectedMuscleGroup && exerciseDatabase[selectedMuscleGroup]) {
-                exerciseDatabase[selectedMuscleGroup].forEach(ex => {
-                    dropdown.innerHTML += `<option value="${ex}">${ex}</option>`;
+            if (globalSelectedMuscleNode && dynamicExerciseMatrixMap[globalSelectedMuscleNode]) {
+                dynamicExerciseMatrixMap[globalSelectedMuscleNode].forEach(movement => {
+                    exerciseSelect.innerHTML += `<option value="${movement}">${movement}</option>`;
                 });
             } else {
-                Object.keys(exerciseDatabase).forEach(category => {
+                Object.keys(dynamicExerciseMatrixMap).forEach(category => {
                     let groupHTML = `<optgroup label="${category.toUpperCase()}">`;
-                    exerciseDatabase[category].forEach(ex => { groupHTML += `<option value="${ex}">${ex}</option>`; });
+                    dynamicExerciseMatrixMap[category].forEach(ex => { groupHTML += `<option value="${ex}">${ex}</option>`; });
                     groupHTML += `</optgroup>`;
-                    dropdown.innerHTML += groupHTML;
+                    exerciseSelect.innerHTML += groupHTML;
                 });
             }
         }
 
-        function resetMuscleFilter() {
-            selectedMuscleGroup = null;
-            document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
+        function clearActiveSystemFilters() {
+            globalSelectedMuscleNode = null;
+            document.querySelectorAll('.mw-muscle').forEach(m => m.classList.remove('selected'));
             document.getElementById('filterBanner').style.display = 'none';
-            renderExerciseDropdown();
+            refreshMovementSelectionOptions();
         }
 
-        function switchPage(pageId, btnElement) {
+        function navigateActiveViewport(targetPageKey, executionSourceButton) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            btnElement.classList.add('active');
-            if (pageId === 'tracker') { updateChartMetrics(); }
+            document.querySelectorAll('.nav-link-item').forEach(b => b.classList.remove('active'));
+            document.getElementById(targetPageKey).classList.add('active');
+            executionSourceButton.classList.add('active');
+            if (targetPageKey === 'tracker') { refreshTelemetryChart(); }
         }
 
-        function renderDayMenu() {
-            const currentDay = document.getElementById('daySelect').value;
-            const container = document.getElementById('dynamicMenuContainer');
-            if (!container) return;
+        function buildNutritionPlanManifest() {
+            const activeRotationIndex = document.getElementById('daySelect').value;
+            const menuRenderContainer = document.getElementById('dynamicMenuContainer');
+            if (!menuRenderContainer) return;
             
-            const daysOfWeek = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            document.getElementById('menuDayTitle').textContent = `${daysOfWeek[parseInt(currentDay)]} Menu Manifest`;
+            const calendarDaysArray = ["", "Monday Plan", "Tuesday Plan", "Wednesday Plan", "Thursday Plan", "Friday Plan", "Saturday Plan", "Sunday Plan"];
+            document.getElementById('menuDayTitle').textContent = `${calendarDaysArray[parseInt(activeRotationIndex)]}`;
 
-            container.innerHTML = daySchedules[currentDay].map(item => {
-                const data = recipes[item.ref];
-                const ingredientItems = data.ingredients.map(ing => `<li>${ing}</li>`).join('');
-                const stepItems = data.steps.map(step => `<li>${step}</li>`).join('');
+            menuRenderContainer.innerHTML = mealRotationPipelines[activeRotationIndex].map(mealItem => {
+                const targetRecipeDetails = recipes[mealItem.ref];
+                const listIngredientsHtmlString = targetRecipeDetails.ingredients.map(ing => `<li>${ing}</li>`).join('');
+                const listStepsHtmlString = targetRecipeDetails.steps.map(step => `<li>${step}</li>`).join('');
                 return `
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-block">
+                        <div class="accordion-header-bar" onclick="toggleAccordionDisplayPanel(this)">
                             <div>
-                                <span style="font-size:0.65rem; font-weight:900; color:var(--border-laser); text-transform:uppercase; display:block; margin-bottom:2px;">${item.tag}</span>
-                                <h3 style="font-size:0.9rem;">${data.title}</h3>
+                                <span style="font-size:0.6rem; font-weight:900; color:var(--mw-select-neon); text-transform:uppercase; display:block; margin-bottom:2px;">${mealItem.tag}</span>
+                                <h3 style="font-size:0.85rem; font-weight: 700;">${targetRecipeDetails.title}</h3>
                             </div>
-                            <span style="color:var(--accent); font-size:0.7rem;">▼</span>
+                            <span style="color:var(--mw-hover-neon); font-size:0.65rem;">▼</span>
                         </div>
-                        <div class="accordion-content">
-                            <p style="font-weight:700; color:var(--accent); font-size:0.8rem; margin-bottom:10px;">${data.macros}</p>
-                            <p style="font-size:0.7rem; text-transform:uppercase; font-weight:800; color:var(--text-muted);">Ingredients:</p>
-                            <ul class="recipe-list">${ingredientItems}</ul>
-                            <p style="font-size:0.7rem; text-transform:uppercase; font-weight:800; color:var(--text-muted); margin-top:4px;">Instructions:</p>
-                            <ol class="recipe-steps">${stepItems}</ol>
+                        <div class="accordion-body-content">
+                            <p style="font-weight:700; color:var(--mw-hover-neon); font-size:0.8rem; margin-bottom:10px;">${targetRecipeDetails.macros}</p>
+                            <p style="font-size:0.65rem; text-transform:uppercase; font-weight:800; color:var(--text-darken); margin-bottom:4px;">Ingredients Base:</p>
+                            <ul class="diet-items-list">${listIngredientsHtmlString}</ul>
+                            <p style="font-size:0.65rem; text-transform:uppercase; font-weight:800; color:var(--text-darken); margin-top:4px; margin-bottom:4px;">Instructions Workflow:</p>
+                            <ol style="padding-left:12px; color:#cbd5e1; font-size:0.8rem;">${listStepsHtmlString}</ol>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function toggleAccordion(headerElement) {
-            const content = headerElement.nextElementSibling;
-            const arrow = headerElement.querySelector('span:last-child');
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                arrow.textContent = '▼';
+        function toggleAccordionDisplayPanel(headerBarTarget) {
+            const actualContentContainerNode = headerBarTarget.nextElementSibling;
+            const arrowIndicatorNode = headerBarTarget.querySelector('span:last-child');
+            if (actualContentContainerNode.style.display === 'block') {
+                actualContentContainerNode.style.display = 'none';
+                arrowIndicatorNode.textContent = '▼';
             } else {
-                content.style.display = 'block';
-                arrow.textContent = '▲';
+                actualContentContainerNode.style.display = 'block';
+                arrowIndicatorNode.textContent = '▲';
             }
         }
 
-        function saveSet() {
-            const exercise = document.getElementById('exercise').value;
-            const weight = parseFloat(document.getElementById('weight').value);
-            const reps = parseInt(document.getElementById('reps').value);
-            if(!weight || !reps || !exercise) return alert("Parameters missing.");
+        function commitPerformanceLog() {
+            const movementName = document.getElementById('exercise').value;
+            const activeWeightValue = parseFloat(document.getElementById('weight').value);
+            const absoluteRepsValue = parseInt(document.getElementById('reps').value);
+            if(!activeWeightValue || !absoluteRepsValue || !movementName) return alert("System requires full parameters to establish logs.");
 
-            const timestamp = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
-            let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            currentLogs.unshift({ exercise, weight, reps, timestamp });
-            localStorage.setItem('workoutLogs', JSON.stringify(currentLogs));
+            const customTimestampString = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+            let localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
+            localizedDataLogsArray.unshift({ exercise: movementName, weight: activeWeightValue, reps: absoluteRepsValue, timestamp: customTimestampString });
+            localStorage.setItem('workoutLogs', JSON.stringify(localizedDataLogsArray));
 
             document.getElementById('weight').value = '';
             document.getElementById('reps').value = '';
-            displayLogs(); populateChartFilter(); updateChartMetrics();
+            renderHistoricalLogsEngine(); buildChartOptionsFilters(); refreshTelemetryChart();
         }
 
-        function displayLogs() {
-            const historyContainer = document.getElementById('logHistory');
-            let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            if(currentLogs.length === 0) {
-                historyContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem; text-align:center;">No entries logged.</p>`;
+        function renderHistoricalLogsEngine() {
+            const historyMountContainer = document.getElementById('logHistory');
+            let localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
+            if(localizedDataLogsArray.length === 0) {
+                historyMountContainer.innerHTML = `<p style="color:var(--text-darken); font-size:0.75rem; text-align:center; padding: 12px 0;">No diagnostic matrices found in runtime storage.</p>`;
                 return;
             }
-            historyContainer.innerHTML = currentLogs.map(item => `
-                <div class="log-item">
-                    <div class="log-info-block"><h4>${item.exercise}</h4><p>${item.timestamp}</p></div>
-                    <div class="log-value-badge">${item.weight}kg × ${item.reps}</div>
+            historyMountContainer.innerHTML = localizedDataLogsArray.map(entryItem => `
+                <div class="log-entry-row">
+                    <div class="log-info-block"><h4>${entryItem.exercise}</h4><p>${entryItem.timestamp}</p></div>
+                    <div class="log-badge-spec">${entryItem.weight}kg × ${entryItem.reps}</div>
                 </div>
             `).join('');
         }
 
-        function populateChartFilter() {
-            const filterSelect = document.getElementById('chartFilter');
-            const currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            const exercisesInLog = [...new Set(currentLogs.map(item => item.exercise))];
-            if(exercisesInLog.length === 0) { filterSelect.innerHTML = `<option value="">No metrics found</option>`; return; }
-            filterSelect.innerHTML = exercisesInLog.map(ex => `<option value="${ex}">${ex}</option>`).join('');
+        function buildChartOptionsFilters() {
+            const telemetryFilterSelectNode = document.getElementById('chartFilter');
+            const localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
+            const targetedExercisesLoggedSet = [...new Set(localizedDataLogsArray.map(log => log.exercise))];
+            if(targetedExercisesLoggedSet.length === 0) { telemetryFilterSelectNode.innerHTML = `<option value="">Awaiting system data stream...</option>`; return; }
+            telemetryFilterSelectNode.innerHTML = targetedExercisesLoggedSet.map(exKey => `<option value="${exKey}">${exKey}</option>`).join('');
         }
 
-        function buildPerformanceChart() {
-            const ctx = document.getElementById('analyticsChart').getContext('2d');
-            performanceChart = new Chart(ctx, {
+        function compileCoreLineChartEngine() {
+            const chartContextNode = document.getElementById('analyticsChart').getContext('2d');
+            telemetryChartInstance = new Chart(chartContextNode, {
                 type: 'line',
-                data: { labels: [], datasets: [{ data: [], borderColor: '#22d3ee', borderWidth: 2, tension: 0.1, fill: true, backgroundColor: 'rgba(34,211,238,0.01)' }] },
-                options: { plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1e1e2f' } }, y: { grid: { color: '#1e1e2f' } } } }
+                data: { labels: [], datasets: [{ data: [], borderColor: '#22d3ee', borderWidth: 2, tension: 0.15, fill: false }] },
+                options: { 
+                    plugins: { legend: { display: false } }, 
+                    scales: { 
+                        x: { grid: { color: '#1f2029' }, ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } } }, 
+                        y: { grid: { color: '#1f2029' }, ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } } } 
+                    } 
+                }
             });
         }
 
-        function updateChartMetrics() {
-            if(!performanceChart) return;
-            const targetExercise = document.getElementById('chartFilter').value;
-            let currentLogs = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            let matches = currentLogs.filter(item => item.exercise === targetExercise).reverse();
-            performanceChart.data.labels = matches.map(item => item.timestamp);
-            performanceChart.data.datasets[0].data = matches.map(item => Math.round(item.weight * (1 + item.reps / 30)));
-            performanceChart.update();
+        function refreshTelemetryChart() {
+            if(!telemetryChartInstance) return;
+            const targetMovementSelectionFilter = document.getElementById('chartFilter').value;
+            let localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
+            let sortedFilteredLogMatches = localizedDataLogsArray.filter(log => log.exercise === targetMovementSelectionFilter).reverse();
+            telemetryChartInstance.data.labels = sortedFilteredLogMatches.map(log => log.timestamp);
+            telemetryChartInstance.data.datasets[0].data = sortedFilteredLogMatches.map(log => Math.round(log.weight * (1 + log.reps / 30)));
+            telemetryChartInstance.update();
         }
 
-        function clearHistory() { if(confirm("Clear storage?")) { localStorage.removeItem('workoutLogs'); displayLogs(); populateChartFilter(); updateChartMetrics(); } }
+        function wipeLocalStorageData() { if(confirm("Purge tracking records permanently?")) { localStorage.removeItem('workoutLogs'); renderHistoricalLogsEngine(); buildChartOptionsFilters(); refreshTelemetryChart(); } }
 
         window.onload = function() {
-            setupMuscleMapListeners();
-            renderExerciseDropdown(); displayLogs(); buildPerformanceChart(); populateChartFilter(); updateChartMetrics(); renderDayMenu();
+            buildInteractiveNodeListeners();
+            refreshMovementSelectionOptions(); renderHistoricalLogsEngine(); compileCoreLineChartEngine(); buildChartOptionsFilters(); refreshTelemetryChart(); buildNutritionPlanManifest();
         };
     </script>
 </body>
