@@ -15,8 +15,8 @@
             
             /* MuscleWiki Interaction Colors */
             --mw-body-base: #1c1d24;
-            --mw-stroke-line: #2a2b35;
-            --mw-muscle-idle: #23242e;
+            --mw-stroke-line: #2d3139;
+            --mw-muscle-idle: #282a36;
             --mw-hover-neon: #38bdf8;
             --mw-select-neon: #f43f5e;
             
@@ -60,7 +60,7 @@
         .page {
             display: none;
             padding: 16px;
-            max-width: 480px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
@@ -104,21 +104,24 @@
             color: var(--text-bright);
         }
 
+        /* Fixed Twin Panel Grid Layout to Maximize Scale */
         .mw-map-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 16px;
             background: var(--bg-workspace);
             border: 1px solid var(--border-subtle);
             border-radius: 10px;
-            padding: 14px 8px;
+            padding: 20px 10px;
             margin-bottom: 20px;
+            justify-items: center;
         }
 
         .mw-map-pane {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         .mw-map-pane span {
@@ -127,24 +130,25 @@
             color: var(--text-darken);
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .mw-viewport {
             width: 100%;
+            max-width: 180px;
             height: 380px;
         }
 
         .mw-svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
         }
 
+        /* MuscleWiki Silhouette & Muscle Styles */
         .mw-silhouette {
             fill: var(--mw-body-base);
             stroke: var(--mw-stroke-line);
-            stroke-width: 1.2;
+            stroke-width: 1;
         }
 
         .mw-muscle {
@@ -235,19 +239,24 @@
                     <span>Anterior</span>
                     <div class="mw-viewport">
                         <svg class="mw-svg" viewBox="0 0 100 220">
-                            <path class="mw-muscle" data-muscle="chest" d="M50,43 C42,43 35,46 31,52 C35,62 45,64 50,65 Z" />
-                            <path class="mw-muscle" data-muscle="chest" d="M50,43 C58,43 65,46 69,52 C65,62 55,64 50,65 Z" />
+                            <path class="mw-silhouette" d="M50,15 C44,15 42,22 42,32 C42,42 45,45 36,50 C26,55 20,62 18,75 C15,92 10,120 12,138 C13,145 18,143 18,136 C16,118 21,92 21,88 L22,150 C22,160 20,170 21,192 C22,210 18,235 20,255 C21,260 25,260 26,255 C30,242 31,220 35,205 C38,205 42,202 45,170 L50,170 Z" />
+                            <path class="mw-silhouette" d="M50,15 C56,15 58,22 58,32 C58,42 55,45 64,50 C74,55 80,62 82,75 C85,92 90,120 88,138 C87,145 82,143 82,136 C84,118 79,92 79,88 L78,150 C78,160 80,170 79,192 C78,210 82,235 80,255 C79,260 75,260 74,255 C70,242 69,220 65,205 C62,205 58,202 55,170 L50,170 Z" />
                             
-                            <path class="mw-muscle" data-muscle="abs" d="M35,68 L65,68 L62,110 L38,110 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M43,33 C45,33 46,38 50,40 C46,40 44,38 43,33" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M57,33 C55,33 54,38 50,40 C54,40 56,38 57,33" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M21,62 C24,53 30,51 32,58 C31,68 25,78 21,71 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M79,62 C76,53 70,51 68,58 C69,68 75,78 79,71 Z" />
                             
-                            <path class="mw-muscle" data-muscle="shoulders" d="M30,47 C24,47 21,55 20,62 C23,65 28,60 31,51 Z" />
-                            <path class="mw-muscle" data-muscle="shoulders" d="M70,47 C76,47 79,55 80,62 C77,65 72,60 69,51 Z" />
+                            <path class="mw-muscle" data-muscle="chest" d="M33,56 C40,54 49,55 50,68 C41,68 35,67 33,56 Z" />
+                            <path class="mw-muscle" data-muscle="chest" d="M67,56 C60,54 51,55 50,68 C59,68 65,67 67,56 Z" />
                             
-                            <path class="mw-muscle" data-muscle="arms" d="M19,65 C16,75 16,90 19,102 C21,102 23,92 22,75 Z" />
-                            <path class="mw-muscle" data-muscle="arms" d="M81,65 C84,75 84,90 81,102 C79,102 77,92 78,75 Z" />
+                            <path class="mw-muscle" data-muscle="abs" d="M36,73 L64,73 L61,122 L39,122 Z" />
                             
-                            <path class="mw-muscle" data-muscle="legs" d="M32,114 C38,114 48,116 48,148 L31,148 C28,135 29,122 32,114 Z" />
-                            <path class="mw-muscle" data-muscle="legs" d="M68,114 C62,114 52,116 52,148 L69,148 C72,135 71,122 68,114 Z" />
+                            <path class="mw-muscle" data-muscle="arms" d="M20,74 C23,74 25,88 24,104 C22,104 18,95 19,83 Z" />
+                            <path class="mw-muscle" data-muscle="arms" d="M80,74 C77,74 75,88 76,104 C78,104 82,95 81,83 Z" />
+                            
+                            <path class="mw-muscle" data-muscle="legs" d="M26,128 C38,126 49,130 48,168 L28,168 C24,151 24,138 26,128 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M74,128 C62,126 51,130 52,168 L72,168 C76,151 76,138 74,128 Z" />
                         </svg>
                     </div>
                 </div>
@@ -256,20 +265,22 @@
                     <span>Posterior</span>
                     <div class="mw-viewport">
                         <svg class="mw-svg" viewBox="0 0 100 220">
-                            <path class="mw-muscle" data-muscle="back" d="M34,44 L66,44 L60,65 L40,65 Z" />
-                            <path class="mw-muscle" data-muscle="back" d="M36,67 L64,67 L61,104 L39,104 Z" />
+                            <path class="mw-silhouette" d="M50,15 C44,15 42,22 42,32 C42,42 45,45 36,50 C26,55 20,62 18,75 C15,92 10,120 12,138 C13,145 18,143 18,136 C16,118 21,92 21,88 L22,150 C22,160 20,170 21,192 C22,210 18,235 20,255 C21,260 25,260 26,255 C30,242 31,220 35,205 C38,205 42,202 45,170 L50,170 Z" />
+                            <path class="mw-silhouette" d="M50,15 C56,15 58,22 58,32 C58,42 55,45 64,50 C74,55 80,62 82,75 C85,92 90,120 88,138 C87,145 82,143 82,136 C84,118 79,92 79,88 L78,150 C78,160 80,170 79,192 C78,210 82,235 80,255 C79,260 75,260 74,255 C70,242 69,220 65,205 C62,205 58,202 55,170 L50,170 Z" />
                             
-                            <path class="mw-muscle" data-muscle="shoulders" d="M32,46 C26,46 22,52 21,60 C24,61 29,56 32,48 Z" />
-                            <path class="mw-muscle" data-muscle="shoulders" d="M68,46 C74,46 78,52 79,60 C76,61 71,56 68,48 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M21,62 C24,53 30,51 32,58 C31,68 25,78 21,71 Z" />
+                            <path class="mw-muscle" data-muscle="shoulders" d="M79,62 C76,53 70,51 68,58 C69,68 75,78 79,71 Z" />
                             
-                            <path class="mw-muscle" data-muscle="arms" d="M20,62 C17,72 17,85 19,98 C21,98 22,88 22,72 Z" />
-                            <path class="mw-muscle" data-muscle="arms" d="M80,62 C83,72 83,85 81,98 C79,98 78,88 78,72 Z" />
+                            <path class="mw-muscle" data-muscle="back" d="M33,56 L67,56 L59,80 L41,80 Z" />
+                            <path class="mw-muscle" data-muscle="back" d="M34,83 L66,83 L62,120 L38,120 Z" />
                             
-                            <path class="mw-muscle" data-muscle="legs" d="M30,108 C40,106 50,106 50,123 C38,125 30,121 30,108 Z" />
-                            <path class="mw-muscle" data-muscle="legs" d="M70,108 C60,106 50,106 50,123 C62,125 70,121 70,108 Z" />
+                            <path class="mw-muscle" data-muscle="arms" d="M20,74 C23,74 25,88 24,104 C22,104 18,95 19,83 Z" />
+                            <path class="mw-muscle" data-muscle="arms" d="M80,74 C77,74 75,88 76,104 C78,104 82,95 81,83 Z" />
                             
-                            <path class="mw-muscle" data-muscle="legs" d="M31,128 L48,128 L45,182 L30,182 Z" />
-                            <path class="mw-muscle" data-muscle="legs" d="M69,128 L52,128 L55,182 L70,182 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M26,123 C36,121 50,121 50,140 C37,142 26,138 26,123 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M74,123 C64,121 50,121 50,140 C63,142 74,138 74,123 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M27,147 L48,147 L45,200 L26,200 Z" />
+                            <path class="mw-muscle" data-muscle="legs" d="M73,147 L52,147 L55,200 L74,200 Z" />
                         </svg>
                     </div>
                 </div>
@@ -470,97 +481,4 @@
                         <div class="accordion-body-content">
                             <p style="font-weight:700; color:var(--mw-hover-neon); font-size:0.8rem; margin-bottom:10px;">${targetRecipeDetails.macros}</p>
                             <p style="font-size:0.65rem; text-transform:uppercase; font-weight:800; color:var(--text-darken); margin-bottom:4px;">Ingredients Base:</p>
-                            <ul class="diet-items-list">${listIngredientsHtmlString}</ul>
-                            <p style="font-size:0.65rem; text-transform:uppercase; font-weight:800; color:var(--text-darken); margin-top:4px; margin-bottom:4px;">Instructions Workflow:</p>
-                            <ol style="padding-left:12px; color:#cbd5e1; font-size:0.8rem;">${listStepsHtmlString}</ol>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function toggleAccordionDisplayPanel(headerBarTarget) {
-            const actualContentContainerNode = headerBarTarget.nextElementSibling;
-            const arrowIndicatorNode = headerBarTarget.querySelector('span:last-child');
-            if (actualContentContainerNode.style.display === 'block') {
-                actualContentContainerNode.style.display = 'none';
-                arrowIndicatorNode.textContent = '▼';
-            } else {
-                actualContentContainerNode.style.display = 'block';
-                arrowIndicatorNode.textContent = '▲';
-            }
-        }
-
-        function commitPerformanceLog() {
-            const movementName = document.getElementById('exercise').value;
-            const activeWeightValue = parseFloat(document.getElementById('weight').value);
-            const absoluteRepsValue = parseInt(document.getElementById('reps').value);
-            if(!activeWeightValue || !absoluteRepsValue || !movementName) return alert("System requires full parameters to establish logs.");
-
-            const customTimestampString = new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
-            let localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            localizedDataLogsArray.unshift({ exercise: movementName, weight: activeWeightValue, reps: absoluteRepsValue, timestamp: customTimestampString });
-            localStorage.setItem('workoutLogs', JSON.stringify(localizedDataLogsArray));
-
-            document.getElementById('weight').value = '';
-            document.getElementById('reps').value = '';
-            renderHistoricalLogsEngine(); buildChartOptionsFilters(); refreshTelemetryChart();
-        }
-
-        function renderHistoricalLogsEngine() {
-            const historyMountContainer = document.getElementById('logHistory');
-            let localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            if(localizedDataLogsArray.length === 0) {
-                historyMountContainer.innerHTML = `<p style="color:var(--text-darken); font-size:0.75rem; text-align:center; padding: 12px 0;">No diagnostic matrices found in runtime storage.</p>`;
-                return;
-            }
-            historyMountContainer.innerHTML = localizedDataLogsArray.map(entryItem => `
-                <div class="log-entry-row">
-                    <div class="log-info-block"><h4>${entryItem.exercise}</h4><p>${entryItem.timestamp}</p></div>
-                    <div class="log-badge-spec">${entryItem.weight}kg × ${entryItem.reps}</div>
-                </div>
-            `).join('');
-        }
-
-        function buildChartOptionsFilters() {
-            const telemetryFilterSelectNode = document.getElementById('chartFilter');
-            const localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            const targetedExercisesLoggedSet = [...new Set(localizedDataLogsArray.map(log => log.exercise))];
-            if(targetedExercisesLoggedSet.length === 0) { telemetryFilterSelectNode.innerHTML = `<option value="">Awaiting system data stream...</option>`; return; }
-            telemetryFilterSelectNode.innerHTML = targetedExercisesLoggedSet.map(exKey => `<option value="${exKey}">${exKey}</option>`).join('');
-        }
-
-        function compileCoreLineChartEngine() {
-            const chartContextNode = document.getElementById('analyticsChart').getContext('2d');
-            telemetryChartInstance = new Chart(chartContextNode, {
-                type: 'line',
-                data: { labels: [], datasets: [{ data: [], borderColor: '#22d3ee', borderWidth: 2, tension: 0.15, fill: false }] },
-                options: { 
-                    plugins: { legend: { display: false } }, 
-                    scales: { 
-                        x: { grid: { color: '#1f2029' }, ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } } }, 
-                        y: { grid: { color: '#1f2029' }, ticks: { color: '#64748b', font: { family: 'Inter', size: 10 } } } 
-                    } 
-                }
-            });
-        }
-
-        function refreshTelemetryChart() {
-            if(!telemetryChartInstance) return;
-            const targetMovementSelectionFilter = document.getElementById('chartFilter').value;
-            let localizedDataLogsArray = JSON.parse(localStorage.getItem('workoutLogs')) || [];
-            let sortedFilteredLogMatches = localizedDataLogsArray.filter(log => log.exercise === targetMovementSelectionFilter).reverse();
-            telemetryChartInstance.data.labels = sortedFilteredLogMatches.map(log => log.timestamp);
-            telemetryChartInstance.data.datasets[0].data = sortedFilteredLogMatches.map(log => Math.round(log.weight * (1 + log.reps / 30)));
-            telemetryChartInstance.update();
-        }
-
-        function wipeLocalStorageData() { if(confirm("Purge tracking records permanently?")) { localStorage.removeItem('workoutLogs'); renderHistoricalLogsEngine(); buildChartOptionsFilters(); refreshTelemetryChart(); } }
-
-        window.onload = function() {
-            buildInteractiveNodeListeners();
-            refreshMovementSelectionOptions(); renderHistoricalLogsEngine(); compileCoreLineChartEngine(); buildChartOptionsFilters(); refreshTelemetryChart(); buildNutritionPlanManifest();
-        };
-    </script>
-</body>
-</html>
+                            <ul class="diet
