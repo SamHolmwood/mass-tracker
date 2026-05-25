@@ -19,14 +19,6 @@
             --border: #222235;
             --border-laser: #ff0055;
             --grid-color: rgba(0, 229, 255, 0.025);
-            
-            /* Body Frame Aesthetics */
-            --body-silhouette-fill: rgba(255, 255, 255, 0.05);
-            --body-silhouette-stroke: rgba(255, 255, 255, 0.15);
-            
-            /* Interactive Area Presets */
-            --muscle-base: rgba(0, 229, 255, 0.03);
-            --muscle-stroke: rgba(0, 229, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -69,48 +61,32 @@
 
         .card { background-color: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 4px; padding: 18px; margin-bottom: 20px; }
 
-        .muscle-map-container { display: flex; justify-content: center; background-color: #0b0b10; border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin-bottom: 20px; }
+        /* Graphic Canvas Engine Container */
+        .muscle-map-container { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            background-color: #0b0b10; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            padding: 16px; 
+            margin-bottom: 20px; 
+        }
         
         .anatomy-viewport {
             width: 100%;
             max-width: 260px;
             height: 380px;
-            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .anatomy-svg-overlay { width: 100%; height: 100%; }
-        
-        /* Structural Human Backing Style */
-        .body-silhouette-base {
-            fill: var(--body-silhouette-fill);
-            stroke: var(--body-silhouette-stroke);
-            stroke-width: 1.2;
+        .anatomy-viewport img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
-
-        .skeletal-spine {
-            stroke: rgba(255, 255, 255, 0.2);
-            stroke-width: 1;
-            stroke-dasharray: 3 3;
-            fill: none;
-        }
-
-        /* SVG Grid Sub-lines */
-        .grid-line { stroke: rgba(0, 229, 255, 0.03); stroke-width: 1; }
-
-        .muscle-node {
-            fill: var(--muscle-base);
-            stroke: var(--muscle-stroke);
-            stroke-width: 0.9;
-            cursor: pointer;
-            transition: all 0.15s ease-in-out;
-        }
-
-        .muscle-node:hover { fill: rgba(0, 229, 255, 0.25); stroke: var(--accent); stroke-width: 1.2px; }
-        .muscle-node.selected { fill: rgba(255, 0, 85, 0.45); stroke: #ffffff; stroke-width: 1.5; filter: drop-shadow(0 0 8px var(--border-laser)); }
-
-        .filter-status-banner { display: none; background: rgba(0, 229, 255, 0.08); border: 1px solid var(--accent-dim); padding: 12px; border-radius: 4px; margin-bottom: 18px; justify-content: space-between; align-items: center; font-size: 0.8rem; }
-        .filter-status-banner strong { color: var(--accent); text-transform: uppercase; font-weight: 900; }
-        .clear-filter-btn { background: none; border: 1px solid var(--border-laser); color: var(--border-laser); font-size: 0.65rem; font-weight: 900; padding: 6px 10px; border-radius: 3px; cursor: pointer; text-transform: uppercase;}
 
         .input-group { margin-bottom: 14px; }
         label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; }
@@ -160,59 +136,8 @@
             
             <div class="muscle-map-container">
                 <div class="anatomy-viewport">
-                    <svg class="anatomy-svg-overlay" viewBox="0 0 320 480" width="100%" height="100%">
-                        <line x1="40" y1="0" x2="40" y2="480" class="grid-line" />
-                        <line x1="80" y1="0" x2="80" y2="480" class="grid-line" />
-                        <line x1="120" y1="0" x2="120" y2="480" class="grid-line" />
-                        <line x1="160" y1="0" x2="160" y2="480" class="grid-line" />
-                        <line x1="200" y1="0" x2="200" y2="480" class="grid-line" />
-                        <line x1="240" y1="0" x2="240" y2="480" class="grid-line" />
-                        <line x1="280" y1="0" x2="280" y2="480" class="grid-line" />
-                        <line x1="0" y1="60" x2="320" y2="60" class="grid-line" />
-                        <line x1="0" y1="120" x2="320" y2="120" class="grid-line" />
-                        <line x1="0" y1="180" x2="320" y2="180" class="grid-line" />
-                        <line x1="0" y1="240" x2="320" y2="240" class="grid-line" />
-                        <line x1="0" y1="300" x2="320" y2="300" class="grid-line" />
-                        <line x1="0" y1="360" x2="320" y2="360" class="grid-line" />
-                        <line x1="0" y1="420" x2="320" y2="420" class="grid-line" />
-
-                        <g id="body-frame">
-                            <path class="body-silhouette-base" d="M160,20 C146,20 138,28 138,45 C138,62 146,70 160,70 C174,70 182,62 182,45 C182,28 174,20 160,20 Z" />
-                            <path class="body-silhouette-base" d="M148,70 L146,86 C130,90 108,100 100,115 C92,128 86,170 89,200 C92,215 100,210 98,190 C95,160 97,130 105,116 L112,110 L108,240 C108,265 92,290 96,325 C100,355 92,405 96,470 C98,476 110,476 112,470 C120,430 126,380 134,355 C142,355 150,342 154,290 L160,290 L166,290 C170,342 178,355 186,355 C194,380 200,430 208,470 C210,476 222,476 224,470 C228,405 220,355 224,325 C228,290 212,265 212,240 L208,110 L215,116 C223,130 225,160 222,190 C220,210 228,210 231,200 C234,170 228,128 220,115 C212,100 190,90 174,86 L172,70 Z" />
-                            <path id="skeletal-spine-line" class="skeletal-spine" d="M160,70 L160,290" />
-                        </g>
-
-                        <g id="muscle-targets">
-                            <path class="muscle-node" data-muscle="shoulders" d="M106,94 C96,98 88,110 86,126 C84,142 83,160 85,172 L100,158 C98,138 100,116 106,94 Z" />
-                            <path class="muscle-node" data-muscle="shoulders" d="M214,94 C224,98 232,110 234,126 C236,142 237,160 235,172 L220,158 C222,138 220,116 214,94 Z" />
-
-                            <path class="muscle-node" data-muscle="chest" d="M112,104 C128,100 148,106 156,120 C152,148 132,154 114,144 C110,130 110,116 112,104 Z" />
-                            <path class="muscle-node" data-muscle="chest" d="M208,104 C192,100 172,106 164,120 C168,148 188,154 206,144 C210,130 210,116 208,104 Z" />
-
-                            <path class="muscle-node" data-muscle="abs" d="M132,150 L188,150 L188,245 L132,245 Z" />
-
-                            <path class="muscle-node" data-muscle="back" d="M122,112 L198,112 L188,235 L132,235 Z" />
-
-                            <path class="muscle-node" data-muscle="arms" d="M97,144 C90,154 87,172 91,192 L102,182 L103,148 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M223,144 C230,154 233,172 229,192 L218,182 L217,148 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M103,114 L91,180 L99,180 L108,130 Z" />
-                            <path class="muscle-node" data-muscle="arms" d="M217,114 L229,180 L221,180 L212,130 Z" />
-
-                            <path class="muscle-node" data-muscle="legs" d="M110,254 C128,254 156,258 154,330 L118,330 C100,296 102,274 110,254 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M210,254 C192,254 164,258 166,330 L202,330 C220,296 218,274 210,254 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M108,250 C130,242 158,248 160,280 C136,285 106,274 108,250 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M212,250 C190,242 162,248 160,280 C184,285 214,274 212,250 Z" />
-
-                            <path class="muscle-node" data-muscle="legs" d="M110,335 L154,335 L150,460 L106,460 Z" />
-                            <path class="muscle-node" data-muscle="legs" d="M210,335 L166,335 L170,460 L214,460 Z" />
-                        </g>
-                    </svg>
+                    <img src="silhouette.png" alt="Anatomy Silhouette Map Framework">
                 </div>
-            </div>
-
-            <div id="filterBanner" class="filter-status-banner">
-                <span>FILTER BANNER: <strong id="filterLabel">NONE</strong> SELECTED</span>
-                <button class="clear-filter-btn" onclick="resetMuscleFilter()">Reset View</button>
             </div>
 
             <h2>Log Workout Dataset</h2>
@@ -286,7 +211,6 @@
 
     <script>
         let performanceChart = null;
-        let selectedMuscleGroup = null;
 
         const exerciseDatabase = {
             chest: ["Flat Bench Press", "Incline Dumbbell Press", "Cable Chest Fly", "Pec Deck Machine"],
@@ -394,47 +318,15 @@
             "7": [ {tag: "Meal 1", ref: "oats"}, {tag: "Meal 2", ref: "beefSweetPotato"}, {tag: "Meal 3", ref: "snackA"}, {tag: "Meal 4", ref: "turkeyChili"} ]
         };
 
-        function setupMuscleMapListeners() {
-            document.querySelectorAll('.muscle-node').forEach(el => {
-                el.addEventListener('click', function() {
-                    const group = this.getAttribute('data-muscle');
-                    if (this.id === 'skeletal-spine-line') return; 
-
-                    document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
-                    document.querySelectorAll(`.muscle-node[data-muscle="${group}"]`).forEach(m => m.classList.add('selected'));
-                    
-                    selectedMuscleGroup = group;
-                    renderExerciseDropdown();
-                    
-                    document.getElementById('filterLabel').textContent = group;
-                    document.getElementById('filterBanner').style.display = 'flex';
-                });
-            });
-        }
-
         function renderExerciseDropdown() {
             const dropdown = document.getElementById('exercise');
             dropdown.innerHTML = '';
-
-            if (selectedMuscleGroup && exerciseDatabase[selectedMuscleGroup]) {
-                exerciseDatabase[selectedMuscleGroup].forEach(ex => {
-                    dropdown.innerHTML += `<option value="${ex}">${ex}</option>`;
-                });
-            } else {
-                Object.keys(exerciseDatabase).forEach(category => {
-                    let groupHTML = `<optgroup label="${category.toUpperCase()}">`;
-                    exerciseDatabase[category].forEach(ex => { groupHTML += `<option value="${ex}">${ex}</option>`; });
-                    groupHTML += `</optgroup>`;
-                    dropdown.innerHTML += groupHTML;
-                });
-            }
-        }
-
-        function resetMuscleFilter() {
-            selectedMuscleGroup = null;
-            document.querySelectorAll('.muscle-node').forEach(m => m.classList.remove('selected'));
-            document.getElementById('filterBanner').style.display = 'none';
-            renderExerciseDropdown();
+            Object.keys(exerciseDatabase).forEach(category => {
+                let groupHTML = `<optgroup label="${category.toUpperCase()}">`;
+                exerciseDatabase[category].forEach(ex => { groupHTML += `<option value="${ex}">${ex}</option>`; });
+                groupHTML += `</optgroup>`;
+                dropdown.innerHTML += groupHTML;
+            });
         }
 
         function switchPage(pageId, btnElement) {
@@ -553,7 +445,6 @@
         function clearHistory() { if(confirm("Clear storage?")) { localStorage.removeItem('workoutLogs'); displayLogs(); populateChartFilter(); updateChartMetrics(); } }
 
         window.onload = function() {
-            setupMuscleMapListeners();
             renderExerciseDropdown(); displayLogs(); buildPerformanceChart(); populateChartFilter(); updateChartMetrics(); renderDayMenu();
         };
     </script>
