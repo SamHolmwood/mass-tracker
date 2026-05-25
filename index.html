@@ -94,6 +94,9 @@
             fill: none;
         }
 
+        /* SVG Grid Sub-lines */
+        .grid-line { stroke: rgba(0, 229, 255, 0.03); stroke-width: 1; }
+
         .muscle-node {
             fill: var(--muscle-base);
             stroke: var(--muscle-stroke);
@@ -157,27 +160,52 @@
             
             <div class="muscle-map-container">
                 <div class="anatomy-viewport">
-                    <svg class="anatomy-svg-overlay" viewBox="0 0 100 240">
-                        <path class="body-silhouette-base" d="M50,12 C44,12 40,16 40,24 C40,32 44,36 50,36 C56,36 60,32 60,24 C60,16 56,12 50,12 Z M40,36 C32,38 22,44 18,52 C14,60 11,85 13,100 C15,108 19,105 18,95 C16,80 17,65 21,58 L24,54 L22,118 C22,130 14,142 16,160 C18,175 14,200 16,234 C17,238 23,238 24,234 C28,215 31,190 35,178 C39,178 44,172 47,145 L50,145 L53,145 C56,172 61,178 65,178 C69,190 72,215 76,234 C77,238 83,238 84,234 C86,200 82,175 84,160 C86,142 78,130 78,118 L76,54 L79,58 C83,65 84,80 82,95 C81,105 85,108 87,100 C89,85 86,60 82,52 C78,44 68,38 60,36 Z" />
-                        
-                        <path id="skeletal-spine-line" class="skeletal-spine" d="M50,36 L50,144" />
-                        
-                        <path class="muscle-node" data-muscle="shoulders" d="M21,38 C14,40 6,48 4,58 C2,68 1,78 3,84 L14,76 C13,64 15,50 21,38 Z" />
-                        <path class="muscle-node" data-muscle="shoulders" d="M79,38 C86,40 94,48 96,58 C98,68 99,78 97,84 L86,76 C87,64 85,50 79,38 Z" />
-                        <path class="muscle-node" data-muscle="chest" d="M24,43 C34,40 45,44 49,52 C46,68 34,71 23,66 C20,58 21,50 24,43 Z" />
-                        <path class="muscle-node" data-muscle="chest" d="M76,43 C66,40 55,44 51,52 C54,68 66,71 77,66 C80,58 79,50 76,43 Z" />
-                        <path class="muscle-node" data-muscle="abs" d="M36,70 L64,70 L64,122 L36,122 Z" />
-                        <path class="muscle-node" data-muscle="back" d="M30,48 L70,48 L64,115 L36,115 Z" />
-                        <path class="muscle-node" data-muscle="arms" d="M12,74 C7,80 5,90 8,100 L14,94 L15,76 Z" />
-                        <path class="muscle-node" data-muscle="arms" d="M88,74 C93,80 95,90 92,100 L86,94 L85,76 Z" />
-                        <path class="muscle-node" data-muscle="arms" d="M16,54 L9,92 L14,92 L19,64 Z" />
-                        <path class="muscle-node" data-muscle="arms" d="M84,54 L91,92 L86,92 L81,64 Z" />
-                        <path class="muscle-node" data-muscle="legs" d="M18,126 C28,126 47,129 46,174 L24,174 C11,152 13,138 18,126 Z" />
-                        <path class="muscle-node" data-muscle="legs" d="M82,126 C72,126 53,129 54,174 L76,174 C89,152 87,138 82,126 Z" />
-                        <path class="muscle-node" data-muscle="legs" d="M17,124 C32,118 48,122 49,142 C34,145 16,138 17,124 Z" />
-                        <path class="muscle-node" data-muscle="legs" d="M83,124 C68,118 52,122 51,142 C66,145 84,138 83,124 Z" />
-                        <path class="muscle-node" data-muscle="legs" d="M18,145 L47,145 L44,230 L16,230 Z" />
-                        <path class="muscle-node" data-muscle="legs" d="M53,145 L82,145 L80,230 L56,230 Z" />
+                    <svg class="anatomy-svg-overlay" viewBox="0 0 320 480" width="100%" height="100%">
+                        <line x1="40" y1="0" x2="40" y2="480" class="grid-line" />
+                        <line x1="80" y1="0" x2="80" y2="480" class="grid-line" />
+                        <line x1="120" y1="0" x2="120" y2="480" class="grid-line" />
+                        <line x1="160" y1="0" x2="160" y2="480" class="grid-line" />
+                        <line x1="200" y1="0" x2="200" y2="480" class="grid-line" />
+                        <line x1="240" y1="0" x2="240" y2="480" class="grid-line" />
+                        <line x1="280" y1="0" x2="280" y2="480" class="grid-line" />
+                        <line x1="0" y1="60" x2="320" y2="60" class="grid-line" />
+                        <line x1="0" y1="120" x2="320" y2="120" class="grid-line" />
+                        <line x1="0" y1="180" x2="320" y2="180" class="grid-line" />
+                        <line x1="0" y1="240" x2="320" y2="240" class="grid-line" />
+                        <line x1="0" y1="300" x2="320" y2="300" class="grid-line" />
+                        <line x1="0" y1="360" x2="320" y2="360" class="grid-line" />
+                        <line x1="0" y1="420" x2="320" y2="420" class="grid-line" />
+
+                        <g id="body-frame">
+                            <path class="body-silhouette-base" d="M160,20 C146,20 138,28 138,45 C138,62 146,70 160,70 C174,70 182,62 182,45 C182,28 174,20 160,20 Z" />
+                            <path class="body-silhouette-base" d="M148,70 L146,86 C130,90 108,100 100,115 C92,128 86,170 89,200 C92,215 100,210 98,190 C95,160 97,130 105,116 L112,110 L108,240 C108,265 92,290 96,325 C100,355 92,405 96,470 C98,476 110,476 112,470 C120,430 126,380 134,355 C142,355 150,342 154,290 L160,290 L166,290 C170,342 178,355 186,355 C194,380 200,430 208,470 C210,476 222,476 224,470 C228,405 220,355 224,325 C228,290 212,265 212,240 L208,110 L215,116 C223,130 225,160 222,190 C220,210 228,210 231,200 C234,170 228,128 220,115 C212,100 190,90 174,86 L172,70 Z" />
+                            <path id="skeletal-spine-line" class="skeletal-spine" d="M160,70 L160,290" />
+                        </g>
+
+                        <g id="muscle-targets">
+                            <path class="muscle-node" data-muscle="shoulders" d="M106,94 C96,98 88,110 86,126 C84,142 83,160 85,172 L100,158 C98,138 100,116 106,94 Z" />
+                            <path class="muscle-node" data-muscle="shoulders" d="M214,94 C224,98 232,110 234,126 C236,142 237,160 235,172 L220,158 C222,138 220,116 214,94 Z" />
+
+                            <path class="muscle-node" data-muscle="chest" d="M112,104 C128,100 148,106 156,120 C152,148 132,154 114,144 C110,130 110,116 112,104 Z" />
+                            <path class="muscle-node" data-muscle="chest" d="M208,104 C192,100 172,106 164,120 C168,148 188,154 206,144 C210,130 210,116 208,104 Z" />
+
+                            <path class="muscle-node" data-muscle="abs" d="M132,150 L188,150 L188,245 L132,245 Z" />
+
+                            <path class="muscle-node" data-muscle="back" d="M122,112 L198,112 L188,235 L132,235 Z" />
+
+                            <path class="muscle-node" data-muscle="arms" d="M97,144 C90,154 87,172 91,192 L102,182 L103,148 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M223,144 C230,154 233,172 229,192 L218,182 L217,148 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M103,114 L91,180 L99,180 L108,130 Z" />
+                            <path class="muscle-node" data-muscle="arms" d="M217,114 L229,180 L221,180 L212,130 Z" />
+
+                            <path class="muscle-node" data-muscle="legs" d="M110,254 C128,254 156,258 154,330 L118,330 C100,296 102,274 110,254 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M210,254 C192,254 164,258 166,330 L202,330 C220,296 218,274 210,254 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M108,250 C130,242 158,248 160,280 C136,285 106,274 108,250 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M212,250 C190,242 162,248 160,280 C184,285 214,274 212,250 Z" />
+
+                            <path class="muscle-node" data-muscle="legs" d="M110,335 L154,335 L150,460 L106,460 Z" />
+                            <path class="muscle-node" data-muscle="legs" d="M210,335 L166,335 L170,460 L214,460 Z" />
+                        </g>
                     </svg>
                 </div>
             </div>
